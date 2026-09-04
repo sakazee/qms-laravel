@@ -1,116 +1,86 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<a href="{{ route('dashboard') }}" class="flex items-center gap-3 border-b border-white/10 px-5 py-4">
+    <i class="fa-solid fa-moon text-xl text-gold"></i>
+    <span class="font-serif text-[15.5px] font-bold leading-tight text-white">
+        {{ app()->getLocale() === 'bn' ? 'কোরবানি সিস্টেম' : 'Qurbani System' }}
+    </span>
+</a>
 
-    <!-- Brand Logo -->
-    <a href="{{ route('dashboard') }}" class="brand-link px-3 py-2">
-        <i class="fas fa-moon text-warning mr-2" style="font-size:20px"></i>
-        <span class="brand-text font-weight-bold">
-            {{ app()->getLocale() === 'bn' ? 'কোরবানি সিস্টেম' : 'Qurbani System' }}
-        </span>
+<nav class="flex-1 py-3">
+    <div class="sidebar-header">{{ app()->getLocale() === 'bn' ? 'ওভারভিউ' : 'OVERVIEW' }}</div>
+
+    <a href="{{ route('dashboard') }}"
+       class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+        <i class="fa-solid fa-gauge-high w-5 text-center"></i>
+        <span>{{ app()->getLocale() === 'bn' ? 'ড্যাশবোর্ড' : 'Dashboard' }}</span>
     </a>
 
-    <div class="sidebar">
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <div class="sidebar-header">{{ app()->getLocale() === 'bn' ? 'ব্যবস্থাপনা' : 'MANAGEMENT' }}</div>
 
-                {{-- Dashboard --}}
-                <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>{{ app()->getLocale() === 'bn' ? 'ড্যাশবোর্ড' : 'Dashboard' }}</p>
-                    </a>
-                </li>
+    <a href="{{ route('templates.index') }}"
+       class="sidebar-link {{ request()->routeIs('templates.*') ? 'active' : '' }}">
+        <i class="fa-solid fa-layer-group w-5 text-center"></i>
+        <span>{{ __('templates.templates') }}</span>
+    </a>
 
-                {{-- Templates --}}
-                <li class="nav-header">{{ app()->getLocale() === 'bn' ? 'ব্যবস্থাপনা' : 'MANAGEMENT' }}</li>
+    @if(session('selected_template_id'))
 
-                <li class="nav-item">
-                    <a href="{{ route('templates.index') }}" class="nav-link {{ request()->routeIs('templates.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-layer-group"></i>
-                        <p>{{ __('templates.templates') }}</p>
-                    </a>
-                </li>
+    <div class="sidebar-header">{{ app()->getLocale() === 'bn' ? 'কোরবানি' : 'QURBANI' }}</div>
 
-                {{-- Template-specific menu (only shown when template selected) --}}
-                @if(session('selected_template_id'))
+    <a href="{{ route('animals.index') }}"
+       class="sidebar-link {{ request()->routeIs('animals.*') ? 'active' : '' }}">
+        <i class="fa-solid fa-horse w-5 text-center"></i>
+        <span>{{ __('animals.animals') }}</span>
+    </a>
 
-                <li class="nav-header">{{ app()->getLocale() === 'bn' ? 'কোরবানি' : 'QURBANI' }}</li>
+    <a href="{{ route('partners.index') }}"
+       class="sidebar-link {{ request()->routeIs('partners.*') ? 'active' : '' }}">
+        <i class="fa-solid fa-users w-5 text-center"></i>
+        <span>{{ __('partners.partners') }}</span>
+    </a>
 
-                <li class="nav-item">
-                    <a href="{{ route('animals.index') }}" class="nav-link {{ request()->routeIs('animals.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-horse"></i>
-                        <p>{{ __('animals.animals') }}</p>
-                    </a>
-                </li>
+    <a href="{{ route('shares.index') }}"
+       class="sidebar-link {{ request()->routeIs('shares.*') ? 'active' : '' }}">
+        <i class="fa-solid fa-share-nodes w-5 text-center"></i>
+        <span>{{ __('shares.shares') }}</span>
+    </a>
 
-                <li class="nav-item">
-                    <a href="{{ route('partners.index') }}" class="nav-link {{ request()->routeIs('partners.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>{{ __('partners.partners') }}</p>
-                    </a>
-                </li>
+    <div class="sidebar-header">{{ app()->getLocale() === 'bn' ? 'আর্থিক' : 'FINANCE' }}</div>
 
-                <li class="nav-item">
-                    <a href="{{ route('shares.index') }}" class="nav-link {{ request()->routeIs('shares.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-share-alt"></i>
-                        <p>{{ __('shares.shares') }}</p>
-                    </a>
-                </li>
+    <a href="{{ route('expenses.index') }}"
+       class="sidebar-link {{ request()->routeIs('expenses.*') ? 'active' : '' }}">
+        <i class="fa-solid fa-file-invoice-dollar w-5 text-center"></i>
+        <span>{{ __('expenses.expenses') }}</span>
+    </a>
 
-                <li class="nav-header">{{ app()->getLocale() === 'bn' ? 'আর্থিক' : 'FINANCE' }}</li>
+    <a href="{{ route('payments.index') }}"
+       class="sidebar-link {{ request()->routeIs('payments.*') ? 'active' : '' }}">
+        <i class="fa-solid fa-money-bill-wave w-5 text-center"></i>
+        <span>{{ __('payments.payments') }}</span>
+    </a>
 
-                <li class="nav-item">
-                    <a href="{{ route('expenses.index') }}" class="nav-link {{ request()->routeIs('expenses.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                        <p>{{ __('expenses.expenses') }}</p>
-                    </a>
-                </li>
+    <div class="sidebar-header">{{ app()->getLocale() === 'bn' ? 'রিপোর্ট' : 'REPORTS' }}</div>
 
-                <li class="nav-item">
-                    <a href="{{ route('payments.index') }}" class="nav-link {{ request()->routeIs('payments.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-money-bill-wave"></i>
-                        <p>{{ __('payments.payments') }}</p>
-                    </a>
-                </li>
-
-                <li class="nav-header">{{ app()->getLocale() === 'bn' ? 'রিপোর্ট' : 'REPORTS' }}</li>
-
-                <li class="nav-item {{ request()->routeIs('reports.*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-chart-bar"></i>
-                        <p>
-                            {{ __('reports.reports') }}
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('reports.template-summary') }}"
-                               class="nav-link {{ request()->routeIs('reports.template-summary') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ __('reports.template_summary') }}</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('reports.animal-summary') }}"
-                               class="nav-link {{ request()->routeIs('reports.animal-summary') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ __('reports.animal_summary') }}</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('reports.partner-summary') }}"
-                               class="nav-link {{ request()->routeIs('reports.partner-summary') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ __('reports.partner_summary') }}</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                @endif {{-- end template selected check --}}
-
-            </ul>
-        </nav>
+    <div class="mb-1">
+        <a href="{{ route('reports.template-summary') }}"
+           class="sidebar-link {{ request()->routeIs('reports.template-summary') ? 'active' : '' }}">
+            <i class="fa-solid fa-table-columns w-5 text-center"></i>
+            <span>{{ __('reports.template_summary') }}</span>
+        </a>
+        <a href="{{ route('reports.animal-summary') }}"
+           class="sidebar-link {{ request()->routeIs('reports.animal-summary') ? 'active' : '' }}">
+            <i class="fa-solid fa-chart-column w-5 text-center"></i>
+            <span>{{ __('reports.animal_summary') }}</span>
+        </a>
+        <a href="{{ route('reports.partner-summary') }}"
+           class="sidebar-link {{ request()->routeIs('reports.partner-summary') ? 'active' : '' }}">
+            <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+            <span>{{ __('reports.partner_summary') }}</span>
+        </a>
     </div>
-</aside>
+
+    @endif {{-- end template selected check --}}
+</nav>
+
+<div class="border-t border-white/10 px-5 py-3 text-[11.5px] text-[#5f7d6b]">
+    {{ config('app.name') }}
+</div>

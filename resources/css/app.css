@@ -1,0 +1,235 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+        @apply bg-paper font-sans text-[14px] text-gray-800;
+    }
+
+    ::selection {
+        @apply bg-gold-200 text-pine-900;
+    }
+}
+
+@layer components {
+    .sidebar-link {
+        @apply mx-2 my-0.5 flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13.5px] font-medium text-[#b9cdbf] transition-colors duration-150 hover:bg-pine-800 hover:text-white;
+    }
+
+    .sidebar-link.active {
+        @apply bg-emerald-700 text-white shadow-inner;
+    }
+
+    .sidebar-header {
+        @apply px-5 pb-1.5 pt-5 text-[10px] font-bold uppercase tracking-[1.5px] text-[#5f7d6b];
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-1.5 rounded-lg text-[13px] font-medium transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .btn-primary {
+        @apply bg-emerald-800 text-white hover:bg-emerald-900;
+    }
+
+    .btn-secondary {
+        @apply bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50;
+    }
+
+    .btn-info {
+        @apply bg-sky-700 text-white hover:bg-sky-800;
+    }
+
+    .btn-danger {
+        @apply bg-rose-700 text-white hover:bg-rose-800;
+    }
+
+    .btn-sm {
+        @apply px-2.5 py-1.5 text-[12px];
+    }
+
+    .btn-xs {
+        @apply px-2 py-1 text-[11.5px];
+    }
+
+    .card {
+        @apply rounded-xl border border-gray-200 bg-white shadow-card;
+    }
+
+    .card-header {
+        @apply flex items-center justify-between gap-3 rounded-t-xl border-b border-gray-100 px-5 py-4;
+    }
+
+    .card-title {
+        @apply flex items-center gap-2 font-serif text-[15.5px] font-semibold text-gray-900;
+    }
+
+    .card-body {
+        @apply p-5;
+    }
+
+    .input {
+        @apply block w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-[13.5px] text-gray-800 shadow-sm placeholder:text-gray-400 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/25;
+    }
+
+    .label {
+        @apply mb-1.5 block text-[12.5px] font-semibold text-gray-700;
+    }
+
+    .badge {
+        @apply inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11.5px] font-semibold;
+    }
+
+    .alert {
+        @apply mb-4 rounded-xl border px-4 py-3 text-[13.5px] font-medium;
+    }
+
+    .alert-success {
+        @apply border-emerald-200 bg-emerald-50 text-emerald-800;
+    }
+
+    .alert-error {
+        @apply border-rose-200 bg-rose-50 text-rose-800;
+    }
+
+    .alert-warning {
+        @apply border-amber-200 bg-amber-50 text-amber-800;
+    }
+
+    .alert-info {
+        @apply border-sky-200 bg-sky-50 text-sky-800;
+    }
+
+    .table-wrap {
+        @apply overflow-x-auto;
+    }
+
+    .datatable {
+        @apply w-full text-[13px];
+    }
+
+    .datatable thead th {
+        @apply border-b border-gray-200 bg-paper-100 px-4 py-3 text-left align-middle text-[12px] font-bold uppercase tracking-wide text-gray-600;
+    }
+
+    .datatable tbody td {
+        @apply border-b border-gray-100 px-4 py-3 align-middle text-gray-700;
+    }
+
+    .datatable tbody tr:hover {
+        @apply bg-paper-50;
+    }
+
+    .action-btn {
+        @apply inline-flex h-8 w-8 items-center justify-center rounded-lg text-[13px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600;
+    }
+
+    .action-view {
+        @apply bg-gray-100 text-gray-600 hover:bg-gray-200;
+    }
+
+    .action-edit {
+        @apply bg-sky-100 text-sky-700 hover:bg-sky-200;
+    }
+
+    .action-delete {
+        @apply bg-rose-100 text-rose-700 hover:bg-rose-200;
+    }
+
+    .dropdown-item {
+        @apply flex w-full items-center gap-2 px-4 py-2 text-left text-[13px] text-gray-700 hover:bg-paper-100;
+    }
+
+    .empty-state {
+        @apply flex flex-col items-center justify-center gap-2 py-12 text-center text-gray-400;
+    }
+}
+
+/* Bootstrap compatibility for page JS that toggles these classes (do not remove) */
+.d-none {
+    display: none !important;
+}
+
+.badge-success {
+    @apply inline-flex items-center gap-1 rounded-md bg-emerald-100 px-2 py-0.5 text-[11.5px] font-semibold text-emerald-800;
+}
+
+.badge-danger {
+    @apply inline-flex items-center gap-1 rounded-md bg-rose-100 px-2 py-0.5 text-[11.5px] font-semibold text-rose-800;
+}
+
+.badge-secondary {
+    @apply inline-flex items-center gap-1 rounded-md bg-gray-100 px-2 py-0.5 text-[11.5px] font-semibold text-gray-600;
+}
+
+.text-success {
+    @apply text-emerald-600;
+}
+
+.text-danger {
+    @apply text-rose-600;
+}
+
+/* DataTables plain theme adjustments */
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+    @apply rounded-lg border border-gray-300 bg-white px-2.5 py-1.5 text-[13px] text-gray-700 focus:border-emerald-600 focus:outline-none;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+    @apply text-gray-600;
+}
+
+.dataTables_wrapper .dataTables_info {
+    @apply py-3 text-[12.5px] text-gray-500;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    @apply mx-0.5 cursor-pointer rounded-md border border-gray-200 bg-white px-2.5 py-1 text-[12.5px] text-gray-600 hover:bg-paper-100 hover:!text-gray-800;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    @apply border-emerald-800 bg-emerald-800 !text-white;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    @apply cursor-not-allowed opacity-50;
+}
+
+/* Select2 theme */
+.select2-container .select2-selection--single {
+    @apply flex h-[38px] items-center rounded-lg border border-gray-300;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    @apply flex items-center text-[13.5px] text-gray-800;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 6px;
+    right: 8px;
+}
+
+.select2-dropdown {
+    @apply rounded-lg border border-gray-200;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    @apply bg-emerald-800;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

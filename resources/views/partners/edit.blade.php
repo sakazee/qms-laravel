@@ -2,23 +2,31 @@
 @section('title', __('partners.edit'))
 @section('page-title', __('partners.edit'))
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('partners.index') }}">{{ __('partners.partners') }}</a></li>
-    <li class="breadcrumb-item active">{{ __('partners.edit') }}</li>
+    <span><a href="{{ route('partners.index') }}" class="hover:text-emerald-700">{{ __('partners.partners') }}</a></span>
+    <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+    <span class="text-gray-600">{{ __('partners.edit') }}</span>
 @endsection
+
 @section('content')
-<div class="row justify-content-center"><div class="col-md-8">
+<div class="mx-auto max-w-3xl">
     <div class="card">
-        <div class="card-header bg-info text-white"><h3 class="card-title mb-0"><i class="fas fa-edit mr-2"></i>{{ __('partners.edit') }}</h3></div>
+        <div class="card-header bg-sky-700">
+            <h3 class="card-title text-white"><i class="fa-solid fa-pen"></i>{{ __('partners.edit') }}</h3>
+        </div>
         <div class="card-body">
             <form action="{{ route('partners.update', $partner) }}" method="POST">
                 @csrf @method('PUT')
                 @include('partners._form')
-                <div class="d-flex justify-content-between mt-4">
-                    <a href="{{ route('partners.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left mr-1"></i>{{ __('messages.back') }}</a>
-                    <button type="submit" class="btn btn-info"><i class="fas fa-save mr-1"></i>{{ __('messages.save') }}</button>
+                <div class="mt-6 flex items-center justify-between">
+                    <a href="{{ route('partners.index') }}" class="btn btn-secondary">
+                        <i class="fa-solid fa-arrow-left"></i>{{ __('messages.back') }}
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-save"></i>{{ __('messages.save') }}
+                    </button>
                 </div>
             </form>
         </div>
     </div>
-</div></div>
+</div>
 @endsection

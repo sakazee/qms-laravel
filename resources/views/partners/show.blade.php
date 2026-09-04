@@ -2,8 +2,9 @@
 @section('title', $partner->name)
 @section('page-title', $partner->name)
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('partners.index') }}">{{ __('partners.partners') }}</a></li>
-    <li class="breadcrumb-item active">{{ __('messages.view') }}</li>
+    <span><a href="{{ route('partners.index') }}" class="hover:text-emerald-700">{{ __('partners.partners') }}</a></span>
+    <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+    <span class="text-gray-600">{{ __('messages.view') }}</span>
 @endsection
 
 @section('content')
@@ -13,54 +14,78 @@
     $due        = max(0, $totalShare - $totalPaid);
     $advance    = max(0, $totalPaid - $totalShare);
 @endphp
-<div class="row">
-    <div class="col-md-4">
-        <div class="card card-primary card-outline">
-            <div class="card-body text-center pt-4">
-                <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-3"
-                     style="width:80px;height:80px;font-size:32px;font-weight:700">
+
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+    <div class="lg:col-span-1">
+        <div class="card">
+            <div class="flex flex-col items-center gap-3 border-b border-gray-100 px-5 py-6">
+                <div class="flex h-20 w-20 items-center justify-center rounded-full bg-emerald-800 text-[32px] font-bold text-white">
                     {{ strtoupper(mb_substr($partner->name, 0, 1)) }}
                 </div>
-                <h4 class="font-weight-bold">{{ $partner->name }}</h4>
-                @if($partner->phone)<p class="text-muted"><i class="fas fa-phone mr-1"></i>{{ $partner->phone }}</p>@endif
-                @if($partner->address)<p class="text-muted"><i class="fas fa-map-marker-alt mr-1"></i>{{ $partner->address }}</p>@endif
-            </div>
-            <div class="card-footer p-0">
-                <div class="row text-center" style="border-top:1px solid #eee">
-                    <div class="col-4 p-3 border-right">
-                        <div class="font-weight-bold text-info">৳{{ number_format($totalShare, 0) }}</div>
-                        <small class="text-muted">{{ __('partners.total_share') }}</small>
-                    </div>
-                    <div class="col-4 p-3 border-right">
-                        <div class="font-weight-bold text-success">৳{{ number_format($totalPaid, 0) }}</div>
-                        <small class="text-muted">{{ __('partners.total_paid') }}</small>
-                    </div>
-                    <div class="col-4 p-3">
-                        <div class="font-weight-bold text-{{ $due > 0 ? 'danger' : 'success' }}">৳{{ number_format($due, 0) }}</div>
-                        <small class="text-muted">{{ __('partners.due') }}</small>
-                    </div>
+                <div class="text-center">
+                    <h4 class="font-serif text-[16px] font-bold text-gray-900">{{ $partner->name }}</h4>
+                    @if($partner->phone)
+                        <p class="mt-1 inline-flex items-center gap-1.5 text-[13px] text-gray-500"><i class="fa-solid fa-phone"></i>{{ $partner->phone }}</p>
+                    @endif
+                    @if($partner->address)
+                        <p class="mt-0.5 inline-flex items-center gap-1.5 text-[13px] text-gray-500"><i class="fa-solid fa-location-dot"></i>{{ $partner->address }}</p>
+                    @endif
                 </div>
             </div>
+            <div class="grid grid-cols-3 divide-x divide-gray-100 border-b border-gray-100">
+                <div class="px-3 py-4 text-center">
+                    <div class="text-[14px] font-bold text-sky-700">৳{{ number_format($totalShare, 0) }}</div>
+                    <div class="mt-0.5 text-[11.5px] text-gray-500">{{ __('partners.total_share') }}</div>
+                </div>
+                <div class="px-3 py-4 text-center">
+                    <div class="text-[14px] font-bold text-emerald-700">৳{{ number_format($totalPaid, 0) }}</div>
+                    <div class="mt-0.5 text-[11.5px] text-gray-500">{{ __('partners.total_paid') }}</div>
+                </div>
+                <div class="px-3 py-4 text-center">
+                    <div class="text-[14px] font-bold {{ $due > 0 ? 'text-rose-700' : 'text-emerald-700' }}">৳{{ number_format($due, 0) }}</div>
+                    <div class="mt-0.5 text-[11.5px] text-gray-500">{{ __('partners.due') }}</div>
+                </div>
+            </div>
+            <div class="px-5 py-3">
+                <a href="{{ route('partners.edit', $partner) }}" class="btn btn-info btn-sm w-full">
+                    <i class="fa-solid fa-pen"></i>{{ __('messages.edit') }}
+                </a>
+            </div>
         </div>
-        <a href="{{ route('partners.edit', $partner) }}" class="btn btn-info btn-block"><i class="fas fa-edit mr-1"></i>{{ __('messages.edit') }}</a>
     </div>
 
-    <div class="col-md-8">
+    <div class="lg:col-span-2">
         <div class="card">
-            <div class="card-header"><h3 class="card-title mb-0"><i class="fas fa-share-alt mr-2"></i>{{ __('shares.shares') }}</h3></div>
-            <div class="card-body p-0">
-                <table class="table mb-0">
-                    <thead><tr><th>{{ __('animals.animal') }}</th><th>{{ __('animals.type.label') }}</th><th>{{ __('shares.shares_count') }}</th><th>{{ __('shares.share_amount') }}</th></tr></thead>
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-share-nodes text-emerald-700"></i>{{ __('shares.shares') }}</h3>
+            </div>
+            <div class="table-wrap">
+                <table class="datatable">
+                    <thead>
+                        <tr>
+                            <th>{{ __('animals.animal') }}</th>
+                            <th>{{ __('animals.type.label') }}</th>
+                            <th>{{ __('shares.shares_count') }}</th>
+                            <th>{{ __('shares.share_amount') }}</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         @forelse($partner->animalShares as $share)
                         <tr>
-                            <td>{{ $share->animal->name ?: $share->animal->type_name }}</td>
+                            <td class="font-semibold text-gray-900">{{ $share->animal->name ?: $share->animal->type_name }}</td>
                             <td>{{ $share->animal->type_name }}</td>
                             <td class="text-center">{{ $share->shares }}</td>
                             <td>৳{{ number_format($share->share_amount, 2) }}</td>
                         </tr>
                         @empty
-                        <tr><td colspan="4" class="text-center py-3 text-muted">{{ __('messages.no_data_found') }}</td></tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="empty-state">
+                                    <i class="fa-solid fa-share-nodes text-3xl text-gray-300"></i>
+                                    <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>
+                                </div>
+                            </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -68,10 +93,18 @@
         </div>
 
         <div class="card">
-            <div class="card-header"><h3 class="card-title mb-0"><i class="fas fa-money-bill-wave mr-2"></i>{{ __('payments.payments') }}</h3></div>
-            <div class="card-body p-0">
-                <table class="table mb-0">
-                    <thead><tr><th>{{ __('payments.payment_date') }}</th><th>{{ __('payments.amount') }}</th><th>{{ __('payments.payment_method') }}</th></tr></thead>
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-money-bill-wave text-emerald-700"></i>{{ __('payments.payments') }}</h3>
+            </div>
+            <div class="table-wrap">
+                <table class="datatable">
+                    <thead>
+                        <tr>
+                            <th>{{ __('payments.payment_date') }}</th>
+                            <th>{{ __('payments.amount') }}</th>
+                            <th>{{ __('payments.payment_method') }}</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         @forelse($partner->payments as $payment)
                         <tr>
@@ -80,7 +113,14 @@
                             <td>{{ $payment->payment_method_label }}</td>
                         </tr>
                         @empty
-                        <tr><td colspan="3" class="text-center py-3 text-muted">{{ __('messages.no_data_found') }}</td></tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="empty-state">
+                                    <i class="fa-solid fa-money-bill-wave text-3xl text-gray-300"></i>
+                                    <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>
+                                </div>
+                            </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>

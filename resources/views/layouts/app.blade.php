@@ -1,315 +1,78 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'bn' ? 'ltr' : 'ltr' }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', __('messages.app_name')) | {{ __('messages.app_name') }}</title>
 
-    <!-- Google Font - Hind Siliguri for Bengali -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <!-- AdminLTE 3 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
-    <!-- Font Awesome -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Serif+Bengali:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- DataTables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap4.min.css">
-    <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
 
-    <style>
-        :root {
-            --font-primary: 'Hind Siliguri', 'Inter', sans-serif;
-            --brand-color: #1a6b3a;
-            --brand-dark: #145430;
-            --brand-light: #e8f5e9;
-            --accent: #f4b942;
-            --sidebar-bg: #1c2a1e;
-            --sidebar-text: #c8dcc9;
-        }
+    <style>[x-cloak]{display:none!important}</style>
 
-        body {
-            font-family: var(--font-primary);
-            font-size: 14px;
-            background-color: #f0f4f1;
-        }
-
-        /* Sidebar */
-        .main-sidebar {
-            background: var(--sidebar-bg) !important;
-        }
-        .brand-link {
-            background: var(--brand-dark) !important;
-            border-bottom: 1px solid rgba(255,255,255,0.1) !important;
-        }
-        .brand-link .brand-text {
-            font-weight: 700;
-            font-size: 15px;
-            color: #fff !important;
-            line-height: 1.3;
-        }
-        .sidebar .nav-link {
-            color: var(--sidebar-text) !important;
-            border-radius: 6px;
-            margin: 2px 8px;
-            transition: all 0.2s;
-        }
-        .sidebar .nav-link:hover,
-        .sidebar .nav-link.active {
-            background: var(--brand-color) !important;
-            color: #fff !important;
-        }
-        .sidebar .nav-link i {
-            color: inherit !important;
-            width: 20px;
-            text-align: center;
-        }
-        .nav-header {
-            color: rgba(255,255,255,0.4) !important;
-            font-size: 10px !important;
-            font-weight: 700 !important;
-            letter-spacing: 1px !important;
-            padding: 10px 20px 5px !important;
-            text-transform: uppercase;
-        }
-        .sidebar-mini.sidebar-collapse .nav-header { display: none; }
-
-        /* Navbar */
-        .main-header.navbar {
-            background: #fff !important;
-            border-bottom: 2px solid var(--brand-light);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        }
-        .navbar-brand-link { display: none; }
-
-        /* Template badge in navbar */
-        .template-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--brand-light);
-            color: var(--brand-dark);
-            padding: 5px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            border: 1px solid rgba(26,107,58,0.2);
-        }
-        .template-badge .dot {
-            width: 8px; height: 8px;
-            background: var(--brand-color);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%,100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        /* Content */
-        .content-header h1 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a2b1d;
-        }
-        .content-wrapper {
-            background: #f0f4f1;
-        }
-
-        /* Cards */
-        .card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-        }
-        .card-header {
-            border-radius: 12px 12px 0 0 !important;
-            font-weight: 600;
-            background: #fff;
-            border-bottom: 1px solid #eef2ef;
-            padding: 15px 20px;
-        }
-        .card-header.bg-primary { background: var(--brand-color) !important; }
-
-        /* Stats cards */
-        .small-box {
-            border-radius: 12px !important;
-            overflow: hidden;
-        }
-        .small-box h3 { font-size: 28px !important; font-weight: 700 !important; }
-        .small-box p { font-size: 13px !important; }
-        .small-box > .inner { padding: 15px 20px !important; }
-
-        /* Tables */
-        .table thead th {
-            background: var(--brand-light);
-            color: var(--brand-dark);
-            font-weight: 600;
-            font-size: 13px;
-            border-top: none;
-        }
-        .table-hover tbody tr:hover { background: var(--brand-light); }
-
-        /* Buttons */
-        .btn-primary {
-            background: var(--brand-color) !important;
-            border-color: var(--brand-color) !important;
-        }
-        .btn-primary:hover { background: var(--brand-dark) !important; }
-        .btn { border-radius: 6px; font-weight: 500; }
-        .btn-sm { padding: 3px 10px; font-size: 12px; }
-
-        /* Badges */
-        .badge { font-size: 11px; font-weight: 600; border-radius: 4px; }
-
-        /* Forms */
-        .form-control, .custom-select {
-            border-radius: 8px;
-            border: 1.5px solid #d8e4da;
-            font-family: var(--font-primary);
-        }
-        .form-control:focus {
-            border-color: var(--brand-color);
-            box-shadow: 0 0 0 0.2rem rgba(26,107,58,0.15);
-        }
-        label { font-weight: 500; color: #3d5c42; font-size: 13px; }
-
-        /* Alerts */
-        .alert { border-radius: 10px; border: none; }
-
-        /* Footer */
-        .main-footer {
-            background: #fff;
-            border-top: 1px solid #eef2ef;
-            font-size: 13px;
-            color: #6c8c72;
-        }
-
-        /* Bengali number support */
-        .bn-num { font-family: 'Hind Siliguri', sans-serif; }
-
-        /* Responsive table */
-        @media (max-width: 768px) {
-            .table-responsive { border-radius: 8px; }
-        }
-    </style>
-
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
-</head>
-<body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
 
-    {{-- Navbar --}}
-    @include('layouts.partials.navbar')
+    <script>
+        window.__qms_locale = {{ \Illuminate\Support\Js::from(app()->getLocale()) }};
+        window.__qms_translate = {{ \Illuminate\Support\Js::from([
+            'confirmDelete' => __('messages.confirm_delete'),
+            'yes'           => __('messages.yes'),
+            'cancel'        => __('messages.cancel'),
+        ]) }};
+    </script>
+</head>
+<body class="bg-paper" data-flash-success="{{ session('success') }}"
+                       data-flash-error="{{ session('error') }}"
+                       data-flash-warning="{{ session('warning') }}">
+<div x-data="{ sidebarOpen: false }" @keydown.escape.window="sidebarOpen = false" class="flex min-h-screen">
+
+    {{-- Mobile overlay --}}
+    <div x-show="sidebarOpen" x-cloak class="fixed inset-0 z-30 bg-pine-950/60 backdrop-blur-sm lg:hidden" @click="sidebarOpen = false"></div>
 
     {{-- Sidebar --}}
-    @include('layouts.partials.sidebar')
+    <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
+           class="fixed inset-y-0 left-0 z-40 flex w-64 flex-col overflow-y-auto bg-pine-900 shadow-lift transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0">
+        @include('layouts.partials.sidebar')
+    </aside>
 
-    {{-- Content Wrapper --}}
-    <div class="content-wrapper">
-        {{-- Content Header --}}
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2 align-items-center">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">@yield('page-title')</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('messages.app_name') }}</a></li>
-                            @yield('breadcrumb')
-                        </ol>
-                    </div>
+    {{-- Main column --}}
+    <div class="flex min-h-screen w-full flex-col">
+        {{-- Navbar --}}
+        @include('layouts.partials.navbar')
+
+        {{-- Content --}}
+        <main class="flex-1 px-4 py-6 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl">
+                <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+                    <h1 class="font-serif text-[22px] font-bold text-pine-900">@yield('page-title')</h1>
+                    @hasSection('breadcrumb')
+                    <nav class="flex items-center gap-1.5 text-[12.5px] text-gray-500">
+                        <a href="{{ route('dashboard') }}" class="hover:text-emerald-700">{{ __('messages.app_name') }}</a>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+                        @yield('breadcrumb')
+                    </nav>
+                    @endif
                 </div>
-            </div>
-        </div>
 
-        {{-- Main Content --}}
-        <div class="content">
-            <div class="container-fluid">
-                {{-- Session Alerts --}}
                 @include('layouts.partials.alerts')
 
                 @yield('content')
             </div>
+        </main>
+
+        {{-- Footer --}}
+        <footer class="border-t border-gray-200 bg-white px-6 py-4">
+            <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 text-[12.5px] text-gray-500">
+                <span><strong class="text-emerald-800">{{ __('messages.app_name') }}</strong> &copy; {{ date('Y') }}</span>
+                <span class="hidden sm:inline"><b>{{ config('app.name') }}</b></span>
+</div>
         </div>
     </div>
-
-    {{-- Footer --}}
-    <footer class="main-footer">
-        <strong>{{ __('messages.app_name') }}</strong> &copy; {{ date('Y') }}
-        <div class="float-right d-none d-sm-inline-block">
-            <b>{{ config('app.name') }}</b>
-        </div>
-    </footer>
-
-    <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
-
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-<script>
-    // Init DataTables
-    $(document).ready(function() {
-        if ($('.datatable').length) {
-            $('.datatable').DataTable({
-                language: {
-                    @if(app()->getLocale() === 'bn')
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/bn.json',
-                    @endif
-                    paginate: {
-                        next: '<i class="fas fa-angle-right"></i>',
-                        previous: '<i class="fas fa-angle-left"></i>'
-                    }
-                },
-                pageLength: 15,
-                responsive: true,
-            });
-        }
-
-        // Select2
-        $('.select2').select2({ theme: 'bootstrap4' });
-
-        // Delete confirmation
-        $(document).on('submit', '.form-delete', function(e) {
-            e.preventDefault();
-            const form = this;
-            Swal.fire({
-                title: '{{ __("messages.confirm_delete") }}',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: '{{ __("messages.yes") }}',
-                cancelButtonText: '{{ __("messages.cancel") }}',
-            }).then((result) => {
-                if (result.isConfirmed) form.submit();
-            });
-        });
-    });
-
-    @if(session('success'))
-    Swal.fire({ icon: 'success', title: '{{ session("success") }}', timer: 2500, showConfirmButton: false, toast: true, position: 'top-end' });
-    @endif
-    @if(session('error'))
-    Swal.fire({ icon: 'error', title: '{{ session("error") }}', timer: 4000, showConfirmButton: true, toast: true, position: 'top-end' });
-    @endif
-    @if(session('warning'))
-    Swal.fire({ icon: 'warning', title: '{{ session("warning") }}', timer: 3500, showConfirmButton: false, toast: true, position: 'top-end' });
-    @endif
-</script>
 
 @stack('scripts')
 </body>

@@ -76,4 +76,8 @@ Thumbs.db
 !/storage/framework/sessions/.gitignore
 !/storage/framework/views/.gitignore
 /storage/bootstrap/cache/*.php
+
+# Node / Vite build output
+/node_modules/
+/public/build/
 /build

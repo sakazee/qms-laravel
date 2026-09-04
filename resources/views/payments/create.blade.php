@@ -2,23 +2,31 @@
 @section('title', __('payments.create'))
 @section('page-title', __('payments.create'))
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('payments.index') }}">{{ __('payments.payments') }}</a></li>
-    <li class="breadcrumb-item active">{{ __('payments.create') }}</li>
+    <span><a href="{{ route('payments.index') }}" class="hover:text-emerald-700">{{ __('payments.payments') }}</a></span>
+    <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+    <span class="text-gray-600">{{ __('payments.create') }}</span>
 @endsection
+
 @section('content')
-<div class="row justify-content-center"><div class="col-md-9">
-<div class="card">
-    <div class="card-header bg-success text-white"><h3 class="card-title mb-0"><i class="fas fa-plus mr-2"></i>{{ __('payments.create') }}</h3></div>
-    <div class="card-body">
-        <form action="{{ route('payments.store') }}" method="POST">
-            @csrf
-            @include('payments._form')
-            <div class="d-flex justify-content-between mt-4">
-                <a href="{{ route('payments.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left mr-1"></i>{{ __('messages.back') }}</a>
-                <button type="submit" class="btn btn-success"><i class="fas fa-save mr-1"></i>{{ __('messages.save') }}</button>
-            </div>
-        </form>
+<div class="mx-auto max-w-3xl">
+    <div class="card">
+        <div class="card-header bg-emerald-800">
+            <h3 class="card-title text-white"><i class="fa-solid fa-plus"></i>{{ __('payments.create') }}</h3>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('payments.store') }}" method="POST">
+                @csrf
+                @include('payments._form')
+                <div class="mt-6 flex items-center justify-between">
+                    <a href="{{ route('payments.index') }}" class="btn btn-secondary">
+                        <i class="fa-solid fa-arrow-left"></i>{{ __('messages.back') }}
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-save"></i>{{ __('messages.save') }}
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-</div></div>
 @endsection
