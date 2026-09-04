@@ -1,0 +1,77 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\Expense\StoreExpenseRequest;
+use App\Http\Requests\Expense\UpdateExpenseRequest;
+use App\Models\Animal;
+use App\Models\Expense;
+use App\Services\ExpenseService;
+
+class ExpenseController extends Controller
+{
+    public function __construct(private readonly ExpenseService $expenseService) {}
+
+    private function getTemplateId(): int
+    {
+        $id = session('selected_template_id');
+        if (!$id) abort(403, __('messages.select_template_first'));
+        return $id;
+    }
+
+    public function index()
+    {
+        $templateId = $this->getTemplateId();
+        $expenses   = $this->expenseService->getForTemplate($templateId, auth()->id());
+        return view('expenses.index', compact('expenses'));
+    }
+
+    public function create()
+    {
+        $templateId = $this->getTemplateId();
+        $animals    = Animal::forTemplate($templateId)->forUser(auth()->id())->get();
+        return view('expenses.create', compact('animals'));
+    }
+
+    public function store(StoreExpenseRequest $request)
+    {
+        $templateId = $this->getTemplateId();
+
+        if ($request->distribution_type === 'custom_percent') {
+            $distributions = $request->distributions ?? [];
+            if (!$this->expenseService->validateCustomPercentTotal($distributions)) {
+                return redirect()->back()->withInput()
+                                 ->with('error', __('expenses.percent_must_be_100'));
+            }
+        }
+
+        $this->expenseService->create($request->validated(), $templateId, auth()->id());
+        return redirect()->route('expenses.index')
+                         ->with('success', __('messages.created_successfully'));
+    }
+
+    public function edit(Expense $expense)
+    {
+        $this->authorize('update', $expense);
+        $templateId = $this->getTemplateId();
+        $animals    = Animal::forTemplate($templateId)->forUser(auth()->id())->get();
+        $expense->load('distributions');
+        return view('expenses.edit', compact('expense', 'animals'));
+    }
+
+    public function update(UpdateExpenseRequest $request, Expense $expense)
+    {
+        $this->authorize('update', $expense);
+        $this->expenseService->update($expense, $request->validated());
+        return redirect()->route('expenses.index')
+                         ->with('success', __('messages.updated_successfully'));
+    }
+
+    public function destroy(Expense $expense)
+    {
+        $this->authorize('delete', $expense);
+        $this->expenseService->delete($expense);
+        return redirect()->route('expenses.index')
+                         ->with('success', __('messages.deleted_successfully'));
+    }
+}

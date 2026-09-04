@@ -1,0 +1,15 @@
+<?php return [
+    'shares'              => 'পশুর ভাগ',
+    'share'               => 'ভাগ',
+    'create'              => 'নতুন ভাগ নির্ধারণ',
+    'edit'                => 'ভাগ সম্পাদনা',
+    'animal'              => 'পশু',
+    'partner'             => 'অংশীদার',
+    'shares_count'        => 'ভাগ সংখ্যা',
+    'share_amount'        => 'ভাগের মূল্য',
+    'small_animal_one_share' => 'ছোট পশুতে মাত্র ১টি ভাগ হয়',
+    'max_shares_exceeded' => 'সর্বোচ্চ ভাগ সীমা অতিক্রম হয়েছে',
+    'overflow'            => 'মাত্র :available টি ভাগ বাকি আছে',
+    'available'           => 'বাকি ভাগ',
+    'assigned'            => 'নির্ধারিত ভাগ',
+];

@@ -1,0 +1,18 @@
+<?php return [
+    'partners'  => 'অংশীদারগণ',
+    'partner'   => 'অংশীদার',
+    'create'    => 'নতুন অংশীদার',
+    'edit'      => 'অংশীদার সম্পাদনা',
+    'name'      => 'নাম',
+    'phone'     => 'ফোন নম্বর',
+    'address'   => 'ঠিকানা',
+    'total_share' => 'মোট ভাগের মূল্য',
+    'total_paid'  => 'মোট পরিশোধ',
+    'due'         => 'বাকি',
+    'advance'     => 'অগ্রিম',
+    'payment_status' => 'পেমেন্ট অবস্থা',
+    'status_paid'    => 'পরিশোধিত',
+    'status_partial' => 'আংশিক',
+    'status_unpaid'  => 'অপরিশোধিত',
+    'cannot_delete_has_shares' => 'এই অংশীদারের ভাগ নির্ধারিত আছে',
+];

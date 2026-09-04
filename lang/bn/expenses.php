@@ -1,0 +1,23 @@
+<?php return [
+    'expenses'            => 'খরচসমূহ',
+    'expense'             => 'খরচ',
+    'create'              => 'নতুন খরচ যোগ করুন',
+    'edit'                => 'খরচ সম্পাদনা',
+    'title'               => 'খরচের শিরোনাম',
+    'amount'              => 'পরিমাণ (টাকা)',
+    'distribution_type'   => 'বিতরণ পদ্ধতি',
+    'expense_date'        => 'তারিখ',
+    'description'         => 'বিবরণ',
+    'dist' => [
+        'flat'             => 'সমান ভাগ',
+        'custom_percent'   => 'কাস্টম শতাংশ',
+        'purchase_percent' => 'ক্রয়মূল্য অনুযায়ী',
+    ],
+    'distributions'       => 'বিতরণ বিবরণী',
+    'animal'              => 'পশু',
+    'percentage'          => 'শতাংশ (%)',
+    'calculated_amount'   => 'নির্ধারিত পরিমাণ',
+    'total_percent'       => 'মোট শতাংশ',
+    'percent_must_be_100' => 'কাস্টম শতাংশের মোট ১০০% হতে হবে',
+    'percent_remaining'   => 'বাকি শতাংশ',
+];

@@ -1,0 +1,17 @@
+<?php return [
+    'reports'           => 'রিপোর্টসমূহ',
+    'template_summary'  => 'টেমপ্লেট সারসংক্ষেপ',
+    'animal_summary'    => 'পশু সারসংক্ষেপ',
+    'partner_summary'   => 'অংশীদার সারসংক্ষেপ',
+    'download_pdf'      => 'PDF ডাউনলোড করুন',
+    'print'             => 'প্রিন্ট করুন',
+    'generated_at'      => 'তৈরির সময়',
+    'total_animals'     => 'মোট পশু',
+    'total_partners'    => 'মোট অংশীদার',
+    'total_animal_cost' => 'পশু ক্রয়মূল্য',
+    'total_expenses'    => 'মোট খরচ',
+    'total_cost'        => 'সর্বমোট খরচ',
+    'total_collection'  => 'মোট সংগ্রহ',
+    'due'               => 'বাকি',
+    'advance'           => 'অগ্রিম',
+];
