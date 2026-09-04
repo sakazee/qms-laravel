@@ -66,3 +66,14 @@ Thumbs.db
 /writable/uploads/project_logo/
 /writable/uploads/supplier/
 /writable/uploads/watermark_image/
+
+# Laravel runtime storage
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+!/storage/framework/cache/.gitignore
+!/storage/framework/sessions/.gitignore
+!/storage/framework/views/.gitignore
+/storage/bootstrap/cache/*.php
+/build
