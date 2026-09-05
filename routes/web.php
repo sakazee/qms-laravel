@@ -19,15 +19,15 @@ Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('l
 Auth::routes(['verify' => false]);
 
 // Protected Routes
-Route::middleware(['auth', 'set.locale'])->group(function () {
+Route::middleware(['auth', 'set.locale', 'ensure.template'])->group(function () {
 
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Templates
-    Route::resource('templates', TemplateController::class);
-    Route::get('templates/{template}/select', [TemplateController::class, 'select'])->name('templates.select');
     Route::get('templates/deselect', [TemplateController::class, 'deselect'])->name('templates.deselect');
+    Route::resource('templates', TemplateController::class)->except(['show']);
+    Route::get('templates/{template}/select', [TemplateController::class, 'select'])->name('templates.select');
 
     // Animals
     Route::resource('animals', AnimalController::class);

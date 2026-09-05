@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureTemplateSelected;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -13,7 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'set.locale' => SetLocale::class,
+            'set.locale'     => SetLocale::class,
+            'ensure.template' => EnsureTemplateSelected::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
