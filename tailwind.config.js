@@ -38,8 +38,8 @@ export default {
                 },
             },
             fontFamily: {
-                sans: ['Hind Siliguri', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-                serif: ['"Noto Serif Bengali"', 'Georgia', 'serif'],
+                sans: ['SolaimanLipi', 'Hind Siliguri', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                serif: ['SolaimanLipi', '"Noto Serif Bengali"', 'Georgia', 'serif'],
             },
             boxShadow: {
                 card: '0 1px 3px rgba(16, 44, 30, 0.06), 0 1px 2px rgba(16, 44, 30, 0.05)',
