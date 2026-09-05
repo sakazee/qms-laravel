@@ -46,7 +46,7 @@
 
         {{-- Content --}}
         <main class="flex-1 px-4 py-6 sm:px-6 lg:px-8">
-            <div class="mx-auto max-w-7xl">
+            <div class="mx-auto">
                 <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
                     <h1 class="font-serif text-[22px] font-bold text-pine-900">@yield('page-title')</h1>
                     @hasSection('breadcrumb')
@@ -66,7 +66,7 @@
 
         {{-- Footer --}}
         <footer class="border-t border-gray-200 bg-white px-6 py-4">
-            <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 text-[12.5px] text-gray-500">
+            <div class="mx-auto flex flex-wrap items-center justify-between gap-2 text-[12.5px] text-gray-500">
                 <span><strong class="text-emerald-800">{{ __('messages.app_name') }}</strong> &copy; {{ date('Y') }}</span>
                 <span class="hidden sm:inline"><b>{{ config('app.name') }}</b></span>
 </div>
