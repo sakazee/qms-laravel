@@ -1,6 +1,9 @@
+import 'datatables.net-dt/css/jquery.dataTables.css';
+import 'datatables.net-responsive-dt/css/responsive.dataTables.css';
 import '../css/app.css';
 import $ from 'jquery';
 import 'datatables.net';
+import 'datatables.net-responsive';
 import 'select2';
 import Swal from 'sweetalert2';
 import Alpine from 'alpinejs';

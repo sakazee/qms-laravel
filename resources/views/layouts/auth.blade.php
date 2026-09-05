@@ -22,7 +22,7 @@
         }
     </style>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/js/app.js')
 </head>
 <body class="auth-bg flex min-h-screen items-center justify-center px-4 py-10 font-sans">
     @yield('content')
