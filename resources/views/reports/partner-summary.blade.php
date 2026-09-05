@@ -39,7 +39,7 @@
                     $badge  = ['paid' => 'bg-emerald-100 text-emerald-800', 'partial' => 'bg-amber-100 text-amber-700', 'unpaid' => 'bg-rose-100 text-rose-700'][$status];
                 @endphp
                 <tr>
-                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $i+1 }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ format_amount($i+1, 0) }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-900 font-semibold">{{ $p->name }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $p->phone ?: '—' }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">৳{{ format_amount($row['total_share'],0) }}</td>

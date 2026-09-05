@@ -128,9 +128,9 @@ function updateDistSection() {
 function calcDist() {
     const total = parseFloat($('#total_amount').val()) || 0; let tp = 0, ta = 0;
     $('.dist-percent').each(function() { const p = parseFloat($(this).val())||0; const a = total*p/100; tp+=p; ta+=a; $(this).closest('tr').find('.dist-amount').val(a.toFixed(2)); });
-    $('#total_percent').text(tp.toFixed(2)+'%').removeClass('text-danger text-success').addClass(Math.abs(tp-100)<0.01?'text-success':'text-danger');
-    $('#total_dist_amount').text('৳'+ta.toFixed(2));
-    $('#percent_status').text(tp.toFixed(2)+'% / 100%').removeClass('badge-secondary badge-success badge-danger').addClass(Math.abs(tp-100)<0.01?'badge-success':'badge-danger');
+    $('#total_percent').text(window.qmsFmt(tp.toFixed(2)+'%')).removeClass('text-danger text-success').addClass(Math.abs(tp-100)<0.01?'text-success':'text-danger');
+    $('#total_dist_amount').text(window.qmsFmt('৳'+ta.toFixed(2)));
+    $('#percent_status').text(window.qmsFmt(tp.toFixed(2)+'% / 100%')).removeClass('badge-secondary badge-success badge-danger').addClass(Math.abs(tp-100)<0.01?'badge-success':'badge-danger');
 }
 $('#dist_type').on('change', updateDistSection);
 $('#total_amount').on('input', calcDist);

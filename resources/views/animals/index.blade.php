@@ -39,7 +39,7 @@
                     ][$animal->status_badge] ?? 'bg-gray-100 text-gray-600';
                 @endphp
                 <tr>
-                    <td>{{ $i + 1 }}</td>
+                    <td>{{ format_amount($i + 1, 0) }}</td>
                     <td>
                         <span class="badge {{ in_array($animal->type, ['cow','buffalo','camel']) ? 'bg-sky-100 text-sky-700' : 'bg-gray-100 text-gray-600' }}">
                             <i class="fa-solid fa-circle text-[6px]"></i>

@@ -34,7 +34,7 @@
             <tbody>
                 @forelse($payments as $i => $payment)
                 <tr>
-                    <td>{{ $i + 1 }}</td>
+                    <td>{{ format_amount($i + 1, 0) }}</td>
                     <td>
                         <div class="font-semibold text-gray-900">{{ $payment->partner->name }}</div>
                     </td>

@@ -29,7 +29,7 @@
             <tbody>
                 @forelse($shares as $i => $share)
                 <tr>
-                    <td>{{ $i + 1 }}</td>
+                    <td>{{ format_amount($i + 1, 0) }}</td>
                     <td class="font-semibold text-gray-900">{{ $share->animal->name ?: $share->animal->type_name }}</td>
                     <td><span class="badge bg-sky-100 text-sky-700">{{ $share->animal->type_name }}</span></td>
                     <td>{{ $share->partner->name }}</td>
@@ -87,7 +87,7 @@
                     <td class="px-4 py-3 font-medium text-gray-900">{{ $animal->name ?: $animal->type_name }}</td>
                     <td class="px-4 py-3 text-center">{{ format_amount($animal->total_shares, 0) }}</td>
                     <td class="px-4 py-3 text-center">
-                        <span class="badge bg-sky-100 text-sky-700">{{ $animal->assigned_shares }}</span>
+                        <span class="badge bg-sky-100 text-sky-700">{{ format_amount($animal->assigned_shares, 0) }}</span>
                     </td>
                     <td class="px-4 py-3 text-center">
                         <span class="badge {{ $animal->available_shares > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-500' }}">{{ format_amount($animal->available_shares, 0) }}</span>
@@ -96,7 +96,7 @@
                         <div class="h-2 w-[160px] overflow-hidden rounded-full bg-gray-200">
                             <div class="h-full rounded-full {{ $pct == 100 ? 'bg-emerald-600' : 'bg-sky-500' }}" style="width:{{ $pct }}%"></div>
                         </div>
-                        <span class="mt-0.5 block text-[11.5px] text-gray-500">{{ $pct }}%</span>
+                        <span class="mt-0.5 block text-[11.5px] text-gray-500">{{ format_amount($pct, 0) }}%</span>
                     </td>
                 </tr>
                 @endforeach

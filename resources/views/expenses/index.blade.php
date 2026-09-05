@@ -34,7 +34,7 @@
             <tbody>
                 @forelse($expenses as $i => $expense)
                 <tr>
-                    <td>{{ $i + 1 }}</td>
+                    <td>{{ format_amount($i + 1, 0) }}</td>
                     <td>
                         <div class="font-semibold text-gray-900">{{ $expense->title }}</div>
                         @if($expense->description)
@@ -52,10 +52,10 @@
                     <td>
                         <div class="text-[12.5px] text-gray-600">
                             @foreach($expense->distributions->take(3) as $d)
-                                {{ $d->animal->type_name }}: {{ $d->percentage }}%<br>
+                                {{ $d->animal->type_name }}: {{ format_amount($d->percentage, 0) }}%<br>
                             @endforeach
                             @if($expense->distributions->count() > 3)
-                                <span class="text-gray-400">+{{ $expense->distributions->count() - 3 }} {{ app()->getLocale() === 'bn' ? 'আরও' : 'more' }}</span>
+                                <span class="text-gray-400">+{{ format_amount($expense->distributions->count() - 3, 0) }} {{ app()->getLocale() === 'bn' ? 'আরও' : 'more' }}</span>
                             @endif
                         </div>
                     </td>

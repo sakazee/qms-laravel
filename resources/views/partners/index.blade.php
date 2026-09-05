@@ -37,7 +37,7 @@
                     $badgeClass = ['paid' => 'bg-emerald-100 text-emerald-800', 'partial' => 'bg-amber-100 text-amber-800', 'unpaid' => 'bg-rose-100 text-rose-700'][$status];
                 @endphp
                 <tr>
-                    <td>{{ $i + 1 }}</td>
+                    <td>{{ format_amount($i + 1, 0) }}</td>
                     <td class="font-semibold text-gray-900">{{ $partner->name }}</td>
                     <td>{{ $partner->phone ?: '—' }}</td>
                     <td>৳{{ format_amount($totalShare, 0) }}</td>

@@ -29,7 +29,7 @@ window.qmsFmt = (value) => {
 $(document).ready(function () {
     // DataTables
     $('.datatable').each(function () {
-        $(this).DataTable({
+        const table = $(this).DataTable({
             pageLength: 15,
             responsive: true,
             order: [],
@@ -43,6 +43,24 @@ $(document).ready(function () {
                 },
             },
         });
+
+        if (window.__qms_locale === 'bn') {
+            table.on('draw', () => {
+                const wrapper = table.settings()[0].nTable.parentNode;
+
+                const info = wrapper.querySelector('.dataTables_info');
+                if (info) info.textContent = window.qmsFmt(info.textContent);
+
+                const buttons = wrapper.querySelectorAll('.dataTables_paginate .paginate_button');
+                buttons.forEach((btn) => {
+                    [...btn.childNodes].forEach((node) => {
+                        if (node.nodeType === 3 && (node.nodeValue || '').trim()) {
+                            node.nodeValue = window.qmsFmt(node.nodeValue);
+                        }
+                    });
+                });
+            });
+        }
     });
 
     // Select2

@@ -29,7 +29,7 @@
             <tbody>
                 @forelse($templates as $i => $template)
                 <tr class="{{ session('selected_template_id') == $template->id ? 'bg-emerald-50/60' : '' }}">
-                    <td>{{ $i + 1 }}</td>
+                    <td>{{ format_amount($i + 1, 0) }}</td>
                     <td>
                         <div class="font-semibold text-gray-900">{{ $template->name }}</div>
                         @if(session('selected_template_id') == $template->id)

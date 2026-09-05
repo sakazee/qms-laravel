@@ -95,7 +95,7 @@
                     <tbody>
                         @forelse($animal->animalShares as $i => $share)
                         <tr>
-                            <td>{{ $i + 1 }}</td>
+                            <td>{{ format_amount($i + 1, 0) }}</td>
                             <td class="font-semibold text-gray-900">{{ $share->partner->name }}</td>
                             <td class="text-center">{{ $share->shares }}</td>
                             <td>৳{{ format_amount($share->share_amount, 2) }}</td>

@@ -25,7 +25,7 @@
     <tbody>
         @foreach($partners as $i => $row)
         <tr>
-            <td>{{ $i+1 }}</td><td>{{ $row['partner']->name }}</td><td>{{ $row['partner']->phone ?: '—' }}</td>
+            <td>{{ format_amount($i+1, 0) }}</td><td>{{ $row['partner']->name }}</td><td>{{ $row['partner']->phone ?: '—' }}</td>
             <td>৳{{ format_amount($row['total_share'],0) }}</td>
             <td>৳{{ format_amount($row['total_paid'],0) }}</td>
             <td class="{{ $row['due']>0?'due':'' }}">৳{{ format_amount($row['due'],0) }}</td>

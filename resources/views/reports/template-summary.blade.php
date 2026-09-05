@@ -60,7 +60,7 @@
             <tbody>
                 @foreach($template->animals as $i => $animal)
                 <tr>
-                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $i+1 }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ format_amount($i+1, 0) }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $animal->type_name }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $animal->name ?: '—' }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">৳{{ format_amount($animal->purchase_price,0) }}</td>
@@ -72,7 +72,7 @@
                 <tr class="bg-paper-100 font-semibold text-gray-900">
                     <td colspan="3" class="border-b border-gray-100 px-4 py-3">{{ __('messages.total') }}</td>
                     <td class="border-b border-gray-100 px-4 py-3">৳{{ format_amount($template->animals->sum('purchase_price'),0) }}</td>
-                    <td class="border-b border-gray-100 px-4 py-3 text-center">{{ $template->animals->sum('total_shares') }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-center">{{ format_amount($template->animals->sum('total_shares'), 0) }}</td>
                     <td colspan="2" class="border-b border-gray-100 px-4 py-3"></td>
                 </tr>
             </tbody>
@@ -98,7 +98,7 @@
             <tbody>
                 @foreach($template->expenses as $i => $expense)
                 <tr>
-                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $i+1 }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ format_amount($i+1, 0) }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $expense->title }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $expense->distribution_type_label }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $expense->expense_date->format('d M Y') }}</td>

@@ -166,12 +166,12 @@ function calcDist() {
         totalAmt += amt;
         $(this).closest('tr').find('.dist-amount').val(amt.toFixed(2));
     });
-    $('#total_percent').text(totalPct.toFixed(2) + '%')
+    $('#total_percent').text(window.qmsFmt(totalPct.toFixed(2) + '%'))
         .removeClass('text-danger text-success')
         .addClass(Math.abs(totalPct - 100) < 0.01 ? 'text-success' : 'text-danger');
-    $('#total_dist_amount').text('৳' + totalAmt.toFixed(2));
+    $('#total_dist_amount').text(window.qmsFmt('৳' + totalAmt.toFixed(2)));
     const remaining = (100 - totalPct).toFixed(2);
-    $('#percent_status').text(totalPct.toFixed(2) + '% / 100%')
+    $('#percent_status').text(window.qmsFmt(totalPct.toFixed(2) + '% / 100%'))
         .removeClass('badge-secondary badge-success badge-danger')
         .addClass(Math.abs(totalPct - 100) < 0.01 ? 'badge-success' : 'badge-danger');
 }

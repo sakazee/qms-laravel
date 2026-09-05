@@ -46,7 +46,7 @@
     </thead>
     <tbody>
         @foreach($template->animals as $i => $a)
-        <tr><td>{{ $i+1 }}</td><td>{{ $a->type_name }}</td><td>{{ $a->name ?: '—' }}</td><td>৳{{ format_amount($a->purchase_price,0) }}</td><td>{{ format_amount($a->total_shares,0) }}</td><td>{{ __('animals.status.'.$a->status) }}</td></tr>
+        <tr><td>{{ format_amount($i+1, 0) }}</td><td>{{ $a->type_name }}</td><td>{{ $a->name ?: '—' }}</td><td>৳{{ format_amount($a->purchase_price,0) }}</td><td>{{ format_amount($a->total_shares,0) }}</td><td>{{ __('animals.status.'.$a->status) }}</td></tr>
         @endforeach
     </tbody>
     <tfoot><tr class="tfoot"><td colspan="3">{{ __('messages.total') }}</td><td>৳{{ format_amount($template->animals->sum('purchase_price'),0) }}</td><td>{{ format_amount($template->animals->sum('total_shares'),0) }}</td><td></td></tr></tfoot>
