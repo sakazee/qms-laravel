@@ -4,7 +4,7 @@
         <select name="partner_id" class="input select2 @error('partner_id') border-rose-400 @enderror" required>
             <option value="">-- {{ app()->getLocale() === 'bn' ? 'অংশীদার নির্বাচন করুন' : 'Select Partner' }} --</option>
             @foreach($partners as $partner)
-            <option value="{{ $partner->id }}" {{ old('partner_id', $payment->partner_id ?? '') == $partner->id ? 'selected' : '' }}>{{ $partner->name }}</option>
+            <option value="{{ $partner->id }}" {{ old('partner_id', request('partner_id', $payment->partner_id ?? '')) == $partner->id ? 'selected' : '' }}>{{ $partner->name }}</option>
             @endforeach
         </select>
         @error('partner_id')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror

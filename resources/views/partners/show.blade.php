@@ -46,8 +46,14 @@
                     <div class="mt-0.5 text-[11.5px] text-gray-500">{{ __('partners.due') }}</div>
                 </div>
             </div>
-            <div class="px-5 py-3">
-                <a href="{{ route('partners.edit', $partner) }}" class="btn btn-info btn-sm w-full">
+            <div class="flex flex-col gap-2 px-5 py-4">
+                <a href="{{ route('payments.create', ['partner_id' => $partner->id]) }}" class="btn btn-primary w-full">
+                    <i class="fa-solid fa-money-bill-wave"></i>{{ __('payments.take_payment') }}
+                </a>
+                <a href="{{ route('shares.create', ['partner_id' => $partner->id]) }}" class="btn btn-info w-full">
+                    <i class="fa-solid fa-share-nodes"></i>{{ __('shares.add_animal_share') }}
+                </a>
+                <a href="{{ route('partners.edit', $partner) }}" class="btn btn-secondary w-full">
                     <i class="fa-solid fa-pen"></i>{{ __('messages.edit') }}
                 </a>
             </div>

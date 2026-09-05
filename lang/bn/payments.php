@@ -8,6 +8,7 @@
     'payment_date'   => 'পেমেন্টের তারিখ',
     'payment_method' => 'পেমেন্ট পদ্ধতি',
     'reference'      => 'রেফারেন্স নম্বর',
+    'take_payment'   => 'পেমেন্ট নিন',
     'method' => [
         'cash'           => 'নগদ',
         'bank'           => 'ব্যাংক',
