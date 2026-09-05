@@ -32,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($expenses as $i => $expense)
+                @foreach($expenses as $i => $expense)
                 <tr>
                     <td>{{ format_amount($i + 1, 0) }}</td>
                     <td>
@@ -73,16 +73,7 @@
                         </div>
                     </td>
                 </tr>
-                @empty
-                <tr>
-                    <td colspan="7">
-                        <div class="empty-state">
-                            <i class="fa-solid fa-file-invoice-dollar text-3xl text-gray-300"></i>
-                            <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>
-                        </div>
-                    </td>
-                </tr>
-                @endforelse
+                @endforeach
             </tbody>
         </table>
     </div>

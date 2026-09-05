@@ -70,23 +70,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($partner->animalShares as $share)
+                        @foreach($partner->animalShares as $share)
                         <tr>
                             <td class="font-semibold text-gray-900">{{ $share->animal->name ?: $share->animal->type_name }}</td>
                             <td>{{ $share->animal->type_name }}</td>
                             <td class="text-center">{{ $share->shares }}</td>
                             <td>৳{{ format_amount($share->share_amount, 2) }}</td>
                         </tr>
-                        @empty
-                        <tr>
-                            <td colspan="4">
-                                <div class="empty-state">
-                                    <i class="fa-solid fa-share-nodes text-3xl text-gray-300"></i>
-                                    <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -106,22 +97,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($partner->payments as $payment)
+                        @foreach($partner->payments as $payment)
                         <tr>
                             <td>{{ $payment->payment_date->format('d M Y') }}</td>
                             <td>৳{{ format_amount($payment->amount, 2) }}</td>
                             <td>{{ $payment->payment_method_label }}</td>
                         </tr>
-                        @empty
-                        <tr>
-                            <td colspan="3">
-                                <div class="empty-state">
-                                    <i class="fa-solid fa-money-bill-wave text-3xl text-gray-300"></i>
-                                    <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>

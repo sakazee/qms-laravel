@@ -28,7 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($partners as $i => $partner)
+                @foreach($partners as $i => $partner)
                 @php
                     $totalShare = $partner->animalShares->sum('share_amount');
                     $totalPaid  = $partner->payments->sum('amount');
@@ -71,16 +71,7 @@
                         </div>
                     </td>
                 </tr>
-                @empty
-                <tr>
-                    <td colspan="8">
-                        <div class="empty-state">
-                            <i class="fa-solid fa-users text-3xl text-gray-300"></i>
-                            <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>
-                        </div>
-                    </td>
-                </tr>
-                @endforelse
+                @endforeach
             </tbody>
         </table>
     </div>

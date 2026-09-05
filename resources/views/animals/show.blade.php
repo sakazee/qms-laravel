@@ -93,23 +93,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($animal->animalShares as $i => $share)
+                        @foreach($animal->animalShares as $i => $share)
                         <tr>
                             <td>{{ format_amount($i + 1, 0) }}</td>
                             <td class="font-semibold text-gray-900">{{ $share->partner->name }}</td>
                             <td class="text-center">{{ $share->shares }}</td>
                             <td>৳{{ format_amount($share->share_amount, 2) }}</td>
                         </tr>
-                        @empty
-                        <tr>
-                            <td colspan="4">
-                                <div class="empty-state">
-                                    <i class="fa-solid fa-share-nodes text-3xl text-gray-300"></i>
-                                    <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>

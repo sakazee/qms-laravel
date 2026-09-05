@@ -29,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($animals as $i => $animal)
+                @foreach($animals as $i => $animal)
                 @php
                     $statusBadgeClass = [
                         'warning'  => 'bg-amber-100 text-amber-800',
@@ -79,16 +79,7 @@
                         </div>
                     </td>
                 </tr>
-                @empty
-                <tr>
-                    <td colspan="9">
-                        <div class="empty-state">
-                            <i class="fa-solid fa-horse text-3xl text-gray-300"></i>
-                            <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>
-                        </div>
-                    </td>
-                </tr>
-                @endforelse
+                @endforeach
             </tbody>
         </table>
     </div>

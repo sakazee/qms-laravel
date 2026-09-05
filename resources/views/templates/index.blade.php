@@ -27,7 +27,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($templates as $i => $template)
+                @foreach($templates as $i => $template)
                 <tr class="{{ session('selected_template_id') == $template->id ? 'bg-emerald-50/60' : '' }}">
                     <td>{{ format_amount($i + 1, 0) }}</td>
                     <td>
@@ -72,16 +72,7 @@
                         </div>
                     </td>
                 </tr>
-                @empty
-                <tr>
-                    <td colspan="7">
-                        <div class="empty-state">
-                            <i class="fa-solid fa-layer-group text-3xl text-gray-300"></i>
-                            <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>
-                        </div>
-                    </td>
-                </tr>
-                @endforelse
+                @endforeach
             </tbody>
         </table>
     </div>
