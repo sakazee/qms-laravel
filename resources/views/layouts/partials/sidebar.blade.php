@@ -22,6 +22,12 @@
         <span>{{ __('templates.templates') }}</span>
     </a>
 
+    <a href="{{ route('expense-heads.index') }}"
+       class="sidebar-link {{ request()->routeIs('expense-heads.*') ? 'active' : '' }}">
+        <i class="fa-solid fa-tags w-5 text-center"></i>
+        <span>{{ __('expense_heads.expense_heads') }}</span>
+    </a>
+
     @if(session('selected_template_id'))
 
     <div class="sidebar-header">{{ app()->getLocale() === 'bn' ? 'কোরবানি' : 'QURBANI' }}</div>

@@ -4,6 +4,7 @@ use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AnimalShareController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\ExpenseHeadController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\PaymentController;
@@ -28,6 +29,9 @@ Route::middleware(['auth', 'set.locale', 'ensure.template'])->group(function () 
     Route::get('templates/deselect', [TemplateController::class, 'deselect'])->name('templates.deselect');
     Route::resource('templates', TemplateController::class)->except(['show']);
     Route::get('templates/{template}/select', [TemplateController::class, 'select'])->name('templates.select');
+
+    // Expense Heads
+    Route::resource('expense-heads', ExpenseHeadController::class)->except(['show']);
 
     // Animals
     Route::resource('animals', AnimalController::class);

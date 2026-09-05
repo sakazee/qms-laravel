@@ -12,6 +12,7 @@ class EnsureTemplateSelected
     protected array $except = [
         'dashboard',
         'templates.*',
+        'expense-heads.*',
         'language.*',
         'logout',
     ];
