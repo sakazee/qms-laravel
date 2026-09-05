@@ -11,7 +11,7 @@
         <h3 class="card-title"><i class="fa-solid fa-file-invoice-dollar text-emerald-700"></i>{{ __('expenses.expenses') }}</h3>
         <div class="flex items-center gap-3">
             <span class="rounded-lg bg-amber-50 px-3 py-1.5 font-serif text-[14px] font-bold text-amber-800 ring-1 ring-amber-200">
-                {{ app()->getLocale() === 'bn' ? 'মোট: ৳' : 'Total: ৳' }}{{ number_format($expenses->sum('amount'), 0) }}
+                {{ app()->getLocale() === 'bn' ? 'মোট: ৳' : 'Total: ৳' }}{{ format_amount($expenses->sum('amount'), 0) }}
             </span>
             <a href="{{ route('expenses.create') }}" class="btn btn-primary btn-sm">
                 <i class="fa-solid fa-plus"></i>{{ __('expenses.create') }}
@@ -41,7 +41,7 @@
                         <div class="max-w-[220px] truncate text-[12px] text-gray-400">{{ Str::limit($expense->description, 50) }}</div>
                         @endif
                     </td>
-                    <td class="font-semibold">৳{{ number_format($expense->amount, 0) }}</td>
+                    <td class="font-semibold">৳{{ format_amount($expense->amount, 0) }}</td>
                     <td>
                         @php
                             $distBadge = ['flat' => 'bg-sky-100 text-sky-700', 'custom_percent' => 'bg-emerald-100 text-emerald-800', 'purchase_percent' => 'bg-amber-100 text-amber-800'][$expense->distribution_type];

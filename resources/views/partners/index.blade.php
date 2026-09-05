@@ -40,11 +40,11 @@
                     <td>{{ $i + 1 }}</td>
                     <td class="font-semibold text-gray-900">{{ $partner->name }}</td>
                     <td>{{ $partner->phone ?: '—' }}</td>
-                    <td>৳{{ number_format($totalShare, 0) }}</td>
-                    <td>৳{{ number_format($totalPaid, 0) }}</td>
+                    <td>৳{{ format_amount($totalShare, 0) }}</td>
+                    <td>৳{{ format_amount($totalPaid, 0) }}</td>
                     <td>
                         @if($due > 0)
-                            <span class="font-semibold text-rose-700">৳{{ number_format($due, 0) }}</span>
+                            <span class="font-semibold text-rose-700">৳{{ format_amount($due, 0) }}</span>
                         @else
                             <span class="text-emerald-700">—</span>
                         @endif

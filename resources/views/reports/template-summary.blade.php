@@ -21,12 +21,12 @@
     $cards = [
         ['label' => __('reports.total_animals'),      'value' => $stats['total_animals'],                  'icon' => 'horse',          'color' => 'border-emerald-200 bg-emerald-50 text-emerald-700'],
         ['label' => __('reports.total_partners'),     'value' => $stats['total_partners'],                 'icon' => 'users',          'color' => 'border-sky-200 bg-sky-50 text-sky-700'],
-        ['label' => __('reports.total_animal_cost'),  'value' => '৳'.number_format($stats['total_animal_cost'],0), 'icon' => 'horse-head',     'color' => 'border-amber-200 bg-amber-50 text-amber-700'],
-        ['label' => __('reports.total_expenses'),     'value' => '৳'.number_format($stats['total_expenses'],0),    'icon' => 'receipt',        'color' => 'border-rose-200 bg-rose-50 text-rose-700'],
-        ['label' => __('reports.total_cost'),         'value' => '৳'.number_format($stats['total_cost'],0),        'icon' => 'calculator',     'color' => 'border-gray-200 bg-gray-50 text-gray-700'],
-        ['label' => __('reports.total_collection'),   'value' => '৳'.number_format($stats['total_collection'],0),  'icon' => 'money-bill-wave','color' => 'border-emerald-200 bg-emerald-50 text-emerald-700'],
-        ['label' => __('reports.due'),                'value' => '৳'.number_format($stats['due'],0),               'icon' => 'exclamation-circle', 'color' => $stats['due']>0 ? 'border-rose-200 bg-rose-50 text-rose-700' : 'border-gray-200 bg-gray-50 text-gray-600'],
-        ['label' => __('reports.advance'),            'value' => '৳'.number_format($stats['advance'],0),           'icon' => 'piggy-bank',     'color' => 'border-sky-200 bg-sky-50 text-sky-700'],
+        ['label' => __('reports.total_animal_cost'),  'value' => '৳'.format_amount($stats['total_animal_cost'],0), 'icon' => 'horse-head',     'color' => 'border-amber-200 bg-amber-50 text-amber-700'],
+        ['label' => __('reports.total_expenses'),     'value' => '৳'.format_amount($stats['total_expenses'],0),    'icon' => 'receipt',        'color' => 'border-rose-200 bg-rose-50 text-rose-700'],
+        ['label' => __('reports.total_cost'),         'value' => '৳'.format_amount($stats['total_cost'],0),        'icon' => 'calculator',     'color' => 'border-gray-200 bg-gray-50 text-gray-700'],
+        ['label' => __('reports.total_collection'),   'value' => '৳'.format_amount($stats['total_collection'],0),  'icon' => 'money-bill-wave','color' => 'border-emerald-200 bg-emerald-50 text-emerald-700'],
+        ['label' => __('reports.due'),                'value' => '৳'.format_amount($stats['due'],0),               'icon' => 'exclamation-circle', 'color' => $stats['due']>0 ? 'border-rose-200 bg-rose-50 text-rose-700' : 'border-gray-200 bg-gray-50 text-gray-600'],
+        ['label' => __('reports.advance'),            'value' => '৳'.format_amount($stats['advance'],0),           'icon' => 'piggy-bank',     'color' => 'border-sky-200 bg-sky-50 text-sky-700'],
     ];
 @endphp
 <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
@@ -63,7 +63,7 @@
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $i+1 }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $animal->type_name }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $animal->name ?: '—' }}</td>
-                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">৳{{ number_format($animal->purchase_price,0) }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">৳{{ format_amount($animal->purchase_price,0) }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700">{{ $animal->total_shares }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700">{{ $animal->assigned_shares }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700"><span class="badge bg-gray-100 text-gray-600">{{ __('animals.status.'.$animal->status) }}</span></td>
@@ -71,7 +71,7 @@
                 @endforeach
                 <tr class="bg-paper-100 font-semibold text-gray-900">
                     <td colspan="3" class="border-b border-gray-100 px-4 py-3">{{ __('messages.total') }}</td>
-                    <td class="border-b border-gray-100 px-4 py-3">৳{{ number_format($template->animals->sum('purchase_price'),0) }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3">৳{{ format_amount($template->animals->sum('purchase_price'),0) }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-center">{{ $template->animals->sum('total_shares') }}</td>
                     <td colspan="2" class="border-b border-gray-100 px-4 py-3"></td>
                 </tr>
@@ -102,12 +102,12 @@
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $expense->title }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $expense->distribution_type_label }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $expense->expense_date->format('d M Y') }}</td>
-                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">৳{{ number_format($expense->amount,0) }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">৳{{ format_amount($expense->amount,0) }}</td>
                 </tr>
                 @endforeach
                 <tr class="bg-paper-100 font-semibold text-gray-900">
                     <td colspan="4" class="border-b border-gray-100 px-4 py-3">{{ __('messages.total') }}</td>
-                    <td class="border-b border-gray-100 px-4 py-3">৳{{ number_format($template->expenses->sum('amount'),0) }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3">৳{{ format_amount($template->expenses->sum('amount'),0) }}</td>
                 </tr>
             </tbody>
         </table>

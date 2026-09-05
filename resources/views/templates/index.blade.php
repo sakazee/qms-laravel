@@ -50,8 +50,8 @@
                             {{ $template->status === 'active' ? __('templates.active') : __('templates.inactive') }}
                         </span>
                     </td>
-                    <td class="text-center font-semibold">{{ $template->animals_count ?? $template->animals()->count() }}</td>
-                    <td class="text-center font-semibold">{{ $template->partners_count ?? $template->partners()->count() }}</td>
+                    <td class="text-center font-semibold">{{ format_amount($template->animals_count ?? $template->animals()->count(), 0) }}</td>
+                    <td class="text-center font-semibold">{{ format_amount($template->partners_count ?? $template->partners()->count(), 0) }}</td>
                     <td>
                         <div class="flex items-center gap-1.5">
                             @if(session('selected_template_id') != $template->id)

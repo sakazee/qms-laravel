@@ -35,7 +35,7 @@
                         <label class="label">{{ __('shares.share_amount') }}</label>
                         <div class="relative">
                             <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[13.5px] font-medium text-gray-500">৳</span>
-                            <input type="text" class="input pl-8" value="{{ number_format($share->share_amount, 2) }}" readonly>
+                            <input type="text" class="input pl-8" value="{{ format_amount($share->share_amount, 2) }}" readonly>
                         </div>
                     </div>
                 </div>

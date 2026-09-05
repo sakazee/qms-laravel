@@ -71,7 +71,7 @@
                                     @php $d = $existingDist->get($animal->id); @endphp
                                     <tr class="border-b border-gray-100">
                                         <td class="px-4 py-3 font-medium text-gray-900">{{ $animal->type_name }} {{ $animal->name ? '— '.$animal->name : '' }}</td>
-                                        <td class="px-4 py-3">৳{{ number_format($animal->purchase_price, 0) }}</td>
+                                        <td class="px-4 py-3">৳{{ format_amount($animal->purchase_price, 0) }}</td>
                                         <td class="px-4 py-3">
                                             <div class="flex items-center">
                                                 <input type="number" name="distributions[{{ $animal->id }}]" class="input !rounded-r-none !py-1.5 dist-percent" min="0" max="100" step="0.01" value="{{ old('distributions.'.$animal->id, $d?->percentage ?? 0) }}">

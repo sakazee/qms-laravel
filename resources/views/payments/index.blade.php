@@ -11,7 +11,7 @@
         <h3 class="card-title"><i class="fa-solid fa-money-bill-wave text-emerald-700"></i>{{ __('payments.payments') }}</h3>
         <div class="flex items-center gap-3">
             <span class="badge bg-emerald-100 text-emerald-800">
-                {{ app()->getLocale() === 'bn' ? 'মোট: ৳' : 'Total: ৳' }}{{ number_format($payments->sum('amount'), 0) }}
+                {{ app()->getLocale() === 'bn' ? 'মোট: ৳' : 'Total: ৳' }}{{ format_amount($payments->sum('amount'), 0) }}
             </span>
             <a href="{{ route('payments.create') }}" class="btn btn-primary btn-sm">
                 <i class="fa-solid fa-plus"></i> {{ __('payments.create') }}
@@ -38,7 +38,7 @@
                     <td>
                         <div class="font-semibold text-gray-900">{{ $payment->partner->name }}</div>
                     </td>
-                    <td class="font-semibold text-emerald-700">৳{{ number_format($payment->amount, 0) }}</td>
+                    <td class="font-semibold text-emerald-700">৳{{ format_amount($payment->amount, 0) }}</td>
                     <td>{{ $payment->payment_date->format('d M Y') }}</td>
                     <td>
                         <span class="badge bg-gray-100 text-gray-600">{{ $payment->payment_method_label }}</span>

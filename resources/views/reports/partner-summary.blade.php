@@ -42,13 +42,13 @@
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $i+1 }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-900 font-semibold">{{ $p->name }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $p->phone ?: '—' }}</td>
-                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">৳{{ number_format($row['total_share'],0) }}</td>
-                    <td class="border-b border-gray-100 px-4 py-3 text-emerald-700">৳{{ number_format($row['total_paid'],0) }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">৳{{ format_amount($row['total_share'],0) }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-emerald-700">৳{{ format_amount($row['total_paid'],0) }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 {{ $row['due']>0 ? 'font-semibold text-rose-700' : 'text-gray-700' }}">
-                        {{ $row['due']>0 ? '৳'.number_format($row['due'],0) : '—' }}
+                        {{ $row['due']>0 ? '৳'.format_amount($row['due'],0) : '—' }}
                     </td>
                     <td class="border-b border-gray-100 px-4 py-3 {{ $row['advance']>0 ? 'text-sky-700' : 'text-gray-700' }}">
-                        {{ $row['advance']>0 ? '৳'.number_format($row['advance'],0) : '—' }}
+                        {{ $row['advance']>0 ? '৳'.format_amount($row['advance'],0) : '—' }}
                     </td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700"><span class="badge {{ $badge }}">{{ __('partners.status_'.$status) }}</span></td>
                 </tr>
@@ -67,10 +67,10 @@
             <tfoot>
                 <tr class="bg-paper-100 font-semibold text-gray-900">
                     <td colspan="3" class="border-t border-gray-200 px-4 py-3">{{ __('messages.total') }}</td>
-                    <td class="border-t border-gray-200 px-4 py-3">৳{{ number_format($partners->sum('total_share'),0) }}</td>
-                    <td class="border-t border-gray-200 px-4 py-3">৳{{ number_format($partners->sum('total_paid'),0) }}</td>
-                    <td class="border-t border-gray-200 px-4 py-3">৳{{ number_format($partners->sum('due'),0) }}</td>
-                    <td class="border-t border-gray-200 px-4 py-3">৳{{ number_format($partners->sum('advance'),0) }}</td>
+                    <td class="border-t border-gray-200 px-4 py-3">৳{{ format_amount($partners->sum('total_share'),0) }}</td>
+                    <td class="border-t border-gray-200 px-4 py-3">৳{{ format_amount($partners->sum('total_paid'),0) }}</td>
+                    <td class="border-t border-gray-200 px-4 py-3">৳{{ format_amount($partners->sum('due'),0) }}</td>
+                    <td class="border-t border-gray-200 px-4 py-3">৳{{ format_amount($partners->sum('advance'),0) }}</td>
                     <td class="border-t border-gray-200 px-4 py-3"></td>
                 </tr>
             </tfoot>

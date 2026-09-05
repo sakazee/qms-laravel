@@ -34,15 +34,15 @@
             </div>
             <div class="grid grid-cols-3 divide-x divide-gray-100 border-b border-gray-100">
                 <div class="px-3 py-4 text-center">
-                    <div class="text-[14px] font-bold text-sky-700">৳{{ number_format($totalShare, 0) }}</div>
+                    <div class="text-[14px] font-bold text-sky-700">৳{{ format_amount($totalShare, 0) }}</div>
                     <div class="mt-0.5 text-[11.5px] text-gray-500">{{ __('partners.total_share') }}</div>
                 </div>
                 <div class="px-3 py-4 text-center">
-                    <div class="text-[14px] font-bold text-emerald-700">৳{{ number_format($totalPaid, 0) }}</div>
+                    <div class="text-[14px] font-bold text-emerald-700">৳{{ format_amount($totalPaid, 0) }}</div>
                     <div class="mt-0.5 text-[11.5px] text-gray-500">{{ __('partners.total_paid') }}</div>
                 </div>
                 <div class="px-3 py-4 text-center">
-                    <div class="text-[14px] font-bold {{ $due > 0 ? 'text-rose-700' : 'text-emerald-700' }}">৳{{ number_format($due, 0) }}</div>
+                    <div class="text-[14px] font-bold {{ $due > 0 ? 'text-rose-700' : 'text-emerald-700' }}">৳{{ format_amount($due, 0) }}</div>
                     <div class="mt-0.5 text-[11.5px] text-gray-500">{{ __('partners.due') }}</div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                             <td class="font-semibold text-gray-900">{{ $share->animal->name ?: $share->animal->type_name }}</td>
                             <td>{{ $share->animal->type_name }}</td>
                             <td class="text-center">{{ $share->shares }}</td>
-                            <td>৳{{ number_format($share->share_amount, 2) }}</td>
+                            <td>৳{{ format_amount($share->share_amount, 2) }}</td>
                         </tr>
                         @empty
                         <tr>
@@ -109,7 +109,7 @@
                         @forelse($partner->payments as $payment)
                         <tr>
                             <td>{{ $payment->payment_date->format('d M Y') }}</td>
-                            <td>৳{{ number_format($payment->amount, 2) }}</td>
+                            <td>৳{{ format_amount($payment->amount, 2) }}</td>
                             <td>{{ $payment->payment_method_label }}</td>
                         </tr>
                         @empty

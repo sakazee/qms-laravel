@@ -24,7 +24,7 @@
                             @foreach($animals as $animal)
                             <option value="{{ $animal->id }}" {{ old('animal_id') == $animal->id ? 'selected' : '' }}>
                                 {{ $animal->type_name }} {{ $animal->name ? '— ' . $animal->name : '' }}
-                                ({{ app()->getLocale() === 'bn' ? 'বাকি' : 'Avail' }}: {{ $animal->available_shares }})
+                                ({{ app()->getLocale() === 'bn' ? 'বাকি' : 'Avail' }}: {{ format_amount($animal->available_shares, 0) }})
                             </option>
                             @endforeach
                         </select>
@@ -114,10 +114,10 @@ $('#animal_select').on('change', function() {
 
     $.getJSON(`/api/animal/${id}/info`, function(data) {
         animalData = data;
-        $('#info_total').text(data.total_shares);
-        $('#info_assigned').text(data.assigned_shares);
-        $('#info_available').text(data.available_shares);
-        $('#info_price').text('৳' + parseFloat(data.share_price).toLocaleString());
+        $('#info_total').text(window.qmsFmt(data.total_shares));
+        $('#info_assigned').text(window.qmsFmt(data.assigned_shares));
+        $('#info_available').text(window.qmsFmt(data.available_shares));
+        $('#info_price').text('৳' + window.qmsFmt(parseFloat(data.share_price).toLocaleString()));
         $('#shares_input').attr('max', data.is_large ? Math.min(7, data.available_shares) : 1);
         if (!data.is_large) { $('#shares_input').val(1).prop('readonly', true); }
         else { $('#shares_input').prop('readonly', false); }
@@ -132,7 +132,7 @@ function calcAmount() {
     if (!animalData) return;
     const shares = parseInt($('#shares_input').val()) || 0;
     const amount = shares * parseFloat(animalData.share_price);
-    $('#calc_amount').val(amount > 0 ? amount.toFixed(2) : '');
+    $('#calc_amount').val(amount > 0 ? window.qmsFmt(amount.toFixed(2)) : '');
 }
 </script>
 @endpush

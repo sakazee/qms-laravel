@@ -40,12 +40,12 @@
         </div>
         <div class="flex items-center gap-6">
             <div class="text-center">
-                <div class="font-serif text-2xl font-bold text-emerald-300">৳{{ number_format($stats['total_collection'] ?? 0, 0) }}</div>
+                <div class="font-serif text-2xl font-bold text-emerald-300">৳{{ format_amount($stats['total_collection'] ?? 0, 0) }}</div>
                 <div class="text-[11.5px] font-medium text-white/60">{{ __('reports.total_collection') }}</div>
             </div>
             <div class="h-10 w-px bg-white/15"></div>
             <div class="text-center">
-                <div class="font-serif text-2xl font-bold text-gold">৳{{ number_format(($stats['due'] ?? 0), 0) }}</div>
+                <div class="font-serif text-2xl font-bold text-gold">৳{{ format_amount(($stats['due'] ?? 0), 0) }}</div>
                 <div class="text-[11.5px] font-medium text-white/60">{{ __('reports.due') }}</div>
             </div>
         </div>
@@ -75,7 +75,7 @@
             <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-100 text-lg text-amber-700"><i class="fa-solid fa-receipt"></i></div>
             <i class="fa-solid fa-arrow-right text-gray-300 transition-transform group-hover:translate-x-0.5"></i>
         </div>
-        <div class="mt-4 font-serif text-[26px] font-bold text-gray-900">৳{{ number_format($stats['total_cost'] ?? 0, 0) }}</div>
+        <div class="mt-4 font-serif text-[26px] font-bold text-gray-900">৳{{ format_amount($stats['total_cost'] ?? 0, 0) }}</div>
         <div class="text-[12.5px] font-medium text-gray-500">{{ __('reports.total_cost') }}</div>
     </a>
     <a href="{{ route('payments.index') }}" class="card group p-5 transition-shadow hover:shadow-lift">
@@ -83,7 +83,7 @@
             <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100 text-lg text-emerald-800"><i class="fa-solid fa-money-bill-wave"></i></div>
             <i class="fa-solid fa-arrow-right text-gray-300 transition-transform group-hover:translate-x-0.5"></i>
         </div>
-        <div class="mt-4 font-serif text-[26px] font-bold text-gray-900">৳{{ number_format($stats['total_collection'] ?? 0, 0) }}</div>
+        <div class="mt-4 font-serif text-[26px] font-bold text-gray-900">৳{{ format_amount($stats['total_collection'] ?? 0, 0) }}</div>
         <div class="text-[12.5px] font-medium text-gray-500">{{ __('reports.total_collection') }}</div>
     </a>
 </div>
@@ -92,19 +92,19 @@
 <div class="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
     <div class="rounded-xl border {{ ($stats['due'] ?? 0) > 0 ? 'border-rose-200 bg-rose-50' : 'border-emerald-200 bg-emerald-50' }} p-4">
         <div class="text-[12.5px] font-semibold {{ ($stats['due'] ?? 0) > 0 ? 'text-rose-700' : 'text-emerald-700' }}">{{ __('reports.due') }}</div>
-        <div class="mt-0.5 font-serif text-xl font-bold text-gray-900">৳{{ number_format($stats['due'] ?? 0, 0) }}</div>
+        <div class="mt-0.5 font-serif text-xl font-bold text-gray-900">৳{{ format_amount($stats['due'] ?? 0, 0) }}</div>
     </div>
     <div class="rounded-xl border border-teal-200 bg-teal-50 p-4">
         <div class="text-[12.5px] font-semibold text-teal-700">{{ __('reports.advance') }}</div>
-        <div class="mt-0.5 font-serif text-xl font-bold text-gray-900">৳{{ number_format($stats['advance'] ?? 0, 0) }}</div>
+        <div class="mt-0.5 font-serif text-xl font-bold text-gray-900">৳{{ format_amount($stats['advance'] ?? 0, 0) }}</div>
     </div>
     <div class="rounded-xl border border-indigo-200 bg-indigo-50 p-4">
         <div class="text-[12.5px] font-semibold text-indigo-700">{{ __('reports.total_animal_cost') }}</div>
-        <div class="mt-0.5 font-serif text-xl font-bold text-gray-900">৳{{ number_format($stats['total_animal_cost'] ?? 0, 0) }}</div>
+        <div class="mt-0.5 font-serif text-xl font-bold text-gray-900">৳{{ format_amount($stats['total_animal_cost'] ?? 0, 0) }}</div>
     </div>
     <div class="rounded-xl border border-orange-200 bg-orange-50 p-4">
         <div class="text-[12.5px] font-semibold text-orange-700">{{ __('reports.total_expenses') }}</div>
-        <div class="mt-0.5 font-serif text-xl font-bold text-gray-900">৳{{ number_format($stats['total_expenses'] ?? 0, 0) }}</div>
+        <div class="mt-0.5 font-serif text-xl font-bold text-gray-900">৳{{ format_amount($stats['total_expenses'] ?? 0, 0) }}</div>
     </div>
 </div>
 

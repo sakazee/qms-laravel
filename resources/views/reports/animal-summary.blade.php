@@ -38,7 +38,7 @@
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $i+1 }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700"><span class="badge bg-sky-100 text-sky-700">{{ $animal->type_name }}</span></td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $animal->name ?: '—' }}</td>
-                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">৳{{ number_format($animal->purchase_price,0) }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">৳{{ format_amount($animal->purchase_price,0) }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700">{{ $animal->total_shares }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700"><span class="badge bg-sky-100 text-sky-700">{{ $animal->assigned_shares }}</span></td>
                     <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700"><span class="badge {{ $animal->available_shares > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-600' }}">{{ $animal->available_shares }}</span></td>
@@ -60,7 +60,7 @@
             <tfoot>
                 <tr class="bg-paper-100 font-semibold text-gray-900">
                     <td colspan="3" class="border-t border-gray-200 px-4 py-3">{{ __('messages.total') }}</td>
-                    <td class="border-t border-gray-200 px-4 py-3">৳{{ number_format($template->animals->sum('purchase_price'),0) }}</td>
+                    <td class="border-t border-gray-200 px-4 py-3">৳{{ format_amount($template->animals->sum('purchase_price'),0) }}</td>
                     <td class="border-t border-gray-200 px-4 py-3 text-center">{{ $template->animals->sum('total_shares') }}</td>
                     <td colspan="4" class="border-t border-gray-200 px-4 py-3"></td>
                 </tr>

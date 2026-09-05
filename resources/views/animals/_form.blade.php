@@ -87,7 +87,7 @@ function calcSharePrice() {
     const price = parseFloat($('#purchase_price').val()) || 0;
     const shares = parseInt($('#total_shares').val()) || 1;
     const perShare = shares > 0 ? (price / shares).toFixed(2) : 0;
-    $('#share_price_display').val(perShare > 0 ? '৳' + parseFloat(perShare).toLocaleString() : '');
+    $('#share_price_display').val(perShare > 0 ? '৳' + window.qmsFmt(parseFloat(perShare).toLocaleString()) : '');
 }
 $('#purchase_price, #total_shares').on('input', calcSharePrice);
 </script>

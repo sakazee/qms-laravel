@@ -34,7 +34,7 @@
                     <td><span class="badge bg-sky-100 text-sky-700">{{ $share->animal->type_name }}</span></td>
                     <td>{{ $share->partner->name }}</td>
                     <td class="text-center"><span class="badge bg-emerald-100 text-emerald-800">{{ $share->shares }}</span></td>
-                    <td class="font-semibold">৳{{ number_format($share->share_amount, 2) }}</td>
+                    <td class="font-semibold">৳{{ format_amount($share->share_amount, 2) }}</td>
                     <td>
                         <div class="flex items-center gap-1.5">
                             <a href="{{ route('shares.edit', $share) }}" class="action-btn action-edit" title="{{ __('messages.edit') }}">
@@ -85,12 +85,12 @@
                 @php $pct = $animal->total_shares > 0 ? round(($animal->assigned_shares / $animal->total_shares) * 100) : 0; @endphp
                 <tr class="border-b border-gray-100">
                     <td class="px-4 py-3 font-medium text-gray-900">{{ $animal->name ?: $animal->type_name }}</td>
-                    <td class="px-4 py-3 text-center">{{ $animal->total_shares }}</td>
+                    <td class="px-4 py-3 text-center">{{ format_amount($animal->total_shares, 0) }}</td>
                     <td class="px-4 py-3 text-center">
                         <span class="badge bg-sky-100 text-sky-700">{{ $animal->assigned_shares }}</span>
                     </td>
                     <td class="px-4 py-3 text-center">
-                        <span class="badge {{ $animal->available_shares > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-500' }}">{{ $animal->available_shares }}</span>
+                        <span class="badge {{ $animal->available_shares > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-500' }}">{{ format_amount($animal->available_shares, 0) }}</span>
                     </td>
                     <td class="px-4 py-3" style="width:200px">
                         <div class="h-2 w-[160px] overflow-hidden rounded-full bg-gray-200">

@@ -31,12 +31,12 @@
     </tr>
     <tr><td>{{ __('reports.total_animals') }}</td><td>{{ $stats['total_animals'] }}</td></tr>
     <tr><td>{{ __('reports.total_partners') }}</td><td>{{ $stats['total_partners'] }}</td></tr>
-    <tr><td>{{ __('reports.total_animal_cost') }}</td><td>৳{{ number_format($stats['total_animal_cost'],0) }}</td></tr>
-    <tr><td>{{ __('reports.total_expenses') }}</td><td>৳{{ number_format($stats['total_expenses'],0) }}</td></tr>
-    <tr><td>{{ __('reports.total_cost') }}</td><td>৳{{ number_format($stats['total_cost'],0) }}</td></tr>
-    <tr><td>{{ __('reports.total_collection') }}</td><td>৳{{ number_format($stats['total_collection'],0) }}</td></tr>
-    <tr><td>{{ __('reports.due') }}</td><td class="{{ $stats['due']>0?'badge-danger':'' }}">৳{{ number_format($stats['due'],0) }}</td></tr>
-    <tr><td>{{ __('reports.advance') }}</td><td class="badge-success">৳{{ number_format($stats['advance'],0) }}</td></tr>
+    <tr><td>{{ __('reports.total_animal_cost') }}</td><td>৳{{ format_amount($stats['total_animal_cost'],0) }}</td></tr>
+    <tr><td>{{ __('reports.total_expenses') }}</td><td>৳{{ format_amount($stats['total_expenses'],0) }}</td></tr>
+    <tr><td>{{ __('reports.total_cost') }}</td><td>৳{{ format_amount($stats['total_cost'],0) }}</td></tr>
+    <tr><td>{{ __('reports.total_collection') }}</td><td>৳{{ format_amount($stats['total_collection'],0) }}</td></tr>
+    <tr><td>{{ __('reports.due') }}</td><td class="{{ $stats['due']>0?'badge-danger':'' }}">৳{{ format_amount($stats['due'],0) }}</td></tr>
+    <tr><td>{{ __('reports.advance') }}</td><td class="badge-success">৳{{ format_amount($stats['advance'],0) }}</td></tr>
 </table>
 
 <h3 style="color:#1a6b3a">{{ __('animals.animals') }}</h3>
@@ -46,10 +46,10 @@
     </thead>
     <tbody>
         @foreach($template->animals as $i => $a)
-        <tr><td>{{ $i+1 }}</td><td>{{ $a->type_name }}</td><td>{{ $a->name ?: '—' }}</td><td>৳{{ number_format($a->purchase_price,0) }}</td><td>{{ $a->total_shares }}</td><td>{{ __('animals.status.'.$a->status) }}</td></tr>
+        <tr><td>{{ $i+1 }}</td><td>{{ $a->type_name }}</td><td>{{ $a->name ?: '—' }}</td><td>৳{{ format_amount($a->purchase_price,0) }}</td><td>{{ format_amount($a->total_shares,0) }}</td><td>{{ __('animals.status.'.$a->status) }}</td></tr>
         @endforeach
     </tbody>
-    <tfoot><tr class="tfoot"><td colspan="3">{{ __('messages.total') }}</td><td>৳{{ number_format($template->animals->sum('purchase_price'),0) }}</td><td>{{ $template->animals->sum('total_shares') }}</td><td></td></tr></tfoot>
+    <tfoot><tr class="tfoot"><td colspan="3">{{ __('messages.total') }}</td><td>৳{{ format_amount($template->animals->sum('purchase_price'),0) }}</td><td>{{ format_amount($template->animals->sum('total_shares'),0) }}</td><td></td></tr></tfoot>
 </table>
 </body>
 </html>

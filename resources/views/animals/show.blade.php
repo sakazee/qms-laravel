@@ -36,7 +36,7 @@
                     </div>
                     <div>
                         <p class="text-[12px] font-semibold text-gray-500">{{ __('animals.purchase_price') }}</p>
-                        <p class="text-[14px] font-medium text-gray-900">৳{{ number_format($animal->purchase_price, 2) }}</p>
+                        <p class="text-[14px] font-medium text-gray-900">৳{{ format_amount($animal->purchase_price, 2) }}</p>
                     </div>
                     <div>
                         <p class="text-[12px] font-semibold text-gray-500">{{ __('animals.total_shares') }}</p>
@@ -56,7 +56,7 @@
                     </div>
                     <div>
                         <p class="text-[12px] font-semibold text-gray-500">{{ __('animals.share_price') }}</p>
-                        <p class="text-[14px] font-medium text-gray-900">৳{{ number_format($animal->share_price, 2) }}</p>
+                        <p class="text-[14px] font-medium text-gray-900">৳{{ format_amount($animal->share_price, 2) }}</p>
                     </div>
                     <div>
                         <p class="text-[12px] font-semibold text-gray-500">{{ __('animals.status.label') }}</p>
@@ -98,7 +98,7 @@
                             <td>{{ $i + 1 }}</td>
                             <td class="font-semibold text-gray-900">{{ $share->partner->name }}</td>
                             <td class="text-center">{{ $share->shares }}</td>
-                            <td>৳{{ number_format($share->share_amount, 2) }}</td>
+                            <td>৳{{ format_amount($share->share_amount, 2) }}</td>
                         </tr>
                         @empty
                         <tr>

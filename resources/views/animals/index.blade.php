@@ -47,14 +47,14 @@
                         </span>
                     </td>
                     <td>{{ $animal->name ?: '—' }}</td>
-                    <td class="font-semibold">৳{{ number_format($animal->purchase_price, 0) }}</td>
-                    <td class="text-center">{{ $animal->total_shares }}</td>
+                    <td class="font-semibold">৳{{ format_amount($animal->purchase_price, 0) }}</td>
+                    <td class="text-center">{{ format_amount($animal->total_shares, 0) }}</td>
                     <td class="text-center">
-                        <span class="badge bg-sky-100 text-sky-700">{{ $animal->assigned_shares }}</span>
+                        <span class="badge bg-sky-100 text-sky-700">{{ format_amount($animal->assigned_shares, 0) }}</span>
                     </td>
                     <td class="text-center">
                         <span class="badge {{ $animal->available_shares > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-700' }}">
-                            {{ $animal->available_shares }}
+                            {{ format_amount($animal->available_shares, 0) }}
                         </span>
                     </td>
                     <td>

@@ -26,14 +26,14 @@
         @foreach($partners as $i => $row)
         <tr>
             <td>{{ $i+1 }}</td><td>{{ $row['partner']->name }}</td><td>{{ $row['partner']->phone ?: '—' }}</td>
-            <td>৳{{ number_format($row['total_share'],0) }}</td>
-            <td>৳{{ number_format($row['total_paid'],0) }}</td>
-            <td class="{{ $row['due']>0?'due':'' }}">৳{{ number_format($row['due'],0) }}</td>
-            <td>৳{{ number_format($row['advance'],0) }}</td>
+            <td>৳{{ format_amount($row['total_share'],0) }}</td>
+            <td>৳{{ format_amount($row['total_paid'],0) }}</td>
+            <td class="{{ $row['due']>0?'due':'' }}">৳{{ format_amount($row['due'],0) }}</td>
+            <td>৳{{ format_amount($row['advance'],0) }}</td>
         </tr>
         @endforeach
     </tbody>
-    <tfoot><tr class="tfoot"><td colspan="3">{{ __('messages.total') }}</td><td>৳{{ number_format($partners->sum('total_share'),0) }}</td><td>৳{{ number_format($partners->sum('total_paid'),0) }}</td><td>৳{{ number_format($partners->sum('due'),0) }}</td><td>৳{{ number_format($partners->sum('advance'),0) }}</td></tr></tfoot>
+    <tfoot><tr class="tfoot"><td colspan="3">{{ __('messages.total') }}</td><td>৳{{ format_amount($partners->sum('total_share'),0) }}</td><td>৳{{ format_amount($partners->sum('total_paid'),0) }}</td><td>৳{{ format_amount($partners->sum('due'),0) }}</td><td>৳{{ format_amount($partners->sum('advance'),0) }}</td></tr></tfoot>
 </table>
 </body>
 </html>
