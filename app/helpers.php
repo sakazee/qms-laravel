@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\App;
 
-if (! function_exists('bd_digits')) {
+if (!function_exists('bd_digits')) {
     /**
      * Translate ASCII digits (0-9) to Bangla Unicode digits (০-৯),
      * leaving grouping/separator characters untouched.
@@ -18,7 +18,7 @@ if (! function_exists('bd_digits')) {
     }
 }
 
-if (! function_exists('format_amount')) {
+if (!function_exists('format_amount')) {
     /**
      * Format a number for display, using Bangla digits when the app
      * is running in the Bangla locale. Display-only (never for input values).
@@ -32,5 +32,23 @@ if (! function_exists('format_amount')) {
         }
 
         return $formatted;
+    }
+}
+
+if (!function_exists('format_count')) {
+    /**
+     * Format a whole number of countable items. In Bangla the count uses
+     * Bangla digits and gets a measure-word classifier appended
+     * (জন for people, টি for animals). Display-only, never for input.
+     */
+    function format_count(int $count, string $classifier = ''): string
+    {
+        $formatted = number_format($count, 0);
+
+        if (App::getLocale() === 'bn') {
+            return bd_digits($formatted) . $classifier;
+        }
+
+        return $formatted . ($classifier !== '' ? ' ' . $classifier : '');
     }
 }

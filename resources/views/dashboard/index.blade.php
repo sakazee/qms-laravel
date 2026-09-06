@@ -59,7 +59,7 @@
             <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100 text-lg text-emerald-800"><i class="fa-solid fa-horse"></i></div>
             <i class="fa-solid fa-arrow-right text-gray-300 transition-transform group-hover:translate-x-0.5"></i>
         </div>
-        <div class="mt-4 font-serif text-[26px] font-bold text-gray-900">{{ format_amount($stats['total_animals'] ?? 0, 0) }}</div>
+        <div class="mt-4 font-serif text-[26px] font-bold text-gray-900">{{ format_count($stats['total_animals'] ?? 0, __('reports.animal_count_prefix')) }}</div>
         <div class="text-[12.5px] font-medium text-gray-500">{{ __('reports.total_animals') }}</div>
     </a>
     <a href="{{ route('partners.index') }}" class="card group p-5 transition-shadow hover:shadow-lift">
@@ -67,7 +67,7 @@
             <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-100 text-lg text-sky-700"><i class="fa-solid fa-users"></i></div>
             <i class="fa-solid fa-arrow-right text-gray-300 transition-transform group-hover:translate-x-0.5"></i>
         </div>
-        <div class="mt-4 font-serif text-[26px] font-bold text-gray-900">{{ format_amount($stats['total_partners'] ?? 0, 0) }}</div>
+        <div class="mt-4 font-serif text-[26px] font-bold text-gray-900">{{ format_count($stats['total_partners'] ?? 0, __('reports.partners_count_prefix')) }}</div>
         <div class="text-[12.5px] font-medium text-gray-500">{{ __('reports.total_partners') }}</div>
     </a>
     <a href="{{ route('expenses.index') }}" class="card group p-5 transition-shadow hover:shadow-lift">
