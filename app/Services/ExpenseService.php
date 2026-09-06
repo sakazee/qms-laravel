@@ -19,14 +19,14 @@ class ExpenseService
     {
         return DB::transaction(function () use ($data, $templateId, $userId) {
             $expense = Expense::create([
-                'user_id'         => $userId,
-                'template_id'     => $templateId,
+                'user_id' => $userId,
+                'template_id' => $templateId,
                 'expense_head_id' => $data['expense_head_id'] ?? null,
-                'title'           => $data['title'],
-                'amount'          => $data['amount'],
-                'split_type'      => $data['split_type'] ?? 'manual',
-                'description'     => $data['description'] ?? null,
-                'expense_date'    => $data['expense_date'],
+                'title' => $data['title'],
+                'amount' => $data['amount'],
+                'split_type' => $data['split_type'] ?? 'manual',
+                'description' => $data['description'] ?? null,
+                'expense_date' => $data['expense_date'],
             ]);
 
             $this->createDistributions($expense, $data, $templateId, $userId);
@@ -39,12 +39,12 @@ class ExpenseService
     {
         return DB::transaction(function () use ($expense, $data) {
             $expense->update([
-                'expense_head_id'   => $data['expense_head_id'] ?? null,
-                'title'             => $data['title'],
-                'amount'            => $data['amount'],
-                'split_type'        => $data['split_type'] ?? 'manual',
-                'description'       => $data['description'] ?? null,
-                'expense_date'      => $data['expense_date'],
+                'expense_head_id' => $data['expense_head_id'] ?? null,
+                'title' => $data['title'],
+                'amount' => $data['amount'],
+                'split_type' => $data['split_type'] ?? 'manual',
+                'description' => $data['description'] ?? null,
+                'expense_date' => $data['expense_date'],
             ]);
 
             // Delete old distributions and recreate
@@ -80,8 +80,12 @@ class ExpenseService
      */
     public function validateAllocationTotal(array $data, $animals, float $total): bool
     {
-        if ($animals->isEmpty()) return true;
-        if (($data['split_type'] ?? 'manual') === 'manual') return true;
+        if ($animals->isEmpty()) {
+            return true;
+        }
+        if (($data['split_type'] ?? 'manual') === 'manual') {
+            return true;
+        }
 
         $allocated = collect($this->resolveRows($data, $animals, $total))->sum('amount');
 
@@ -91,15 +95,17 @@ class ExpenseService
     private function createDistributions(Expense $expense, array $data, int $templateId, int $userId): void
     {
         $animals = $this->targetAnimals($data, $templateId, $userId);
-        if ($animals->isEmpty()) return;
+        if ($animals->isEmpty()) {
+            return;
+        }
 
         foreach ($this->resolveRows($data, $animals, (float) $expense->amount) as $animalId => $fill) {
             ExpenseDistribution::create([
                 'expense_id' => $expense->id,
-                'animal_id'  => $animalId,
-                'method'     => $fill['method'],
+                'animal_id' => $animalId,
+                'method' => $fill['method'],
                 'percentage' => $fill['percentage'],
-                'amount'     => $fill['amount'],
+                'amount' => $fill['amount'],
             ]);
         }
     }
@@ -121,26 +127,26 @@ class ExpenseService
      */
     private function resolveRows(array $data, $animals, float $total): array
     {
-        $rows   = $data['distributions'] ?? [];
+        $rows = $data['distributions'] ?? [];
         $amount = [];
-        $pct    = [];
+        $pct = [];
 
         foreach ($animals as $animal) {
-            $row  = $rows[$animal->id] ?? [];
+            $row = $rows[$animal->id] ?? [];
             $fill = $this->parseRow($row, $total);
 
             if ($fill['percent'] !== null) {
                 $p = round($fill['percent'], 2);
                 $idealCents = ($total * $p / 100) * 100;
                 $pct[$animal->id] = [
-                    'pct'   => $p,
+                    'pct' => $p,
                     'cents' => (int) floor($idealCents + 1e-9),
-                    'frac'  => $idealCents - floor($idealCents + 1e-9),
+                    'frac' => $idealCents - floor($idealCents + 1e-9),
                 ];
             } elseif ($fill['amount'] !== null) {
                 $amt = round($fill['amount'], 2);
                 $amount[$animal->id] = [
-                    'amount'     => $amt,
+                    'amount' => $amt,
                     'percentage' => $total > 0 ? min(round($amt / $total * 100, 2), 999.99) : 0,
                 ];
             }
@@ -153,10 +159,10 @@ class ExpenseService
         }
 
         if ($pct) {
-            $usedCents  = array_reduce($amount, fn ($s, $r) => $s + (int) round($r['amount'] * 100), 0);
+            $usedCents = array_reduce($amount, fn ($s, $r) => $s + (int) round($r['amount'] * 100), 0);
             $floorCents = array_sum(array_column($pct, 'cents'));
 
-            $n         = count($pct);
+            $n = count($pct);
             $remainder = $totalCents - $usedCents - $floorCents;
 
             if ($remainder > 0 && $remainder < $n) {
@@ -177,9 +183,9 @@ class ExpenseService
 
             foreach ($pct as $id => $v) {
                 $out[$id] = [
-                    'method'     => 'percent',
+                    'method' => 'percent',
                     'percentage' => $v['pct'],
-                    'amount'     => round($v['cents'] / 100, 2),
+                    'amount' => round($v['cents'] / 100, 2),
                 ];
             }
         }
@@ -192,7 +198,7 @@ class ExpenseService
     private function parseRow(array $row, float $total): array
     {
         $percent = isset($row['percent']) && $row['percent'] !== '' ? (float) $row['percent'] : null;
-        $amount  = isset($row['amount'])  && $row['amount']  !== '' ? (float) $row['amount']  : null;
+        $amount = isset($row['amount']) && $row['amount'] !== '' ? (float) $row['amount'] : null;
 
         return compact('percent', 'amount');
     }
@@ -208,9 +214,9 @@ class ExpenseService
     public function getForTemplate(int $templateId, int $userId)
     {
         return Expense::with('distributions.animal', 'expenseHead')
-                      ->forTemplate($templateId)
-                      ->where('user_id', $userId)
-                      ->latest()
-                      ->get();
+            ->forTemplate($templateId)
+            ->where('user_id', $userId)
+            ->latest()
+            ->get();
     }
 }

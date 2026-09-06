@@ -60,7 +60,7 @@ $checkedAnimals = array_map('intval', (array) $checkedAnimals);
         <h5 class="flex items-center gap-2 font-serif text-[15px] font-semibold text-amber-700">
             <i class="fa-solid fa-table"></i>{{ __('expenses.distributions') }}
         </h5>
-        <span id="allocation_status" class="badge bg-gray-100 text-gray-600">
+        <span id="allocation_status" class="badge bg-gray-100 text-gray-600" role="status">
             <span id="allocated_val">৳0</span> / <span id="allocated_total">৳0</span>
             <span class="ml-2 opacity-80">({{ __('expenses.remaining') }}: <span id="remaining_val">৳0</span>)</span>
         </span>
@@ -322,10 +322,9 @@ window.qmsOnReady(function ($) {
         const left = 10000 - units;
         vendor.sort((a, b) => b.frac - a.frac);
         for (let i = 0; i < left; i++) vendor[i].floor++;
-        rows.each(function (i) {
-            const pct = vendor[i].floor / 100;
-            $(this).find('.dist-percent').val(pct.toFixed(2));
-            $(this).find('.dist-amount').val(null);
+        vendor.forEach((v) => {
+            $(v.el).find('.dist-percent').val((v.floor / 100).toFixed(2));
+            $(v.el).find('.dist-amount').val(null);
         });
         recomputeTotals();
     }
