@@ -93,6 +93,9 @@ $checkedAnimals = array_map('intval', (array) $checkedAnimals);
             <button type="button" id="btn_purchase" class="btn btn-sm btn-split" aria-pressed="false">
                 <i class="fa-solid fa-percent"></i>{{ __('expenses.split_purchase') }}
             </button>
+            <button type="button" id="btn_manual" class="btn btn-sm btn-split" aria-pressed="false">
+                <i class="fa-solid fa-pen"></i>{{ __('expenses.split_manual') }}
+            </button>
         </div>
     </div>
 
@@ -164,6 +167,14 @@ window.qmsOnReady(function ($) {
         return parseFloat($('#total_amount').val()) || 0;
     }
 
+    function updateTotalFromAmounts() {
+        if ($('#split_type').val() !== 'manual') return;
+        const sum = visibleRows().get().reduce(function (s, tr) {
+            return s + (parseFloat($(tr).find('.dist-amount').val()) || 0);
+        }, 0);
+        $('#total_amount').val(sum ? sum.toFixed(2) : '');
+    }
+
     function updateVisibility() {
         const show = totalAmount() > 0;
         $('#distribution_section').toggleClass('d-none', !show);
@@ -189,20 +200,16 @@ window.qmsOnReady(function ($) {
     }
 
     function visibleRows() {
-        const ids = selectedIds();
-        const set = new Set(ids.map(String));
-        const rows = $('.dist-row');
-        return ids.length === 0 ? rows : rows.filter(function () {
+        const set = new Set(selectedIds().map(String));
+        return $('.dist-row').filter(function () {
             return set.has(String($(this).data('id')));
         });
     }
 
     function showHideRows() {
-        const ids = selectedIds();
-        const set = new Set(ids.map(String));
+        const set = new Set(selectedIds().map(String));
         $('.dist-row').each(function () {
-            const on = ids.length === 0 || set.has(String($(this).data('id')));
-            $(this).toggleClass('d-none', !on);
+            $(this).toggleClass('d-none', !set.has(String($(this).data('id'))));
         });
     }
 
@@ -334,12 +341,14 @@ window.qmsOnReady(function ($) {
         const tr = $(this).closest('.dist-row');
         tr.data('src', 'amount');
         clearSplit();
+        updateTotalFromAmounts();
         recomputeTotals();
     });
 
     $(document).on('change', '.animal-check', function () {
         syncSelectAll();
         showHideRows();
+        updateTotalFromAmounts();
         recomputeTotals();
     });
 
@@ -348,23 +357,33 @@ window.qmsOnReady(function ($) {
         $('.animal-check').prop('checked', checkedTo);
         syncSelectAll();
         showHideRows();
+        updateTotalFromAmounts();
         recomputeTotals();
     });
     $('#total_amount').on('input', updateVisibility);
 
     function activateSplit(btn, type) {
-        $('#btn_equal, #btn_purchase').removeClass('is-active').attr('aria-pressed', 'false');
+        $('#btn_equal, #btn_purchase, #btn_manual').removeClass('is-active').attr('aria-pressed', 'false');
         $(btn).addClass('is-active').attr('aria-pressed', 'true');
         $('#split_type').val(type);
     }
 
     function clearSplit() {
         $('#split_type').val('manual');
-        $('#btn_equal, #btn_purchase').removeClass('is-active').attr('aria-pressed', 'false');
+        $('#btn_equal, #btn_purchase, #btn_manual').removeClass('is-active').attr('aria-pressed', 'false');
     }
 
     $('#btn_equal').on('click', function () { activateSplit(this, 'equal'); split('equal'); });
     $('#btn_purchase').on('click', function () { activateSplit(this, 'purchase'); split('purchase'); });
+    $('#btn_manual').on('click', function () {
+        activateSplit(this, 'manual');
+        visibleRows().each(function () {
+            $(this).data('src', 'amount');
+            $(this).find('.dist-percent').val('');
+        });
+        updateTotalFromAmounts();
+        recomputeTotals();
+    });
 
     $('#expense_form').on('submit', function (e) {
         if ($('.dist-row').length === 0 || selectedIds().length === 0) return true;
@@ -373,7 +392,7 @@ window.qmsOnReady(function ($) {
             if (src === 'percent') $(this).find('.dist-amount').val('');
             else if (src === 'amount') $(this).find('.dist-percent').val('');
         });
-        if (!recomputeTotals()) {
+        if (!recomputeTotals() && $('#split_type').val() !== 'manual') {
             e.preventDefault();
             e.stopPropagation();
             alert(mismatchMsg);
@@ -382,8 +401,8 @@ window.qmsOnReady(function ($) {
 
     $(function () {
         const stored = $('#split_type').val();
-        if (stored === 'equal' || stored === 'purchase') {
-            activateSplit(stored === 'equal' ? '#btn_equal' : '#btn_purchase', stored);
+        if (stored === 'equal' || stored === 'purchase' || stored === 'manual') {
+            activateSplit(stored === 'equal' ? '#btn_equal' : stored === 'purchase' ? '#btn_purchase' : '#btn_manual', stored);
         }
         syncSelectAll();
         updateVisibility();

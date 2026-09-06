@@ -75,11 +75,13 @@ class ExpenseService
      * Allocations must add up to the expense amount exactly. Percentage
      * rows are balanced (largest remainder) so fractional splits resolve
      * to exact paisa; genuinely mismatching amounts still get rejected.
-     * An empty template trivially passes.
+     * An empty template trivially passes, and manual split mode is
+     * exempt: the typed per-animal amounts are taken as-is.
      */
     public function validateAllocationTotal(array $data, $animals, float $total): bool
     {
         if ($animals->isEmpty()) return true;
+        if (($data['split_type'] ?? 'manual') === 'manual') return true;
 
         $allocated = collect($this->resolveRows($data, $animals, $total))->sum('amount');
 
