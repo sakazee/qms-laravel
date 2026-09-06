@@ -23,6 +23,7 @@
             <thead>
                 <tr>
                     <th>#</th>
+                    <th>{{ __('expenses.expense_head') }}</th>
                     <th>{{ __('expenses.title') }}</th>
                     <th>{{ __('expenses.amount') }}</th>
                     <th>{{ __('expenses.distribution_type') }}</th>
@@ -35,6 +36,16 @@
                 @foreach($expenses as $i => $expense)
                 <tr>
                     <td>{{ format_amount($i + 1, 0) }}</td>
+                    <td>
+                        @if($expense->expenseHead)
+                        <span class="inline-flex items-center gap-1.5">
+                            <span class="inline-block h-2.5 w-2.5 rounded-full" style="background-color: {{ $expense->expenseHead->color }};"></span>
+                            <span class="text-[12.5px] font-medium text-gray-700">{{ $expense->expenseHead->name }}</span>
+                        </span>
+                        @else
+                            <span class="text-[12.5px] text-gray-400">—</span>
+                        @endif
+                    </td>
                     <td>
                         <div class="font-semibold text-gray-900">{{ $expense->title }}</div>
                         @if($expense->description)

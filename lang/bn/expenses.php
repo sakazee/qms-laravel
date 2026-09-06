@@ -8,6 +8,7 @@
     'distribution_type'   => 'বিতরণ পদ্ধতি',
     'expense_date'        => 'তারিখ',
     'description'         => 'বিবরণ',
+    'expense_head'        => 'খরচের খাত',
     'dist' => [
         'flat'             => 'সমান ভাগ',
         'custom_percent'   => 'কাস্টম শতাংশ',

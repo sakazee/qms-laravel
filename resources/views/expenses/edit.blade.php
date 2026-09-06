@@ -17,7 +17,17 @@
             <form action="{{ route('expenses.update', $expense) }}" method="POST">
                 @csrf @method('PUT')
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                    <div class="sm:col-span-2 lg:col-span-1">
+                    <div class="sm:col-span-2">
+                        <label class="label">{{ __('expenses.expense_head') }} <span class="text-rose-600">*</span></label>
+                        <select name="expense_head_id" class="input select2 @error('expense_head_id') border-rose-400 @enderror" required>
+                            <option value="">-- {{ app()->getLocale() === 'bn' ? 'খরচের খাত নির্বাচন করুন' : 'Select Expense Head' }} --</option>
+                            @foreach($expenseHeads as $head)
+                            <option value="{{ $head->id }}" {{ old('expense_head_id', $expense->expense_head_id) == $head->id ? 'selected' : '' }}>{{ $head->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('expense_head_id')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+                    </div>
+                    <div class="sm:col-span-2">
                         <label class="label">{{ __('expenses.title') }} <span class="text-rose-600">*</span></label>
                         <input type="text" name="title" value="{{ old('title', $expense->title) }}" class="input" required>
                     </div>

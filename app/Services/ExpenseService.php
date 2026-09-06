@@ -23,6 +23,7 @@ class ExpenseService
             $expense = Expense::create([
                 'user_id'           => $userId,
                 'template_id'       => $templateId,
+                'expense_head_id'   => $data['expense_head_id'] ?? null,
                 'title'             => $data['title'],
                 'amount'            => $data['amount'],
                 'distribution_type' => $data['distribution_type'],
@@ -40,6 +41,7 @@ class ExpenseService
     {
         return DB::transaction(function () use ($expense, $data) {
             $expense->update([
+                'expense_head_id'   => $data['expense_head_id'] ?? null,
                 'title'             => $data['title'],
                 'amount'            => $data['amount'],
                 'distribution_type' => $data['distribution_type'],
@@ -144,7 +146,7 @@ class ExpenseService
 
     public function getForTemplate(int $templateId, int $userId)
     {
-        return Expense::with('distributions.animal')
+        return Expense::with('distributions.animal', 'expenseHead')
                       ->forTemplate($templateId)
                       ->where('user_id', $userId)
                       ->latest()

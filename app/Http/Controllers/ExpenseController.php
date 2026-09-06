@@ -6,6 +6,7 @@ use App\Http\Requests\Expense\StoreExpenseRequest;
 use App\Http\Requests\Expense\UpdateExpenseRequest;
 use App\Models\Animal;
 use App\Models\Expense;
+use App\Models\ExpenseHead;
 use App\Services\ExpenseService;
 
 class ExpenseController extends Controller
@@ -30,7 +31,8 @@ class ExpenseController extends Controller
     {
         $templateId = $this->getTemplateId();
         $animals    = Animal::forTemplate($templateId)->forUser(auth()->id())->get();
-        return view('expenses.create', compact('animals'));
+        $expenseHeads = ExpenseHead::forUser(auth()->id())->get();
+        return view('expenses.create', compact('animals', 'expenseHeads'));
     }
 
     public function store(StoreExpenseRequest $request)
@@ -55,8 +57,9 @@ class ExpenseController extends Controller
         $this->authorize('update', $expense);
         $templateId = $this->getTemplateId();
         $animals    = Animal::forTemplate($templateId)->forUser(auth()->id())->get();
-        $expense->load('distributions');
-        return view('expenses.edit', compact('expense', 'animals'));
+        $expenseHeads = ExpenseHead::forUser(auth()->id())->get();
+        $expense->load('distributions', 'expenseHead');
+        return view('expenses.edit', compact('expense', 'animals', 'expenseHeads'));
     }
 
     public function update(UpdateExpenseRequest $request, Expense $expense)

@@ -185,6 +185,10 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        $this->call([
+            DefaultExpenseHeadsSeeder::class,
+        ]);
+
         $this->command->info('✅ Demo data seeded successfully!');
         $this->command->info('   Email: demo@qurbani.app');
         $this->command->info('   Password: password');

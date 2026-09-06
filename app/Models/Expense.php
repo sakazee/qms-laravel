@@ -11,7 +11,7 @@ class Expense extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id', 'template_id', 'title', 'amount',
+        'user_id', 'template_id', 'expense_head_id', 'title', 'amount',
         'distribution_type', 'description', 'expense_date'
     ];
 
@@ -28,6 +28,11 @@ class Expense extends Model
     public function template()
     {
         return $this->belongsTo(Template::class);
+    }
+
+    public function expenseHead()
+    {
+        return $this->belongsTo(ExpenseHead::class);
     }
 
     public function distributions()
