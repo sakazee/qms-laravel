@@ -24,6 +24,7 @@ class ExpenseService
                 'expense_head_id' => $data['expense_head_id'] ?? null,
                 'title'           => $data['title'],
                 'amount'          => $data['amount'],
+                'split_type'      => $data['split_type'] ?? 'manual',
                 'description'     => $data['description'] ?? null,
                 'expense_date'    => $data['expense_date'],
             ]);
@@ -41,6 +42,7 @@ class ExpenseService
                 'expense_head_id'   => $data['expense_head_id'] ?? null,
                 'title'             => $data['title'],
                 'amount'            => $data['amount'],
+                'split_type'        => $data['split_type'] ?? 'manual',
                 'description'       => $data['description'] ?? null,
                 'expense_date'      => $data['expense_date'],
             ]);

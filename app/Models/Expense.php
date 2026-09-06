@@ -11,7 +11,7 @@ class Expense extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id', 'template_id', 'expense_head_id', 'title', 'amount',
+        'user_id', 'template_id', 'expense_head_id', 'title', 'amount', 'split_type',
         'description', 'expense_date'
     ];
 
@@ -38,6 +38,15 @@ class Expense extends Model
     public function distributions()
     {
         return $this->hasMany(ExpenseDistribution::class);
+    }
+
+    public function getSplitTypeLabelAttribute()
+    {
+        return match ($this->split_type) {
+            'equal'    => __('expenses.split_equal'),
+            'purchase' => __('expenses.split_purchase'),
+            default    => __('expenses.split_manual'),
+        };
     }
 
     public function scopeForTemplate($query, $templateId)

@@ -44,6 +44,7 @@
 </div>
 
 {{-- Distribution --}}
+<input type="hidden" name="split_type" id="split_type" value="{{ old('split_type', $expense?->split_type ?? 'manual') }}">
 <div id="distribution_section" class="d-none mt-6 rounded-xl border border-gray-200">
     <div class="flex items-center justify-between rounded-t-xl border-b border-gray-100 px-5 py-4">
         <h5 class="flex items-center gap-2 font-serif text-[15px] font-semibold text-amber-700">
@@ -224,6 +225,7 @@ window.qmsOnReady(function ($) {
         const tr = $(this).closest('.dist-row');
         const pct = parseFloat($(this).val()) || 0;
         tr.find('.dist-amount').val((totalAmount() * pct / 100).toFixed(2));
+        clearSplit();
         recomputeTotals();
     });
 
@@ -232,19 +234,26 @@ window.qmsOnReady(function ($) {
         const total = totalAmount();
         const amt = parseFloat($(this).val()) || 0;
         if (total > 0) tr.find('.dist-percent').val((amt / total * 100).toFixed(2));
+        clearSplit();
         recomputeTotals();
     });
 
     $sel.on('change', function () { showHideRows(); recomputeTotals(); });
     $('#total_amount').on('input', updateVisibility);
 
-    function activateSplit(btn) {
+    function activateSplit(btn, type) {
         $('#btn_equal, #btn_purchase').removeClass('is-active').attr('aria-pressed', 'false');
         $(btn).addClass('is-active').attr('aria-pressed', 'true');
+        $('#split_type').val(type);
     }
 
-    $('#btn_equal').on('click', function () { activateSplit(this); split('equal'); });
-    $('#btn_purchase').on('click', function () { activateSplit(this); split('purchase'); });
+    function clearSplit() {
+        $('#split_type').val('manual');
+        $('#btn_equal, #btn_purchase').removeClass('is-active').attr('aria-pressed', 'false');
+    }
+
+    $('#btn_equal').on('click', function () { activateSplit(this, 'equal'); split('equal'); });
+    $('#btn_purchase').on('click', function () { activateSplit(this, 'purchase'); split('purchase'); });
 
     $('#expense_form').on('submit', function (e) {
         if ($('.dist-row').length === 0) return true;
@@ -256,6 +265,10 @@ window.qmsOnReady(function ($) {
     });
 
     $(function () {
+        const stored = $('#split_type').val();
+        if (stored === 'equal' || stored === 'purchase') {
+            activateSplit(stored === 'equal' ? '#btn_equal' : '#btn_purchase', stored);
+        }
         updateVisibility();
     });
 })();

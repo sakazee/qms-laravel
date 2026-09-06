@@ -18,6 +18,7 @@
     'all_animals_hint'    => 'কিছুই নির্বাচন না করলে খরচটি টেমপ্লেটের সকল পশুর জন্য প্রযোজ্য হবে',
     'split_equal'         => 'সমান ভাগ',
     'split_purchase'      => 'ক্রয়মূল্যের অনুপাতে',
+    'split_manual'        => 'ম্যানুয়াল',
     'allocated'           => 'বরাদ্দ',
     'remaining'           => 'বাকি',
     'animals_covered'     => 'পশু',

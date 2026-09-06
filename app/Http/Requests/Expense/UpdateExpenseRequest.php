@@ -15,6 +15,7 @@ class UpdateExpenseRequest extends FormRequest
             'expense_head_id'            => ['required', 'nullable', Rule::exists('expense_heads', 'id')->where('user_id', auth()->id())],
             'title'                      => ['required', 'string', 'max:255'],
             'amount'                     => ['required', 'numeric', 'min:0.01'],
+            'split_type'                 => ['nullable', Rule::in(['equal', 'purchase', 'manual'])],
             'description'                => ['nullable', 'string'],
             'expense_date'               => ['required', 'date'],
             'animal_ids'                 => ['nullable', 'array'],

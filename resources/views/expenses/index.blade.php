@@ -64,6 +64,11 @@
                             };
                         @endphp
                         <div class="flex items-center gap-2">
+                            <span class="badge {{ match ($expense->split_type) {
+                                'equal' => 'bg-indigo-100 text-indigo-700',
+                                'purchase' => 'bg-violet-100 text-violet-700',
+                                default => 'bg-gray-100 text-gray-500',
+                            } }}">{{ $expense->split_type_label }}</span>
                             <span class="badge {{ $distBadge[0] }}">{{ $distBadge[1] }}</span>
                             <span class="text-[12px] text-gray-400">{{ format_amount($expense->distributions->count(), 0) }} {{ app()->getLocale() === 'bn' ? 'টি পশু' : 'animals' }}</span>
                         </div>
