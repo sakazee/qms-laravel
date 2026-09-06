@@ -179,15 +179,70 @@ window.qmsOnReady(function ($) {
         });
     }
 
+    function rowSrc(tr) {
+        const s = $(tr).data('src');
+        if (s === 'percent' || s === 'amount') return s;
+        const hasP = String($(tr).find('.dist-percent').val()).trim() !== '';
+        const hasA = String($(tr).find('.dist-amount').val()).trim() !== '';
+        return hasP ? 'percent' : (hasA ? 'amount' : null);
+    }
+
     function recomputeTotals() {
         const total = totalAmount();
+        const totalCents = Math.round(total * 100);
+        const pctRows = [], amtRows = [];
+
+        visibleRows().each(function () {
+            const src = rowSrc(this);
+            if (src === 'percent') {
+                pctRows.push({
+                    tr: this,
+                    pct: Math.round((parseFloat($(this).find('.dist-percent').val()) || 0) * 100) / 100,
+                });
+            } else if (src === 'amount') {
+                amtRows.push({
+                    tr: this,
+                    amt: Math.round((parseFloat($(this).find('.dist-amount').val()) || 0) * 100) / 100,
+                });
+            }
+        });
+
+        const usedCents = amtRows.reduce((s, r) => s + Math.round(r.amt * 100), 0);
+        let floorCents = 0;
+        const defs = pctRows.map((r) => {
+            const ideal = totalCents * r.pct / 100;
+            const cents = Math.floor(ideal + 1e-9);
+            const frac  = ideal - cents;
+            floorCents += cents;
+            return { tr: r.tr, cents, frac };
+        });
+
+        const n = pctRows.length;
+        let remainder = totalCents - usedCents - floorCents;
+        if (remainder > 0 && remainder < n) {
+            defs.sort((a, b) => b.frac - a.frac);
+            for (let i = 0; i < remainder; i++) defs[i].cents++;
+        } else if (remainder < 0 && -remainder <= n) {
+            defs.sort((a, b) => a.frac - b.frac);
+            for (let i = 0; i < -remainder; i++) defs[i].cents--;
+        } else if (remainder !== 0) {
+            defs.forEach((d, i) => { d.cents = Math.round(totalCents * pctRows[i].pct / 100); });
+        }
+        defs.forEach((d) => { $(d.tr).find('.dist-amount').val((d.cents / 100).toFixed(2)); });
+
+        amtRows.forEach((r) => {
+            $(r.tr).find('.dist-amount').val(r.amt.toFixed(2));
+            const pct = totalCents > 0 ? Math.min(Math.round(r.amt / total * 10000) / 100, 999.99) : 0;
+            $(r.tr).find('.dist-percent').val(pct ? pct.toFixed(2) : null);
+        });
+
         let allocated = 0, pctSum = 0;
         visibleRows().each(function () {
             allocated += parseFloat($(this).find('.dist-amount').val()) || 0;
             pctSum     += parseFloat($(this).find('.dist-percent').val()) || 0;
         });
         const remaining = total - allocated;
-        const ok = Math.abs(remaining) < 0.05;
+        const ok = Math.abs(remaining) < 0.01;
         const fmt = window.qmsFmt || ((s) => s);
 
         $('#allocated_val').text(fmt('৳' + allocated.toFixed(2)));
@@ -209,31 +264,43 @@ window.qmsOnReady(function ($) {
         if (count === 0) return;
         const total = totalAmount();
         const prices = [];
-        rows.each(function () { prices.push(parseFloat($(this).data('price')) || 0); });
+        rows.each(function () {
+            prices.push(parseFloat($(this).data('price')) || 0);
+            $(this).data('src', 'percent');
+        });
         const sum = prices.reduce((a, b) => a + b, 0);
+        const vendor = [];
+        let units = 0;
         rows.each(function (i) {
-            const pct = by === 'equal'
+            const raw = by === 'equal'
                 ? 100 / count
                 : (sum > 0 ? (prices[i] / sum) * 100 : 100 / count);
+            const u = raw * 100;
+            const floor = Math.floor(u + 1e-9);
+            vendor.push({ el: this, floor, frac: u - floor });
+            units += floor;
+        });
+        const left = 10000 - units;
+        vendor.sort((a, b) => b.frac - a.frac);
+        for (let i = 0; i < left; i++) vendor[i].floor++;
+        rows.each(function (i) {
+            const pct = vendor[i].floor / 100;
             $(this).find('.dist-percent').val(pct.toFixed(2));
-            $(this).find('.dist-amount').val((total * pct / 100).toFixed(2));
+            $(this).find('.dist-amount').val(null);
         });
         recomputeTotals();
     }
 
     $(document).on('input', '.dist-percent', function () {
         const tr = $(this).closest('.dist-row');
-        const pct = parseFloat($(this).val()) || 0;
-        tr.find('.dist-amount').val((totalAmount() * pct / 100).toFixed(2));
+        tr.data('src', 'percent');
         clearSplit();
         recomputeTotals();
     });
 
     $(document).on('input', '.dist-amount', function () {
         const tr = $(this).closest('.dist-row');
-        const total = totalAmount();
-        const amt = parseFloat($(this).val()) || 0;
-        if (total > 0) tr.find('.dist-percent').val((amt / total * 100).toFixed(2));
+        tr.data('src', 'amount');
         clearSplit();
         recomputeTotals();
     });
@@ -257,6 +324,11 @@ window.qmsOnReady(function ($) {
 
     $('#expense_form').on('submit', function (e) {
         if ($('.dist-row').length === 0) return true;
+        visibleRows().each(function () {
+            const src = rowSrc(this);
+            if (src === 'percent') $(this).find('.dist-amount').val('');
+            else if (src === 'amount') $(this).find('.dist-percent').val('');
+        });
         if (!recomputeTotals()) {
             e.preventDefault();
             e.stopPropagation();
