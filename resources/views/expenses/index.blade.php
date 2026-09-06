@@ -13,15 +13,22 @@
             <span class="rounded-lg bg-amber-50 px-3 py-1.5 font-serif text-[14px] font-bold text-amber-800 ring-1 ring-amber-200">
                 {{ app()->getLocale() === 'bn' ? 'মোট: ৳' : 'Total: ৳' }}{{ format_amount($expenses->sum('amount'), 0) }}
             </span>
+            <button type="submit" form="bulk-form" class="btn btn-danger btn-sm bulk-delete-btn" disabled
+                    title="{{ __('messages.delete_selected') }}">
+                <i class="fa-solid fa-trash-can"></i>{{ __('messages.delete_selected') }} <span class="bulk-count"></span>
+            </button>
             <a href="{{ route('expenses.create') }}" class="btn btn-primary btn-sm">
                 <i class="fa-solid fa-plus"></i>{{ __('expenses.create') }}
             </a>
         </div>
     </div>
+    <form id="bulk-form" action="{{ route('expenses.bulk-destroy') }}" method="POST" class="bulk-form">
+        @csrf
     <div class="table-wrap">
         <table class="datatable">
             <thead>
                 <tr>
+                    <th class="w-10"><input type="checkbox" class="bulk-select-all" title="{{ __('messages.select_all') }}"></th>
                     <th>#</th>
                     <th>{{ __('expenses.expense_head') }}</th>
                     <th>{{ __('expenses.title') }}</th>
@@ -35,6 +42,7 @@
             <tbody>
                 @foreach($expenses as $i => $expense)
                 <tr>
+                    <td><input type="checkbox" class="bulk-checkbox" value="{{ $expense->id }}"></td>
                     <td>{{ format_amount($i + 1, 0) }}</td>
                     <td>
                         @if($expense->expenseHead)
@@ -102,5 +110,6 @@
             </tbody>
         </table>
     </div>
+    </form>
 </div>
 @endsection

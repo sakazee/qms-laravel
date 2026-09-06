@@ -29,4 +29,6 @@ return [
     'small_animal_max_one_share' => 'ছোট পশুতে সর্বোচ্চ ১টি ভাগ হয়',
     'large_animal_max_seven_shares' => 'বড় পশুতে সর্বোচ্চ ৭টি ভাগ হয়',
     'cannot_delete_has_shares'   => 'এই পশুতে ভাগ নির্ধারিত আছে, তাই মুছা যাবে না',
+    'status_updated'           => 'স্ট্যাটাস পরিবর্তিত হয়েছে: :status',
+    'next_status'              => 'স্ট্যাটাস পরিবর্তন করুন: :status',
 ];

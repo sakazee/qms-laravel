@@ -27,6 +27,8 @@ class Animal extends Model
     public const MAX_SHARES_LARGE = 7;
     public const MAX_SHARES_SMALL = 1;
 
+    public const STATUS_CYCLE = ['pending', 'purchased', 'slaughtered'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -112,5 +114,11 @@ class Animal extends Model
             'slaughtered'  => 'success',
             default        => 'secondary',
         };
+    }
+
+    public function getNextStatusAttribute(): string
+    {
+        $index = array_search($this->status, self::STATUS_CYCLE, true);
+        return $index === false ? 'pending' : self::STATUS_CYCLE[($index + 1) % count(self::STATUS_CYCLE)];
     }
 }

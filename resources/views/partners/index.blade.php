@@ -9,14 +9,23 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title"><i class="fa-solid fa-users text-emerald-700"></i>{{ __('partners.partners') }}</h3>
-        <a href="{{ route('partners.create') }}" class="btn btn-primary btn-sm">
-            <i class="fa-solid fa-plus"></i> {{ __('partners.create') }}
-        </a>
+        <div class="flex items-center gap-3">
+            <button type="submit" form="bulk-form" class="btn btn-danger btn-sm bulk-delete-btn" disabled
+                    title="{{ __('messages.delete_selected') }}">
+                <i class="fa-solid fa-trash-can"></i>{{ __('messages.delete_selected') }} <span class="bulk-count"></span>
+            </button>
+            <a href="{{ route('partners.create') }}" class="btn btn-primary btn-sm">
+                <i class="fa-solid fa-plus"></i> {{ __('partners.create') }}
+            </a>
+        </div>
     </div>
+    <form id="bulk-form" action="{{ route('partners.bulk-destroy') }}" method="POST" class="bulk-form">
+        @csrf
     <div class="table-wrap">
         <table class="datatable">
             <thead>
                 <tr>
+                    <th class="w-10"><input type="checkbox" class="bulk-select-all" title="{{ __('messages.select_all') }}"></th>
                     <th>#</th>
                     <th>{{ __('partners.name') }}</th>
                     <th>{{ __('partners.phone') }}</th>
@@ -37,6 +46,7 @@
                     $badgeClass = ['paid' => 'bg-emerald-100 text-emerald-800', 'partial' => 'bg-amber-100 text-amber-800', 'unpaid' => 'bg-rose-100 text-rose-700'][$status];
                 @endphp
                 <tr>
+                    <td><input type="checkbox" class="bulk-checkbox" value="{{ $partner->id }}"></td>
                     <td>{{ format_amount($i + 1, 0) }}</td>
                     <td class="font-semibold text-gray-900">{{ $partner->name }}</td>
                     <td>{{ $partner->phone ?: '—' }}</td>
@@ -75,5 +85,6 @@
             </tbody>
         </table>
     </div>
+    </form>
 </div>
 @endsection

@@ -19,9 +19,10 @@
     <script>
         window.__qms_locale = {{ \Illuminate\Support\Js::from(app()->getLocale()) }};
         window.__qms_translate = {{ \Illuminate\Support\Js::from([
-            'confirmDelete' => __('messages.confirm_delete'),
-            'yes'           => __('messages.yes'),
-            'cancel'        => __('messages.cancel'),
+            'confirmDelete'     => __('messages.confirm_delete'),
+            'confirmBulkDelete' => __('messages.confirm_bulk_delete'),
+            'yes'               => __('messages.yes'),
+            'cancel'            => __('messages.cancel'),
         ]) }};
     </script>
 </head>

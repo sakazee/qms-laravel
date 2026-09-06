@@ -31,6 +31,27 @@ class AnimalService
         return $animal->fresh();
     }
 
+    public function cycleStatus(Animal $animal): Animal
+    {
+        $animal->update(['status' => $animal->next_status]);
+        return $animal->fresh();
+    }
+
+    public function bulkDelete($animals): array
+    {
+        $deleted = 0;
+        $skipped = 0;
+        foreach ($animals as $animal) {
+            try {
+                $this->delete($animal);
+                $deleted++;
+            } catch (\RuntimeException) {
+                $skipped++;
+            }
+        }
+        return [$deleted, $skipped];
+    }
+
     public function delete(Animal $animal): void
     {
         if ($animal->animalShares()->exists()) {

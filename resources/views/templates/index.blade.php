@@ -54,7 +54,12 @@
                     <td class="text-center font-semibold">{{ format_amount($template->partners_count ?? $template->partners()->count(), 0) }}</td>
                     <td>
                         <div class="flex items-center gap-1.5">
-                            @if(session('selected_template_id') != $template->id)
+                            @if(session('selected_template_id') == $template->id)
+                            <a href="{{ route('templates.deselect') }}"
+                               class="action-btn bg-gray-100 text-gray-600 hover:bg-gray-200" title="{{ __('templates.deselect') }}">
+                                <i class="fa-solid fa-check-double"></i>
+                            </a>
+                            @else
                             <a href="{{ route('templates.select', $template) }}"
                                class="action-btn bg-emerald-100 text-emerald-800 hover:bg-emerald-200" title="{{ __('templates.select') }}">
                                 <i class="fa-solid fa-check"></i>

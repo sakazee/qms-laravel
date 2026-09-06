@@ -120,4 +120,56 @@ $(document).ready(function () {
             if (result.isConfirmed) form.submit();
         });
     });
+
+    // Bulk delete: select-all + per-row checkboxes + confirm
+    function updateBulkUI(form) {
+        const count = $(form).find('.bulk-checkbox:checked').length;
+        const btn = $(`button[form="${form.id}"]`);
+        btn.prop('disabled', count === 0);
+        btn.find('.bulk-count').text(count > 0 ? `(${count})` : '');
+    }
+
+    $(document).on('change', '.bulk-select-all', function () {
+        const form = $(this).closest('form')[0];
+        $(form).find('.bulk-checkbox').prop('checked', $(this).is(':checked'));
+        updateBulkUI(form);
+    });
+
+    $(document).on('change', '.bulk-checkbox', function () {
+        const form = $(this).closest('form')[0];
+        const all = $(form).find('.bulk-checkbox');
+        const checked = $(form).find('.bulk-checkbox:checked');
+        $(form).find('.bulk-select-all').prop('checked', all.length > 0 && checked.length === all.length);
+        updateBulkUI(form);
+    });
+
+    $(document).on('submit', '.bulk-form', function (e) {
+        e.preventDefault();
+        const form = this;
+        const ids = $(form).find('.bulk-checkbox:checked').map(function () {
+            return $(this).val();
+        }).get();
+        if (ids.length === 0) return;
+        const title = (window.__qms_translate?.confirmBulkDelete ?? 'Delete {count} selected item(s)?')
+            .replace('{count}', ids.length);
+        Swal.fire({
+            title,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#be123c',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: window.__qms_translate?.yes ?? 'Yes',
+            cancelButtonText: window.__qms_translate?.cancel ?? 'Cancel',
+        }).then((result) => {
+            if (!result.isConfirmed) return;
+            ids.forEach((id) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'ids[]';
+                input.value = id;
+                form.appendChild(input);
+            });
+            form.submit();
+        });
+    });
 });

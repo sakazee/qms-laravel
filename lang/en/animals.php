@@ -9,4 +9,6 @@ return ['animals' => 'Animals', 'animal' => 'Animal', 'create' => 'Add Animal', 
     'small_animal_max_one_share' => 'Small animals can have maximum 1 share',
     'large_animal_max_seven_shares' => 'Large animals can have maximum 7 shares',
     'cannot_delete_has_shares' => 'Cannot delete animal with assigned shares',
+    'status_updated' => 'Status updated to :status',
+    'next_status' => 'Change status to :status',
 ];

@@ -13,15 +13,22 @@
             <span class="badge bg-emerald-100 text-emerald-800">
                 {{ app()->getLocale() === 'bn' ? 'মোট: ৳' : 'Total: ৳' }}{{ format_amount($payments->sum('amount'), 0) }}
             </span>
+            <button type="submit" form="bulk-form" class="btn btn-danger btn-sm bulk-delete-btn" disabled
+                    title="{{ __('messages.delete_selected') }}">
+                <i class="fa-solid fa-trash-can"></i>{{ __('messages.delete_selected') }} <span class="bulk-count"></span>
+            </button>
             <a href="{{ route('payments.create') }}" class="btn btn-primary btn-sm">
                 <i class="fa-solid fa-plus"></i> {{ __('payments.create') }}
             </a>
         </div>
     </div>
+    <form id="bulk-form" action="{{ route('payments.bulk-destroy') }}" method="POST" class="bulk-form">
+        @csrf
     <div class="table-wrap">
         <table class="datatable">
             <thead>
                 <tr>
+                    <th class="w-10"><input type="checkbox" class="bulk-select-all" title="{{ __('messages.select_all') }}"></th>
                     <th>#</th>
                     <th>{{ __('payments.partner') }}</th>
                     <th>{{ __('payments.amount') }}</th>
@@ -34,6 +41,7 @@
             <tbody>
                 @foreach($payments as $i => $payment)
                 <tr>
+                    <td><input type="checkbox" class="bulk-checkbox" value="{{ $payment->id }}"></td>
                     <td>{{ format_amount($i + 1, 0) }}</td>
                     <td>
                         <div class="font-semibold text-gray-900">{{ $payment->partner->name }}</div>
@@ -62,5 +70,6 @@
             </tbody>
         </table>
     </div>
+    </form>
 </div>
 @endsection

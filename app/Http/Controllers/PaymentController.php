@@ -6,6 +6,7 @@ use App\Http\Requests\Payment\StorePaymentRequest;
 use App\Http\Requests\Payment\UpdatePaymentRequest;
 use App\Models\Partner;
 use App\Models\Payment;
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -68,5 +69,22 @@ class PaymentController extends Controller
         $payment->delete();
         return redirect()->route('payments.index')
                          ->with('success', __('messages.deleted_successfully'));
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $ids = $request->validate([
+            'ids'   => ['required', 'array', 'min:1'],
+            'ids.*' => ['integer'],
+        ])['ids'];
+
+        $templateId = $this->getTemplateId();
+        $deleted    = Payment::forTemplate($templateId)
+                             ->where('user_id', auth()->id())
+                             ->whereIn('id', $ids)
+                             ->delete();
+
+        return redirect()->route('payments.index')
+                         ->with('success', __('messages.bulk_deleted', ['count' => format_amount($deleted, 0)]));
     }
 }

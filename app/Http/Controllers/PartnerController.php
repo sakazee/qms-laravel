@@ -76,4 +76,33 @@ class PartnerController extends Controller
         return redirect()->route('partners.index')
                          ->with('success', __('messages.deleted_successfully'));
     }
+
+    public function bulkDestroy(Request $request)
+    {
+        $ids = $request->validate([
+            'ids'   => ['required', 'array', 'min:1'],
+            'ids.*' => ['integer'],
+        ])['ids'];
+
+        $templateId = $this->getTemplateId();
+        $partners   = Partner::forTemplate($templateId)
+                             ->forUser(auth()->id())
+                             ->whereIn('id', $ids)
+                             ->get();
+
+        $deleted = 0;
+        $skipped = 0;
+        foreach ($partners as $partner) {
+            if ($partner->animalShares()->exists()) {
+                $skipped++;
+                continue;
+            }
+            $partner->delete();
+            $deleted++;
+        }
+
+        return redirect()->route('partners.index')
+                         ->with('success', __('messages.bulk_deleted', ['count' => format_amount($deleted, 0)]))
+                         ->with('warning', $skipped > 0 ? __('messages.bulk_skipped', ['count' => format_amount($skipped, 0)]) : null);
+    }
 }

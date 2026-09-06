@@ -71,4 +71,32 @@ class AnimalController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function toggleStatus(Animal $animal)
+    {
+        $this->authorize('update', $animal);
+        $animal = $this->animalService->cycleStatus($animal);
+        return redirect()->route('animals.index')
+                         ->with('success', __('animals.status_updated', ['status' => __('animals.status.' . $animal->status)]));
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $ids = $request->validate([
+            'ids'   => ['required', 'array', 'min:1'],
+            'ids.*' => ['integer'],
+        ])['ids'];
+
+        $templateId = $this->getTemplateId();
+        $animals    = Animal::forTemplate($templateId)
+                            ->forUser(auth()->id())
+                            ->whereIn('id', $ids)
+                            ->get();
+
+        [$deleted, $skipped] = $this->animalService->bulkDelete($animals);
+
+        return redirect()->route('animals.index')
+                         ->with('success', __('messages.bulk_deleted', ['count' => format_amount($deleted, 0)]))
+                         ->with('warning', $skipped > 0 ? __('messages.bulk_skipped', ['count' => format_amount($skipped, 0)]) : null);
+    }
 }

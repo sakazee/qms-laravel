@@ -8,6 +8,7 @@ use App\Models\Animal;
 use App\Models\Expense;
 use App\Models\ExpenseHead;
 use App\Services\ExpenseService;
+use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
@@ -84,5 +85,28 @@ class ExpenseController extends Controller
         $this->expenseService->delete($expense);
         return redirect()->route('expenses.index')
                          ->with('success', __('messages.deleted_successfully'));
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $ids = $request->validate([
+            'ids'   => ['required', 'array', 'min:1'],
+            'ids.*' => ['integer'],
+        ])['ids'];
+
+        $templateId = $this->getTemplateId();
+        $expenses   = Expense::forTemplate($templateId)
+                             ->where('user_id', auth()->id())
+                             ->whereIn('id', $ids)
+                             ->get();
+
+        $deleted = 0;
+        foreach ($expenses as $expense) {
+            $this->expenseService->delete($expense);
+            $deleted++;
+        }
+
+        return redirect()->route('expenses.index')
+                         ->with('success', __('messages.bulk_deleted', ['count' => format_amount($deleted, 0)]));
     }
 }

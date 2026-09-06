@@ -62,6 +62,6 @@ class TemplateController extends Controller
     public function deselect()
     {
         session()->forget('selected_template_id');
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('success', __('templates.deselected'));
     }
 }

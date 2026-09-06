@@ -34,9 +34,12 @@ Route::middleware(['auth', 'set.locale', 'ensure.template'])->group(function () 
     Route::resource('expense-heads', ExpenseHeadController::class)->except(['show']);
 
     // Animals
+    Route::post('animals/bulk-destroy', [AnimalController::class, 'bulkDestroy'])->name('animals.bulk-destroy');
+    Route::post('animals/{animal}/status', [AnimalController::class, 'toggleStatus'])->name('animals.toggle-status');
     Route::resource('animals', AnimalController::class);
 
     // Partners
+    Route::post('partners/bulk-destroy', [PartnerController::class, 'bulkDestroy'])->name('partners.bulk-destroy');
     Route::resource('partners', PartnerController::class);
 
     // Animal Shares
@@ -44,9 +47,11 @@ Route::middleware(['auth', 'set.locale', 'ensure.template'])->group(function () 
     Route::get('api/animal/{animal}/info', [AnimalShareController::class, 'getAnimalInfo'])->name('api.animal.info');
 
     // Expenses
+    Route::post('expenses/bulk-destroy', [ExpenseController::class, 'bulkDestroy'])->name('expenses.bulk-destroy');
     Route::resource('expenses', ExpenseController::class);
 
     // Payments
+    Route::post('payments/bulk-destroy', [PaymentController::class, 'bulkDestroy'])->name('payments.bulk-destroy');
     Route::resource('payments', PaymentController::class);
 
     // Reports
