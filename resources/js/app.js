@@ -1,5 +1,6 @@
 import 'datatables.net-dt/css/jquery.dataTables.css';
 import 'datatables.net-responsive-dt/css/responsive.dataTables.css';
+import 'select2/dist/css/select2.min.css';
 import '../css/app.css';
 import $ from 'jquery';
 import 'datatables.net';

@@ -69,10 +69,10 @@
         <p class="mt-1.5 text-[12px] text-gray-500"><i class="fa-solid fa-circle-info mr-1"></i>{{ __('expenses.all_animals_hint') }}</p>
 
         <div class="mt-3 flex flex-wrap items-center gap-2">
-            <button type="button" id="btn_equal" class="btn btn-secondary btn-sm">
+            <button type="button" id="btn_equal" class="btn btn-sm btn-split" aria-pressed="false">
                 <i class="fa-solid fa-equals"></i>{{ __('expenses.split_equal') }}
             </button>
-            <button type="button" id="btn_purchase" class="btn btn-secondary btn-sm">
+            <button type="button" id="btn_purchase" class="btn btn-sm btn-split" aria-pressed="false">
                 <i class="fa-solid fa-percent"></i>{{ __('expenses.split_purchase') }}
             </button>
         </div>
@@ -97,19 +97,19 @@
                     <td class="px-4 py-3 font-medium text-gray-900">{{ $animal->type_name }}{{ $animal->name ? ' — '.$animal->name : '' }}</td>
                     <td class="px-4 py-3">৳{{ format_amount($animal->purchase_price, 0) }}</td>
                     <td class="px-4 py-3">
-                        <div class="flex items-center">
+                        <div class="relative">
+                            <span class="pointer-events-none absolute inset-y-0 left-0 flex w-9 items-center justify-end pr-1.5 text-[12.5px] font-medium text-gray-500">%</span>
                             <input type="number" name="distributions[{{ $animal->id }}][percent]"
-                                   class="input !rounded-r-none !py-1.5 dist-percent" placeholder="—"
+                                   class="input !py-1.5 pl-9 dist-percent" placeholder="—"
                                    min="0" step="0.01"
                                    value="{{ old('distributions.'.$animal->id.'.percent', $d?->percentage) }}">
-                            <span class="inline-flex items-center rounded-r-lg border border-l-0 border-gray-300 bg-gray-50 px-3 text-[12.5px] font-medium text-gray-600">%</span>
                         </div>
                     </td>
                     <td class="px-4 py-3">
                         <div class="relative">
-                            <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-[13px] font-medium text-gray-500">৳</span>
+                            <span class="pointer-events-none absolute inset-y-0 left-0 flex w-9 items-center justify-end pr-1.5 text-[12.5px] font-medium text-gray-500">৳</span>
                             <input type="number" name="distributions[{{ $animal->id }}][amount]"
-                                   class="input !py-1.5 pl-7 dist-amount" placeholder="—"
+                                   class="input !py-1.5 pl-9 dist-amount" placeholder="—"
                                    min="0" step="0.01"
                                    value="{{ old('distributions.'.$animal->id.'.amount', $d?->amount) }}">
                         </div>
@@ -237,8 +237,14 @@ window.qmsOnReady(function ($) {
 
     $sel.on('change', function () { showHideRows(); recomputeTotals(); });
     $('#total_amount').on('input', updateVisibility);
-    $('#btn_equal').on('click', function () { split('equal'); });
-    $('#btn_purchase').on('click', function () { split('purchase'); });
+
+    function activateSplit(btn) {
+        $('#btn_equal, #btn_purchase').removeClass('is-active').attr('aria-pressed', 'false');
+        $(btn).addClass('is-active').attr('aria-pressed', 'true');
+    }
+
+    $('#btn_equal').on('click', function () { activateSplit(this); split('equal'); });
+    $('#btn_purchase').on('click', function () { activateSplit(this); split('purchase'); });
 
     $('#expense_form').on('submit', function (e) {
         if ($('.dist-row').length === 0) return true;
