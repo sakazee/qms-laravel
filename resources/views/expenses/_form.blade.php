@@ -71,7 +71,7 @@ $checkedAnimals = array_map('intval', (array) $checkedAnimals);
         <div id="animal_picker" class="rounded-xl border border-gray-200 bg-white">
             <label class="flex cursor-pointer items-center gap-2.5 border-b border-gray-100 px-4 py-2.5 select-none hover:bg-emerald-50/60">
                 <input type="checkbox" id="animal_select_all" class="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500">
-                <span class="text-[13px] font-semibold text-gray-800">{{ __('expenses.select_all_animals') }}</span>
+                <span class="text-[13px] font-semibold text-gray-800 ml-2">{{ __('expenses.select_all_animals') }}</span>
                 <span id="animal_picker_count" class="ml-auto text-[12px] font-semibold text-emerald-700"></span>
             </label>
             <div class="max-h-48 overflow-y-auto py-1">
@@ -79,7 +79,7 @@ $checkedAnimals = array_map('intval', (array) $checkedAnimals);
                 <label class="flex cursor-pointer items-center gap-2.5 px-4 py-1.5 select-none hover:bg-emerald-50/60">
                     <input type="checkbox" name="animal_ids[]" value="{{ $animal->id }}" class="animal-check h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
                            {{ in_array($animal->id, $checkedAnimals, true) ? 'checked' : '' }}>
-                    <span class="text-[13px] text-gray-700">{{ $animal->type_name }}{{ $animal->name ? ' — '.$animal->name : '' }} (৳{{ format_amount($animal->purchase_price, 0) }})</span>
+                    <span class="text-[13px] text-gray-700 ml-2">{{ $animal->type_name }}{{ $animal->name ? ' — '.$animal->name : '' }} (৳{{ format_amount($animal->purchase_price, 0) }})</span>
                 </label>
                 @endforeach
             </div>
