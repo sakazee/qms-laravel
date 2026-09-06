@@ -15,6 +15,7 @@ class TemplateService
     public function create(array $data, int $userId): Template
     {
         $this->clearCache($userId);
+
         return Template::create(array_merge($data, ['user_id' => $userId]));
     }
 
@@ -22,6 +23,7 @@ class TemplateService
     {
         $template->update($data);
         $this->clearCache($template->user_id);
+
         return $template->fresh();
     }
 
@@ -35,18 +37,19 @@ class TemplateService
     {
         return Cache::remember("dashboard_stats_{$userId}_{$templateId}", 300, function () use ($templateId, $userId) {
             $template = Template::with(['animals', 'partners', 'expenses', 'payments'])
-                                ->where('id', $templateId)
-                                ->where('user_id', $userId)
-                                ->firstOrFail();
+                ->where('id', $templateId)
+                ->where('user_id', $userId)
+                ->firstOrFail();
 
             return [
-                'total_animals'    => $template->animals->count(),
-                'total_partners'   => $template->partners->count(),
-                'total_expenses'   => $template->expenses->sum('amount'),
+                'total_animals' => $template->animals->count(),
+                'total_partners' => $template->partners->count(),
+                'total_expenses' => $template->expenses->sum('amount'),
                 'total_collection' => $template->payments->sum('amount'),
-                'total_cost'       => $template->animals->sum('purchase_price') + $template->expenses->sum('amount'),
-                'due'              => $template->due,
-                'advance'          => $template->advance,
+                'total_animal_cost' => $template->animals->sum('purchase_price'),
+                'total_cost' => $template->animals->sum('purchase_price') + $template->expenses->sum('amount'),
+                'due' => $template->due,
+                'advance' => $template->advance,
             ];
         });
     }
