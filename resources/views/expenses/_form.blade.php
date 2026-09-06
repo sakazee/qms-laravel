@@ -1,4 +1,14 @@
-@php $expense ??= null; $existingDist = $expense?->distributions?->keyBy('animal_id'); @endphp
+@php
+$expense ??= null;
+$existingDist = $expense?->distributions?->keyBy('animal_id');
+$checkedAnimals = old('animal_ids');
+if ($checkedAnimals === null) {
+    $checkedAnimals = ($expense && $existingDist->isNotEmpty())
+        ? $existingDist->keys()->toArray()
+        : $animals->pluck('id')->all();
+}
+$checkedAnimals = array_map('intval', (array) $checkedAnimals);
+@endphp
 
 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
     <div class="sm:col-span-2">
@@ -58,15 +68,22 @@
 
     <div class="border-b border-gray-100 px-5 py-4">
         <label class="label">{{ __('expenses.select_animals') }}</label>
-        <select name="animal_ids[]" id="animal_ids" class="input select2" multiple
-                data-placeholder="{{ app()->getLocale() === 'bn' ? 'সকল পশু — নির্বাচন না করলে সবগুলোতে প্রযোজ্য' : 'All animals — select to limit' }}">
-            @foreach($animals as $animal)
-            <option value="{{ $animal->id }}"
-                {{ in_array($animal->id, old('animal_ids', $existingDist?->keys()->toArray() ?? []), true) ? 'selected' : '' }}>
-                {{ $animal->type_name }}{{ $animal->name ? ' — '.$animal->name : '' }} (৳{{ format_amount($animal->purchase_price, 0) }})
-            </option>
-            @endforeach
-        </select>
+        <div id="animal_picker" class="rounded-xl border border-gray-200 bg-white">
+            <label class="flex cursor-pointer items-center gap-2.5 border-b border-gray-100 px-4 py-2.5 select-none hover:bg-emerald-50/60">
+                <input type="checkbox" id="animal_select_all" class="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500">
+                <span class="text-[13px] font-semibold text-gray-800">{{ __('expenses.select_all_animals') }}</span>
+                <span id="animal_picker_count" class="ml-auto text-[12px] font-semibold text-emerald-700"></span>
+            </label>
+            <div class="max-h-48 overflow-y-auto py-1">
+                @foreach($animals as $animal)
+                <label class="flex cursor-pointer items-center gap-2.5 px-4 py-1.5 select-none hover:bg-emerald-50/60">
+                    <input type="checkbox" name="animal_ids[]" value="{{ $animal->id }}" class="animal-check h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                           {{ in_array($animal->id, $checkedAnimals, true) ? 'checked' : '' }}>
+                    <span class="text-[13px] text-gray-700">{{ $animal->type_name }}{{ $animal->name ? ' — '.$animal->name : '' }} (৳{{ format_amount($animal->purchase_price, 0) }})</span>
+                </label>
+                @endforeach
+            </div>
+        </div>
         <p class="mt-1.5 text-[12px] text-gray-500"><i class="fa-solid fa-circle-info mr-1"></i>{{ __('expenses.all_animals_hint') }}</p>
 
         <div class="mt-3 flex flex-wrap items-center gap-2">
@@ -139,7 +156,6 @@
 window.qmsOnReady(function ($) {
 (function () {
     const locale = '{{ app()->getLocale() }}';
-    const $sel = $('#animal_ids');
     const mismatchMsg = locale === 'bn'
         ? 'বরাদ্দকৃত পরিমাণের যোগফল খরচের পরিমাণের সমান নয়। বাকি টাকা আরেকটি পশুতে বরাদ্দ করুন বা % / নির্দিষ্ট পরিমাণ ঠিক করুন।'
         : 'Allocated amounts must add up to the expense total. Adjust the % or fixed amounts to cover the remaining amount.';
@@ -158,7 +174,18 @@ window.qmsOnReady(function ($) {
     }
 
     function selectedIds() {
-        return $sel.val() || [];
+        return $('.animal-check:checked').map(function () {
+            return $(this).val();
+        }).get();
+    }
+
+    function syncSelectAll() {
+        const $all = $('.animal-check');
+        const checked = $all.filter(':checked');
+        const $btn = $('#animal_select_all');
+        $btn.prop('checked', checked.length > 0 && checked.length === $all.length);
+        $btn.prop('indeterminate', checked.length > 0 && checked.length < $all.length);
+        $('#animal_picker_count').text($all.length ? checked.length + '/' + $all.length : '');
     }
 
     function visibleRows() {
@@ -190,6 +217,11 @@ window.qmsOnReady(function ($) {
     function recomputeTotals() {
         const total = totalAmount();
         const totalCents = Math.round(total * 100);
+        if (visibleRows().length === 0) {
+            $('#allocation_status').removeClass('badge-success badge-danger');
+            $('#remaining_val').removeClass('text-emerald-600 text-rose-600');
+            return true;
+        }
         const pctRows = [], amtRows = [];
 
         visibleRows().each(function () {
@@ -305,7 +337,19 @@ window.qmsOnReady(function ($) {
         recomputeTotals();
     });
 
-    $sel.on('change', function () { showHideRows(); recomputeTotals(); });
+    $(document).on('change', '.animal-check', function () {
+        syncSelectAll();
+        showHideRows();
+        recomputeTotals();
+    });
+
+    $('#animal_select_all').on('change', function () {
+        const checkedTo = $(this).is(':checked');
+        $('.animal-check').prop('checked', checkedTo);
+        syncSelectAll();
+        showHideRows();
+        recomputeTotals();
+    });
     $('#total_amount').on('input', updateVisibility);
 
     function activateSplit(btn, type) {
@@ -323,7 +367,7 @@ window.qmsOnReady(function ($) {
     $('#btn_purchase').on('click', function () { activateSplit(this, 'purchase'); split('purchase'); });
 
     $('#expense_form').on('submit', function (e) {
-        if ($('.dist-row').length === 0) return true;
+        if ($('.dist-row').length === 0 || selectedIds().length === 0) return true;
         visibleRows().each(function () {
             const src = rowSrc(this);
             if (src === 'percent') $(this).find('.dist-amount').val('');
@@ -341,6 +385,7 @@ window.qmsOnReady(function ($) {
         if (stored === 'equal' || stored === 'purchase') {
             activateSplit(stored === 'equal' ? '#btn_equal' : '#btn_purchase', stored);
         }
+        syncSelectAll();
         updateVisibility();
     });
 })();

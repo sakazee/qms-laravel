@@ -56,9 +56,9 @@ class ExpenseService
     }
 
     /**
-     * Animals the expense applies to: the submitted selection, or all
-     * animals of the template when nothing was selected. Unknown ids are
-     * ignored.
+     * Animals the expense applies to: the submitted selection only. An
+     * empty selection means the expense covers no animal. Unknown ids
+     * are ignored.
      */
     public function targetAnimals(array $data, int $templateId, int $userId)
     {
@@ -68,7 +68,7 @@ class ExpenseService
             ->filter(fn ($id) => $all->contains('id', (int) $id))
             ->map(fn ($id) => (int) $id);
 
-        return $selected->isNotEmpty() ? $all->whereIn('id', $selected) : $all;
+        return $selected->isNotEmpty() ? $all->whereIn('id', $selected) : collect();
     }
 
     /**
