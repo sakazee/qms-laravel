@@ -12,7 +12,7 @@ class Expense extends Model
 
     protected $fillable = [
         'user_id', 'template_id', 'expense_head_id', 'title', 'amount',
-        'distribution_type', 'description', 'expense_date'
+        'description', 'expense_date'
     ];
 
     protected $casts = [
@@ -43,15 +43,5 @@ class Expense extends Model
     public function scopeForTemplate($query, $templateId)
     {
         return $query->where('template_id', $templateId);
-    }
-
-    public function getDistributionTypeLabelAttribute(): string
-    {
-        return match($this->distribution_type) {
-            'flat'             => __('expenses.dist.flat'),
-            'custom_percent'   => __('expenses.dist.custom_percent'),
-            'purchase_percent' => __('expenses.dist.purchase_percent'),
-            default            => $this->distribution_type,
-        };
     }
 }

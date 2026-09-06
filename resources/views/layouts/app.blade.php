@@ -74,6 +74,31 @@
     </div>
 </div>
 
+<script>
+    window.qmsOnReady = (function () {
+        const queue = [];
+        let done = false;
+        let timer = null;
+
+        function tryBoot() {
+            if (done) return;
+            if (!window.jQuery || !window.jQuery.fn || typeof window.jQuery.fn.select2 !== 'function') return;
+            done = true;
+            if (timer) clearInterval(timer);
+            const $ = window.jQuery;
+            for (let i = 0; i < queue.length; i++) queue[i]($);
+            queue.length = 0;
+        }
+
+        document.addEventListener('DOMContentLoaded', tryBoot);
+        timer = setInterval(tryBoot, 100);
+
+        return function (fn) {
+            if (done) { fn(window.jQuery); return; }
+            queue.push(fn);
+        };
+    })();
+</script>
 @stack('scripts')
 </body>
 </html>

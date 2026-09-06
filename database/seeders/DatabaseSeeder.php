@@ -126,36 +126,34 @@ class DatabaseSeeder extends Seeder
 
         // Create expenses
         $expense1 = Expense::create([
-            'user_id'           => $user->id,
-            'template_id'       => $template->id,
-            'title'             => 'পরিবহন খরচ',
-            'amount'            => 7000.00,
-            'distribution_type' => 'flat',
-            'expense_date'      => now()->subDays(3),
+            'user_id'      => $user->id,
+            'template_id'  => $template->id,
+            'title'        => 'পরিবহন খরচ',
+            'amount'       => 7000.00,
+            'expense_date' => now()->subDays(3),
         ]);
-        // Flat distribution
+        // Flat (equal) distribution
         $animals = collect([$cow1, $cow2, $goat]);
         $flatAmt = round(7000 / 3, 2);
         foreach ($animals as $a) {
             ExpenseDistribution::create([
-                'expense_id' => $expense1->id, 'animal_id' => $a->id,
+                'expense_id' => $expense1->id, 'animal_id' => $a->id, 'method' => 'percent',
                 'percentage' => round(100/3, 2), 'amount' => $flatAmt,
             ]);
         }
 
         $expense2 = Expense::create([
-            'user_id'           => $user->id,
-            'template_id'       => $template->id,
-            'title'             => 'কসাই মজুরি',
-            'amount'            => 5000.00,
-            'distribution_type' => 'purchase_percent',
-            'expense_date'      => now()->subDays(1),
+            'user_id'      => $user->id,
+            'template_id'  => $template->id,
+            'title'        => 'কসাই মজুরি',
+            'amount'       => 5000.00,
+            'expense_date' => now()->subDays(1),
         ]);
         $totalPurchase = $cow1->purchase_price + $cow2->purchase_price + $goat->purchase_price;
         foreach ($animals as $a) {
             $pct = ($a->purchase_price / $totalPurchase) * 100;
             ExpenseDistribution::create([
-                'expense_id' => $expense2->id, 'animal_id' => $a->id,
+                'expense_id' => $expense2->id, 'animal_id' => $a->id, 'method' => 'percent',
                 'percentage' => round($pct, 2), 'amount' => round(5000 * $pct / 100, 2),
             ]);
         }

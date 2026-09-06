@@ -1,0 +1,258 @@
+@php $expense ??= null; $existingDist = $expense?->distributions?->keyBy('animal_id'); @endphp
+
+<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="sm:col-span-2">
+        <label class="label">{{ __('expenses.expense_head') }} <span class="text-rose-600">*</span></label>
+        <select name="expense_head_id" class="input select2 @error('expense_head_id') border-rose-400 @enderror" required>
+            <option value="">-- {{ app()->getLocale() === 'bn' ? 'খরচের খাত নির্বাচন করুন' : 'Select Expense Head' }} --</option>
+            @foreach($expenseHeads as $head)
+            <option value="{{ $head->id }}" {{ old('expense_head_id', $expense?->expense_head_id) == $head->id ? 'selected' : '' }}>{{ $head->name }}</option>
+            @endforeach
+        </select>
+        @error('expense_head_id')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+    </div>
+
+    <div class="sm:col-span-2">
+        <label class="label">{{ __('expenses.title') }} <span class="text-rose-600">*</span></label>
+        <input type="text" name="title" value="{{ old('title', $expense?->title) }}"
+               class="input @error('title') border-rose-400 @enderror" required>
+        @error('title')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+    </div>
+
+    <div class="lg:col-span-1">
+        <label class="label">{{ __('expenses.amount') }} <span class="text-rose-600">*</span></label>
+        <div class="relative">
+            <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[13.5px] font-medium text-gray-500">৳</span>
+            <input type="number" name="amount" id="total_amount" value="{{ old('amount', $expense?->amount) }}"
+                   class="input pl-8 @error('amount') border-rose-400 @enderror"
+                   min="0.01" step="0.01" required>
+        </div>
+        @error('amount')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+    </div>
+
+    <div class="lg:col-span-1">
+        <label class="label">{{ __('expenses.expense_date') }} <span class="text-rose-600">*</span></label>
+        <input type="date" name="expense_date" value="{{ old('expense_date', $expense?->expense_date?->format('Y-m-d') ?? date('Y-m-d')) }}"
+               class="input @error('expense_date') border-rose-400 @enderror" required>
+        @error('expense_date')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+    </div>
+</div>
+
+<div class="mt-5">
+    <label class="label">{{ __('messages.description') }}</label>
+    <textarea name="description" rows="2" class="input resize-none">{{ old('description', $expense?->description) }}</textarea>
+</div>
+
+{{-- Distribution --}}
+<div id="distribution_section" class="d-none mt-6 rounded-xl border border-gray-200">
+    <div class="flex items-center justify-between rounded-t-xl border-b border-gray-100 px-5 py-4">
+        <h5 class="flex items-center gap-2 font-serif text-[15px] font-semibold text-amber-700">
+            <i class="fa-solid fa-table"></i>{{ __('expenses.distributions') }}
+        </h5>
+        <span id="allocation_status" class="badge bg-gray-100 text-gray-600">
+            <span id="allocated_val">৳0</span> / <span id="allocated_total">৳0</span>
+            <span class="ml-2 opacity-80">({{ __('expenses.remaining') }}: <span id="remaining_val">৳0</span>)</span>
+        </span>
+    </div>
+
+    <div class="border-b border-gray-100 px-5 py-4">
+        <label class="label">{{ __('expenses.select_animals') }}</label>
+        <select name="animal_ids[]" id="animal_ids" class="input select2" multiple
+                data-placeholder="{{ app()->getLocale() === 'bn' ? 'সকল পশু — নির্বাচন না করলে সবগুলোতে প্রযোজ্য' : 'All animals — select to limit' }}">
+            @foreach($animals as $animal)
+            <option value="{{ $animal->id }}"
+                {{ in_array($animal->id, old('animal_ids', $existingDist?->keys()->toArray() ?? []), true) ? 'selected' : '' }}>
+                {{ $animal->type_name }}{{ $animal->name ? ' — '.$animal->name : '' }} (৳{{ format_amount($animal->purchase_price, 0) }})
+            </option>
+            @endforeach
+        </select>
+        <p class="mt-1.5 text-[12px] text-gray-500"><i class="fa-solid fa-circle-info mr-1"></i>{{ __('expenses.all_animals_hint') }}</p>
+
+        <div class="mt-3 flex flex-wrap items-center gap-2">
+            <button type="button" id="btn_equal" class="btn btn-secondary btn-sm">
+                <i class="fa-solid fa-equals"></i>{{ __('expenses.split_equal') }}
+            </button>
+            <button type="button" id="btn_purchase" class="btn btn-secondary btn-sm">
+                <i class="fa-solid fa-percent"></i>{{ __('expenses.split_purchase') }}
+            </button>
+        </div>
+    </div>
+
+    <div class="table-wrap">
+        <table class="w-full text-[13px]" id="dist_table">
+            <thead>
+                <tr class="border-b border-gray-200 bg-paper-100 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">
+                    <th class="px-4 py-3">#</th>
+                    <th class="px-4 py-3">{{ __('expenses.animal') }}</th>
+                    <th class="px-4 py-3">{{ __('animals.purchase_price') }}</th>
+                    <th class="px-4 py-3" style="width:170px">{{ __('expenses.percentage') }}</th>
+                    <th class="px-4 py-3" style="width:170px">{{ __('expenses.fixed_amount') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($animals as $i => $animal)
+                @php $d = $existingDist?->get($animal->id); @endphp
+                <tr class="dist-row border-b border-gray-100" data-id="{{ $animal->id }}" data-price="{{ $animal->purchase_price }}">
+                    <td class="px-4 py-3 text-gray-500">{{ format_amount($i + 1, 0) }}</td>
+                    <td class="px-4 py-3 font-medium text-gray-900">{{ $animal->type_name }}{{ $animal->name ? ' — '.$animal->name : '' }}</td>
+                    <td class="px-4 py-3">৳{{ format_amount($animal->purchase_price, 0) }}</td>
+                    <td class="px-4 py-3">
+                        <div class="flex items-center">
+                            <input type="number" name="distributions[{{ $animal->id }}][percent]"
+                                   class="input !rounded-r-none !py-1.5 dist-percent" placeholder="—"
+                                   min="0" step="0.01"
+                                   value="{{ old('distributions.'.$animal->id.'.percent', $d?->percentage) }}">
+                            <span class="inline-flex items-center rounded-r-lg border border-l-0 border-gray-300 bg-gray-50 px-3 text-[12.5px] font-medium text-gray-600">%</span>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3">
+                        <div class="relative">
+                            <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-[13px] font-medium text-gray-500">৳</span>
+                            <input type="number" name="distributions[{{ $animal->id }}][amount]"
+                                   class="input !py-1.5 pl-7 dist-amount" placeholder="—"
+                                   min="0" step="0.01"
+                                   value="{{ old('distributions.'.$animal->id.'.amount', $d?->amount) }}">
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+                @if($animals->isEmpty())
+                <tr>
+                    <td colspan="5" class="px-4 py-6 text-center text-[13px] text-gray-500">{{ __('messages.no_data_found') }}</td>
+                </tr>
+                @endif
+            </tbody>
+            <tfoot>
+                <tr class="bg-emerald-50/50 font-bold text-gray-900">
+                    <td class="px-4 py-3" colspan="3">{{ __('messages.total') }}</td>
+                    <td class="px-4 py-3"><span id="total_percent">—</span></td>
+                    <td class="px-4 py-3"><span id="allocated_val_foot">৳0</span></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+@push('scripts')
+<script>
+window.qmsOnReady(function ($) {
+(function () {
+    const locale = '{{ app()->getLocale() }}';
+    const $sel = $('#animal_ids');
+    const mismatchMsg = locale === 'bn'
+        ? 'বরাদ্দকৃত পরিমাণের যোগফল খরচের পরিমাণের সমান নয়। বাকি টাকা আরেকটি পশুতে বরাদ্দ করুন বা % / নির্দিষ্ট পরিমাণ ঠিক করুন।'
+        : 'Allocated amounts must add up to the expense total. Adjust the % or fixed amounts to cover the remaining amount.';
+
+    function totalAmount() {
+        return parseFloat($('#total_amount').val()) || 0;
+    }
+
+    function updateVisibility() {
+        const show = totalAmount() > 0;
+        $('#distribution_section').toggleClass('d-none', !show);
+        if (show) {
+            showHideRows();
+            recomputeTotals();
+        }
+    }
+
+    function selectedIds() {
+        return $sel.val() || [];
+    }
+
+    function visibleRows() {
+        const ids = selectedIds();
+        const set = new Set(ids.map(String));
+        const rows = $('.dist-row');
+        return ids.length === 0 ? rows : rows.filter(function () {
+            return set.has(String($(this).data('id')));
+        });
+    }
+
+    function showHideRows() {
+        const ids = selectedIds();
+        const set = new Set(ids.map(String));
+        $('.dist-row').each(function () {
+            const on = ids.length === 0 || set.has(String($(this).data('id')));
+            $(this).toggleClass('d-none', !on);
+        });
+    }
+
+    function recomputeTotals() {
+        const total = totalAmount();
+        let allocated = 0, pctSum = 0;
+        visibleRows().each(function () {
+            allocated += parseFloat($(this).find('.dist-amount').val()) || 0;
+            pctSum     += parseFloat($(this).find('.dist-percent').val()) || 0;
+        });
+        const remaining = total - allocated;
+        const ok = Math.abs(remaining) < 0.05;
+        const fmt = window.qmsFmt || ((s) => s);
+
+        $('#allocated_val').text(fmt('৳' + allocated.toFixed(2)));
+        $('#allocated_total').text(fmt('৳' + total.toFixed(2)));
+        $('#remaining_val').text(fmt('৳' + remaining.toFixed(2)))
+            .toggleClass('text-emerald-600', ok)
+            .toggleClass('text-rose-600', !ok);
+        $('#allocated_val_foot').text(fmt('৳' + allocated.toFixed(2)));
+        $('#total_percent').text(fmt(pctSum.toFixed(2) + '%'));
+        $('#allocation_status')
+            .removeClass('badge-success badge-danger')
+            .addClass(ok ? 'badge-success' : 'badge-danger');
+        return ok;
+    }
+
+    function split(by) {
+        const rows = visibleRows();
+        const count = rows.length;
+        if (count === 0) return;
+        const total = totalAmount();
+        const prices = [];
+        rows.each(function () { prices.push(parseFloat($(this).data('price')) || 0); });
+        const sum = prices.reduce((a, b) => a + b, 0);
+        rows.each(function (i) {
+            const pct = by === 'equal'
+                ? 100 / count
+                : (sum > 0 ? (prices[i] / sum) * 100 : 100 / count);
+            $(this).find('.dist-percent').val(pct.toFixed(2));
+            $(this).find('.dist-amount').val((total * pct / 100).toFixed(2));
+        });
+        recomputeTotals();
+    }
+
+    $(document).on('input', '.dist-percent', function () {
+        const tr = $(this).closest('.dist-row');
+        const pct = parseFloat($(this).val()) || 0;
+        tr.find('.dist-amount').val((totalAmount() * pct / 100).toFixed(2));
+        recomputeTotals();
+    });
+
+    $(document).on('input', '.dist-amount', function () {
+        const tr = $(this).closest('.dist-row');
+        const total = totalAmount();
+        const amt = parseFloat($(this).val()) || 0;
+        if (total > 0) tr.find('.dist-percent').val((amt / total * 100).toFixed(2));
+        recomputeTotals();
+    });
+
+    $sel.on('change', function () { showHideRows(); recomputeTotals(); });
+    $('#total_amount').on('input', updateVisibility);
+    $('#btn_equal').on('click', function () { split('equal'); });
+    $('#btn_purchase').on('click', function () { split('purchase'); });
+
+    $('#expense_form').on('submit', function (e) {
+        if ($('.dist-row').length === 0) return true;
+        if (!recomputeTotals()) {
+            e.preventDefault();
+            e.stopPropagation();
+            alert(mismatchMsg);
+        }
+    });
+
+    $(function () {
+        updateVisibility();
+    });
+})();
+});
+</script>
+@endpush

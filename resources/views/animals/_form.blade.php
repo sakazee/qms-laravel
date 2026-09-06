@@ -64,6 +64,7 @@
 
 @push('scripts')
 <script>
+window.qmsOnReady(function ($) {
 const largeAnimals = ['cow', 'buffalo', 'camel'];
 const hint = {
     bn: { large: 'বড় পশু: সর্বোচ্চ ৭টি ভাগ', small: 'ছোট পশু: সর্বোচ্চ ১টি ভাগ' },
@@ -90,5 +91,6 @@ function calcSharePrice() {
     $('#share_price_display').val(perShare > 0 ? '৳' + window.qmsFmt(parseFloat(perShare).toLocaleString()) : '');
 }
 $('#purchase_price, #total_shares').on('input', calcSharePrice);
+});
 </script>
 @endpush

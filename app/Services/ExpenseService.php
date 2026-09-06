@@ -10,28 +10,25 @@ use Illuminate\Support\Facades\DB;
 class ExpenseService
 {
     /**
-     * Create expense with auto-distribution
-     * 
-     * Distribution Types:
-     * - flat: Equally split among all animals
-     * - custom_percent: User-defined percentages per animal
-     * - purchase_percent: Split proportional to purchase price
+     * Create expense with per-animal distribution
+     *
+     * Each selected animal row is expressed as either a percentage of the
+     * total or a fixed amount. No selection means all template animals.
      */
     public function create(array $data, int $templateId, int $userId): Expense
     {
         return DB::transaction(function () use ($data, $templateId, $userId) {
             $expense = Expense::create([
-                'user_id'           => $userId,
-                'template_id'       => $templateId,
-                'expense_head_id'   => $data['expense_head_id'] ?? null,
-                'title'             => $data['title'],
-                'amount'            => $data['amount'],
-                'distribution_type' => $data['distribution_type'],
-                'description'       => $data['description'] ?? null,
-                'expense_date'      => $data['expense_date'],
+                'user_id'         => $userId,
+                'template_id'     => $templateId,
+                'expense_head_id' => $data['expense_head_id'] ?? null,
+                'title'           => $data['title'],
+                'amount'          => $data['amount'],
+                'description'     => $data['description'] ?? null,
+                'expense_date'    => $data['expense_date'],
             ]);
 
-            $this->createDistributions($expense, $data, $templateId);
+            $this->createDistributions($expense, $data, $templateId, $userId);
 
             return $expense;
         });
@@ -44,96 +41,107 @@ class ExpenseService
                 'expense_head_id'   => $data['expense_head_id'] ?? null,
                 'title'             => $data['title'],
                 'amount'            => $data['amount'],
-                'distribution_type' => $data['distribution_type'],
                 'description'       => $data['description'] ?? null,
                 'expense_date'      => $data['expense_date'],
             ]);
 
             // Delete old distributions and recreate
             $expense->distributions()->delete();
-            $this->createDistributions($expense, $data, $expense->template_id);
+            $this->createDistributions($expense, $data, $expense->template_id, $expense->user_id);
 
             return $expense->fresh();
         });
     }
 
-    private function createDistributions(Expense $expense, array $data, int $templateId): void
+    /**
+     * Animals the expense applies to: the submitted selection, or all
+     * animals of the template when nothing was selected. Unknown ids are
+     * ignored.
+     */
+    public function targetAnimals(array $data, int $templateId, int $userId)
     {
-        $animals = Animal::forTemplate($templateId)->get();
+        $all = Animal::forTemplate($templateId)->forUser($userId)->get();
 
+        $selected = collect($data['animal_ids'] ?? [])
+            ->filter(fn ($id) => $all->contains('id', (int) $id))
+            ->map(fn ($id) => (int) $id);
+
+        return $selected->isNotEmpty() ? $all->whereIn('id', $selected) : $all;
+    }
+
+    /**
+     * Allocations must add up to the expense amount (rounding tolerance).
+     * An empty template trivially passes.
+     */
+    public function validateAllocationTotal(array $data, $animals, float $total): bool
+    {
+        if ($animals->isEmpty()) return true;
+
+        $allocated = collect($this->resolveRows($data, $animals, $total))->sum('amount');
+
+        return abs((float) $allocated - $total) < 0.05;
+    }
+
+    private function createDistributions(Expense $expense, array $data, int $templateId, int $userId): void
+    {
+        $animals = $this->targetAnimals($data, $templateId, $userId);
         if ($animals->isEmpty()) return;
 
-        $distributions = [];
-
-        switch ($expense->distribution_type) {
-            case 'flat':
-                $distributions = $this->flatDistribution($expense, $animals);
-                break;
-
-            case 'custom_percent':
-                $distributions = $this->customPercentDistribution($expense, $data['distributions'] ?? []);
-                break;
-
-            case 'purchase_percent':
-                $distributions = $this->purchasePercentDistribution($expense, $animals);
-                break;
-        }
-
-        foreach ($distributions as $dist) {
-            ExpenseDistribution::create($dist);
-        }
-    }
-
-    private function flatDistribution(Expense $expense, $animals): array
-    {
-        $count = $animals->count();
-        if ($count === 0) return [];
-
-        $amountEach = round($expense->amount / $count, 2);
-        $percent = round(100 / $count, 2);
-
-        return $animals->map(fn($animal) => [
-            'expense_id' => $expense->id,
-            'animal_id'  => $animal->id,
-            'percentage' => $percent,
-            'amount'     => $amountEach,
-        ])->toArray();
-    }
-
-    private function customPercentDistribution(Expense $expense, array $distributions): array
-    {
-        $result = [];
-        foreach ($distributions as $animalId => $percent) {
-            $result[] = [
+        foreach ($this->resolveRows($data, $animals, (float) $expense->amount) as $animalId => $fill) {
+            ExpenseDistribution::create([
                 'expense_id' => $expense->id,
                 'animal_id'  => $animalId,
-                'percentage' => $percent,
-                'amount'     => round($expense->amount * ($percent / 100), 2),
+                'method'     => $fill['method'],
+                'percentage' => $fill['percentage'],
+                'amount'     => $fill['amount'],
+            ]);
+        }
+    }
+
+    /**
+     * Convert submitted per-animal rows into stored values. A row is a
+     * percentage (amount derived from the total) or a fixed amount
+     * (percentage derived). Rows with neither are skipped.
+     */
+    private function resolveRows(array $data, $animals, float $total): array
+    {
+        $rows = $data['distributions'] ?? [];
+        $out  = [];
+
+        foreach ($animals as $animal) {
+            $row  = $rows[$animal->id] ?? [];
+            $fill = $this->resolveRow($row, $total);
+            if ($fill !== null) $out[$animal->id] = $fill;
+        }
+
+        return $out;
+    }
+
+    private function resolveRow(array $row, float $total): ?array
+    {
+        $percent = isset($row['percent']) && $row['percent'] !== '' ? (float) $row['percent'] : null;
+        $amount  = isset($row['amount'])  && $row['amount']  !== '' ? (float) $row['amount']  : null;
+
+        if ($percent !== null) {
+            $pct = round($percent, 2);
+            return [
+                'method'     => 'percent',
+                'percentage' => $pct,
+                'amount'     => round($total * ($pct / 100), 2),
             ];
         }
-        return $result;
-    }
 
-    private function purchasePercentDistribution(Expense $expense, $animals): array
-    {
-        $totalPurchase = $animals->sum('purchase_price');
-        if ($totalPurchase == 0) {
-            // Fallback to flat if no purchase prices
-            return $this->flatDistribution($expense, $animals);
+        if ($amount !== null) {
+            $amt = round($amount, 2);
+            $pct = $total > 0 ? round($amt / $total * 100, 2) : 0;
+            return [
+                'method'     => 'amount',
+                'percentage' => min($pct, 999.99),
+                'amount'     => $amt,
+            ];
         }
 
-        return $animals->map(fn($animal) => [
-            'expense_id' => $expense->id,
-            'animal_id'  => $animal->id,
-            'percentage' => round(($animal->purchase_price / $totalPurchase) * 100, 2),
-            'amount'     => round($expense->amount * ($animal->purchase_price / $totalPurchase), 2),
-        ])->toArray();
-    }
-
-    public function validateCustomPercentTotal(array $distributions): bool
-    {
-        $total = array_sum($distributions);
-        return abs($total - 100) < 0.01; // Allow tiny floating point errors
+        return null;
     }
 
     public function delete(Expense $expense): void

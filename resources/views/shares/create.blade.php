@@ -106,6 +106,7 @@
 
 @push('scripts')
 <script>
+window.qmsOnReady(function ($) {
 let animalData = null;
 
 $('#animal_select').on('change', function() {
@@ -134,5 +135,6 @@ function calcAmount() {
     const amount = shares * parseFloat(animalData.share_price);
     $('#calc_amount').val(amount > 0 ? window.qmsFmt(amount.toFixed(2)) : '');
 }
+});
 </script>
 @endpush

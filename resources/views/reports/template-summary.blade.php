@@ -90,7 +90,7 @@
                 <tr>
                     <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">#</th>
                     <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.title') }}</th>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.distribution_type') }}</th>
+                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.animals_covered') }}</th>
                     <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.expense_date') }}</th>
                     <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.amount') }}</th>
                 </tr>
@@ -100,7 +100,7 @@
                 <tr>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ format_amount($i+1, 0) }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $expense->title }}</td>
-                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $expense->distribution_type_label }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ format_amount($expense->distributions->count(), 0) }} / {{ format_amount($template->animals->count(), 0) }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $expense->expense_date->format('d M Y') }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">৳{{ format_amount($expense->amount,0) }}</td>
                 </tr>

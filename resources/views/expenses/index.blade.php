@@ -26,7 +26,7 @@
                     <th>{{ __('expenses.expense_head') }}</th>
                     <th>{{ __('expenses.title') }}</th>
                     <th>{{ __('expenses.amount') }}</th>
-                    <th>{{ __('expenses.distribution_type') }}</th>
+                    <th>{{ __('expenses.distribution_method') }}</th>
                     <th>{{ __('expenses.expense_date') }}</th>
                     <th>{{ app()->getLocale() === 'bn' ? 'বিতরণ' : 'Distributions' }}</th>
                     <th>{{ __('messages.action') }}</th>
@@ -55,15 +55,24 @@
                     <td class="font-semibold">৳{{ format_amount($expense->amount, 0) }}</td>
                     <td>
                         @php
-                            $distBadge = ['flat' => 'bg-sky-100 text-sky-700', 'custom_percent' => 'bg-emerald-100 text-emerald-800', 'purchase_percent' => 'bg-amber-100 text-amber-800'][$expense->distribution_type];
+                            $methods = $expense->distributions->pluck('method')->filter()->unique()->values();
+                            $distBadge = match (true) {
+                                $methods->isEmpty() => ['bg-gray-100 text-gray-500', '—'],
+                                $methods->count() === 1 && $methods->first() === 'percent' => ['bg-sky-100 text-sky-700', app()->getLocale() === 'bn' ? '% ভাগ' : '% split'],
+                                $methods->count() === 1 => ['bg-amber-100 text-amber-800', app()->getLocale() === 'bn' ? 'নির্দিষ্ট ৳' : 'Fixed ৳'],
+                                default => ['bg-emerald-100 text-emerald-800', app()->getLocale() === 'bn' ? 'মিশ্র' : 'Mixed'],
+                            };
                         @endphp
-                        <span class="badge {{ $distBadge }}">{{ $expense->distribution_type_label }}</span>
+                        <div class="flex items-center gap-2">
+                            <span class="badge {{ $distBadge[0] }}">{{ $distBadge[1] }}</span>
+                            <span class="text-[12px] text-gray-400">{{ format_amount($expense->distributions->count(), 0) }} {{ app()->getLocale() === 'bn' ? 'টি পশু' : 'animals' }}</span>
+                        </div>
                     </td>
                     <td>{{ $expense->expense_date->format('d M Y') }}</td>
                     <td>
                         <div class="text-[12.5px] text-gray-600">
                             @foreach($expense->distributions->take(3) as $d)
-                                {{ $d->animal->type_name }}: {{ format_amount($d->percentage, 0) }}%<br>
+                                {{ $d->animal->type_name }}: ৳{{ format_amount($d->amount, 0) }} ({{ format_amount($d->percentage, 0) }}%)<br>
                             @endforeach
                             @if($expense->distributions->count() > 3)
                                 <span class="text-gray-400">+{{ format_amount($expense->distributions->count() - 3, 0) }} {{ app()->getLocale() === 'bn' ? 'আরও' : 'more' }}</span>

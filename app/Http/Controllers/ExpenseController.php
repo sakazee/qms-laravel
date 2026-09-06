@@ -38,16 +38,15 @@ class ExpenseController extends Controller
     public function store(StoreExpenseRequest $request)
     {
         $templateId = $this->getTemplateId();
+        $data       = $request->validated();
 
-        if ($request->distribution_type === 'custom_percent') {
-            $distributions = $request->distributions ?? [];
-            if (!$this->expenseService->validateCustomPercentTotal($distributions)) {
-                return redirect()->back()->withInput()
-                                 ->with('error', __('expenses.percent_must_be_100'));
-            }
+        $animals = $this->expenseService->targetAnimals($data, $templateId, auth()->id());
+        if (!$this->expenseService->validateAllocationTotal($data, $animals, (float) $data['amount'])) {
+            return redirect()->back()->withInput()
+                             ->with('error', __('expenses.allocation_mismatch'));
         }
 
-        $this->expenseService->create($request->validated(), $templateId, auth()->id());
+        $this->expenseService->create($data, $templateId, auth()->id());
         return redirect()->route('expenses.index')
                          ->with('success', __('messages.created_successfully'));
     }
@@ -65,7 +64,16 @@ class ExpenseController extends Controller
     public function update(UpdateExpenseRequest $request, Expense $expense)
     {
         $this->authorize('update', $expense);
-        $this->expenseService->update($expense, $request->validated());
+        $data = $request->validated();
+
+        $templateId = $expense->template_id;
+        $animals    = $this->expenseService->targetAnimals($data, $templateId, $expense->user_id);
+        if (!$this->expenseService->validateAllocationTotal($data, $animals, (float) $data['amount'])) {
+            return redirect()->back()->withInput()
+                             ->with('error', __('expenses.allocation_mismatch'));
+        }
+
+        $this->expenseService->update($expense, $data);
         return redirect()->route('expenses.index')
                          ->with('success', __('messages.updated_successfully'));
     }

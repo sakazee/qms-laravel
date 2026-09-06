@@ -12,14 +12,16 @@ class StoreExpenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'expense_head_id'   => ['required', 'nullable', Rule::exists('expense_heads', 'id')->where('user_id', auth()->id())],
-            'title'             => ['required', 'string', 'max:255'],
-            'amount'            => ['required', 'numeric', 'min:0.01'],
-            'distribution_type' => ['required', 'in:flat,custom_percent,purchase_percent'],
-            'description'       => ['nullable', 'string'],
-            'expense_date'      => ['required', 'date'],
-            'distributions'     => ['nullable', 'array'],
-            'distributions.*'   => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'expense_head_id'            => ['required', 'nullable', Rule::exists('expense_heads', 'id')->where('user_id', auth()->id())],
+            'title'                      => ['required', 'string', 'max:255'],
+            'amount'                     => ['required', 'numeric', 'min:0.01'],
+            'description'                => ['nullable', 'string'],
+            'expense_date'               => ['required', 'date'],
+            'animal_ids'                 => ['nullable', 'array'],
+            'animal_ids.*'               => ['integer'],
+            'distributions'              => ['nullable', 'array'],
+            'distributions.*.percent'    => ['nullable', 'numeric', 'min:0'],
+            'distributions.*.amount'     => ['nullable', 'numeric', 'min:0'],
         ];
     }
 }

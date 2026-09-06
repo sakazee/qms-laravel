@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExpenseDistribution extends Model
 {
-    protected $fillable = ['expense_id', 'animal_id', 'percentage', 'amount'];
+    protected $fillable = ['expense_id', 'animal_id', 'method', 'percentage', 'amount'];
 
     protected $casts = [
         'percentage' => 'decimal:2',
