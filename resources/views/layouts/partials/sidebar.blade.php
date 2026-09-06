@@ -82,6 +82,11 @@
             <i class="fa-solid fa-chart-pie w-5 text-center"></i>
             <span>{{ __('reports.partner_summary') }}</span>
         </a>
+        <a href="{{ route('reports.partner-due-summary') }}"
+           class="sidebar-link {{ request()->routeIs('reports.partner-due-summary') ? 'active' : '' }}">
+            <i class="fa-solid fa-scale-balanced w-5 text-center"></i>
+            <span>{{ __('reports.partner_due_summary') }}</span>
+        </a>
     </div>
 
     @endif {{-- end template selected check --}}

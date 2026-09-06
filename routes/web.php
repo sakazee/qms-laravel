@@ -56,11 +56,13 @@ Route::middleware(['auth', 'set.locale', 'ensure.template'])->group(function () 
 
     // Reports
     Route::prefix('reports')->name('reports.')->group(function () {
-        Route::get('template-summary',        [ReportController::class, 'templateSummary'])->name('template-summary');
-        Route::get('template-summary/pdf',    [ReportController::class, 'templateSummaryPdf'])->name('template-summary.pdf');
-        Route::get('partner-summary',         [ReportController::class, 'partnerSummary'])->name('partner-summary');
-        Route::get('partner-summary/pdf',     [ReportController::class, 'partnerSummaryPdf'])->name('partner-summary.pdf');
-        Route::get('animal-summary',          [ReportController::class, 'animalSummary'])->name('animal-summary');
-        Route::get('animal-summary/pdf',      [ReportController::class, 'animalSummaryPdf'])->name('animal-summary.pdf');
+        Route::get('template-summary', [ReportController::class, 'templateSummary'])->name('template-summary');
+        Route::get('template-summary/pdf', [ReportController::class, 'templateSummaryPdf'])->name('template-summary.pdf');
+        Route::get('partner-summary', [ReportController::class, 'partnerSummary'])->name('partner-summary');
+        Route::get('partner-summary/pdf', [ReportController::class, 'partnerSummaryPdf'])->name('partner-summary.pdf');
+        Route::get('animal-summary', [ReportController::class, 'animalSummary'])->name('animal-summary');
+        Route::get('animal-summary/pdf', [ReportController::class, 'animalSummaryPdf'])->name('animal-summary.pdf');
+        Route::get('partner-due-summary', [ReportController::class, 'partnerDueSummary'])->name('partner-due-summary');
+        Route::get('partner-due-summary/pdf', [ReportController::class, 'partnerDueSummaryPdf'])->name('partner-due-summary.pdf');
     });
 });
