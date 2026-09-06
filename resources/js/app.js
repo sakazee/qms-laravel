@@ -4,11 +4,17 @@ import '../css/app.css';
 import $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-responsive';
-import 'select2';
+import select2 from 'select2';
 import Swal from 'sweetalert2';
 import Alpine from 'alpinejs';
 
 window.$ = window.jQuery = $;
+
+// Force select2's UMD factory onto this shared jQuery instance. A bare
+// side-effect import can leave $.fn.select2 registered on a separate
+// interop wrapper, so `$(...).select2()` would fail with
+// "select2 is not a function" even though the data-tool is bundled.
+select2($);
 window.Swal = window.swal = Swal;
 window.Alpine = Alpine;
 Alpine.start();
@@ -64,11 +70,13 @@ $(document).ready(function () {
     });
 
     // Select2
-    $('.select2').each(function () {
-        $(this).select2({
-            placeholder: $(this).data('placeholder') || '—',
+    if ($.fn.select2) {
+        $('.select2').each(function () {
+            $(this).select2({
+                placeholder: $(this).data('placeholder') || '—',
+            });
         });
-    });
+    }
 
     // Flash message toasts (set on body via data-flash-*)
     const flash = {
