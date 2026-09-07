@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <style>
     @font-face { font-family: SolaimanLipi; src: url('{{ public_path("fonts/bengali/SolaimanLipi.ttf") }}'); }
-    body { font-family: SolaimanLipi, sans-serif; font-size: 12px; }
+    @font-face { font-family: ShonarBangla; src: url('{{ public_path("fonts/bengali/ShonarBangla-N.ttf") }}'); }
+
+    body { font-family: SolaimanLipi, ShonarBangla, sans-serif; font-size: 12px; color: #1a1a1a; }
     h1 { font-size:18px; color:#1a6b3a; text-align:center; }
     .subtitle { text-align:center; color:#666; font-size:11px; margin-bottom:20px; }
     table { width:100%; border-collapse:collapse; }
@@ -17,7 +19,7 @@
 </head>
 <body>
 <h1>{{ __('messages.app_name') }}</h1>
-<div class="subtitle">{{ $title }} — {{ now()->format('d M Y') }}</div>
+<div class="subtitle">{{ $title }} — {{ bd_date(now()->format('d M Y')) }}</div>
 <table>
     <thead>
         <tr><th>#</th><th>{{ __('partners.name') }}</th><th>{{ __('partners.phone') }}</th><th>{{ __('partners.total_share') }}</th><th>{{ __('partners.total_paid') }}</th><th>{{ __('partners.due') }}</th><th>{{ __('partners.advance') }}</th></tr>

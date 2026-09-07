@@ -99,7 +99,7 @@ class ReportService
         return ['partners' => $partners];
     }
 
-    public function generatePdf(string $view, array $data, string $filename, string $defaultFont = 'shonar-bangla'): Response
+    public function generatePdf(string $view, array $data, string $filename, string $defaultFont = 'shonarbangla'): Response
     {
         $defaultConfig = (new ConfigVariables)->getDefaults();
         $fontDirs = $defaultConfig['fontDir'];
@@ -129,7 +129,7 @@ class ReportService
                     'R' => 'Kalpurush.ttf',
                     'useOTL'    => 0xFF,
                 ],
-                'shonar-bangla' => [
+                'shonarbangla' => [
                     'R' => 'ShonarBangla-N.ttf',
                     'B' => 'ShonarBangla-B.ttf',
                     'useOTL'    => 0xFF,

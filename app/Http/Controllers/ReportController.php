@@ -83,6 +83,6 @@ class ReportController extends Controller
         $data = $this->reportService->getPartnerDueSummary($templateId, effective_user_id());
         $data['title'] = __('reports.partner_due_summary');
 
-        return $this->reportService->generatePdf('reports.pdf.partner-due-summary', $data, 'partner-due-summary.pdf', 'shonarbangla');
+        return $this->reportService->generatePdf('reports.pdf.partner-due-summary', $data, 'partner-due-summary.pdf');
     }
 }

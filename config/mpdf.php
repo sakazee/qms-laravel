@@ -21,7 +21,7 @@ return [
     'mode'           => 'utf-8',
     'format'         => 'A4',
     'orientation'    => 'P',
-    'default_font'   => 'shonar-bangla',
+    'default_font'   => 'shonarbangla',
 
     'margin_left'   => 15,
     'margin_right'  => 15,
@@ -35,7 +35,7 @@ return [
             'useOTL'    => 0xFF,
             'useKashida' => 75,
         ],
-        'shonar-bangla' => [
+        'shonarbangla' => [
             'R'  => 'ShonarBangla-N.ttf',
             'B'  => 'ShonarBangla-B.ttf',
             'useOTL'    => 0xFF,
