@@ -16,24 +16,29 @@ class AnimalShareController extends Controller
     private function getTemplateId(): int
     {
         $id = session('selected_template_id');
-        if (!$id) abort(403, __('messages.select_template_first'));
+        if (! $id) {
+            abort(403, __('messages.select_template_first'));
+        }
+
         return $id;
     }
 
     public function index()
     {
         $templateId = $this->getTemplateId();
-        $shares     = $this->shareService->getForTemplate($templateId, auth()->id());
-        $animals    = Animal::forTemplate($templateId)->forUser(auth()->id())->get();
-        $partners   = Partner::forTemplate($templateId)->forUser(auth()->id())->get();
+        $shares = $this->shareService->getForTemplate($templateId, effective_user_id());
+        $animals = Animal::forTemplate($templateId)->forUser(effective_user_id())->get();
+        $partners = Partner::forTemplate($templateId)->forUser(effective_user_id())->get();
+
         return view('shares.index', compact('shares', 'animals', 'partners'));
     }
 
     public function create()
     {
         $templateId = $this->getTemplateId();
-        $animals    = Animal::forTemplate($templateId)->forUser(auth()->id())->get();
-        $partners   = Partner::forTemplate($templateId)->forUser(auth()->id())->get();
+        $animals = Animal::forTemplate($templateId)->forUser(effective_user_id())->get();
+        $partners = Partner::forTemplate($templateId)->forUser(effective_user_id())->get();
+
         return view('shares.create', compact('animals', 'partners'));
     }
 
@@ -41,9 +46,10 @@ class AnimalShareController extends Controller
     {
         $templateId = $this->getTemplateId();
         try {
-            $this->shareService->assign($request->validated(), $templateId, auth()->id());
+            $this->shareService->assign($request->validated(), $templateId, effective_user_id());
+
             return redirect()->route('shares.index')
-                             ->with('success', __('messages.created_successfully'));
+                ->with('success', __('messages.created_successfully'));
         } catch (\RuntimeException $e) {
             return redirect()->back()->withInput()->with('error', $e->getMessage());
         }
@@ -53,7 +59,8 @@ class AnimalShareController extends Controller
     {
         $templateId = $this->getTemplateId();
         $share->load('animal', 'partner');
-        $partners = Partner::forTemplate($templateId)->forUser(auth()->id())->get();
+        $partners = Partner::forTemplate($templateId)->forUser(effective_user_id())->get();
+
         return view('shares.edit', compact('share', 'partners'));
     }
 
@@ -61,8 +68,9 @@ class AnimalShareController extends Controller
     {
         try {
             $this->shareService->update($share, $request->validated());
+
             return redirect()->route('shares.index')
-                             ->with('success', __('messages.updated_successfully'));
+                ->with('success', __('messages.updated_successfully'));
         } catch (\RuntimeException $e) {
             return redirect()->back()->withInput()->with('error', $e->getMessage());
         }
@@ -71,21 +79,22 @@ class AnimalShareController extends Controller
     public function destroy(AnimalShare $share)
     {
         $this->shareService->delete($share);
+
         return redirect()->route('shares.index')
-                         ->with('success', __('messages.deleted_successfully'));
+            ->with('success', __('messages.deleted_successfully'));
     }
 
     // AJAX: Get animal share info
     public function getAnimalInfo(Animal $animal)
     {
         return response()->json([
-            'type'             => $animal->type,
-            'is_large'         => $animal->is_large,
-            'total_shares'     => $animal->total_shares,
-            'assigned_shares'  => $animal->assigned_shares,
+            'type' => $animal->type,
+            'is_large' => $animal->is_large,
+            'total_shares' => $animal->total_shares,
+            'assigned_shares' => $animal->assigned_shares,
             'available_shares' => $animal->available_shares,
-            'share_price'      => $animal->share_price,
-            'purchase_price'   => $animal->purchase_price,
+            'share_price' => $animal->share_price,
+            'purchase_price' => $animal->purchase_price,
         ]);
     }
 }

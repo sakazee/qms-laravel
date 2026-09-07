@@ -8,14 +8,17 @@ use Illuminate\Validation\Rule;
 
 class StoreExpenseHeadRequest extends FormRequest
 {
-    public function authorize(): bool { return true; }
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     public function rules(): array
     {
         return [
-            'name'        => ['required', 'string', 'max:100', Rule::unique('expense_heads', 'name')->where(fn ($q) => $q->where('user_id', auth()->id()))],
+            'name' => ['required', 'string', 'max:100', Rule::unique('expense_heads', 'name')->where(fn ($q) => $q->where('user_id', effective_user_id()))],
             'description' => ['nullable', 'string'],
-            'color'       => ['required', Rule::in(ExpenseHead::COLORS)],
+            'color' => ['required', Rule::in(ExpenseHead::COLORS)],
         ];
     }
 
@@ -23,9 +26,9 @@ class StoreExpenseHeadRequest extends FormRequest
     {
         return [
             'name.required' => __('validation.required', ['attribute' => __('expense_heads.name')]),
-            'name.unique'   => __('expense_heads.name_taken'),
-            'color.required'=> __('validation.required', ['attribute' => __('expense_heads.color')]),
-            'color.in'      => __('expense_heads.color_invalid'),
+            'name.unique' => __('expense_heads.name_taken'),
+            'color.required' => __('validation.required', ['attribute' => __('expense_heads.color')]),
+            'color.in' => __('expense_heads.color_invalid'),
         ];
     }
 }

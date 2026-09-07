@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\ImpersonateController;
+use App\Http\Controllers\Admin\ModeController;
+use App\Http\Controllers\Admin\TemplateBrowserController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AnimalShareController;
 use App\Http\Controllers\DashboardController;
@@ -65,4 +69,29 @@ Route::middleware(['auth', 'set.locale', 'ensure.template'])->group(function () 
         Route::get('partner-due-summary', [ReportController::class, 'partnerDueSummary'])->name('partner-due-summary');
         Route::get('partner-due-summary/pdf', [ReportController::class, 'partnerDueSummaryPdf'])->name('partner-due-summary.pdf');
     });
+});
+
+// Super Admin Routes
+Route::middleware(['auth', 'set.locale', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+
+    // Mode switching (admin <-> user)
+    Route::get('switch-to-admin', [ModeController::class, 'switchToAdmin'])->name('switch-to-admin');
+    Route::get('switch-to-user', [ModeController::class, 'switchToUser'])->name('switch-to-user');
+
+    // User management
+    Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::get('users/create', [AdminUserController::class, 'create'])->name('users.create');
+    Route::post('users', [AdminUserController::class, 'store'])->name('users.store');
+    Route::get('users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+    Route::put('users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+    Route::delete('users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+    Route::post('users/{user}/restore', [AdminUserController::class, 'restore'])->name('users.restore')->withTrashed();
+
+    // Impersonation
+    Route::post('impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop');
+    Route::post('impersonate/{user}', [ImpersonateController::class, 'start'])->name('impersonate');
+
+    // Template browser
+    Route::get('templates', [TemplateBrowserController::class, 'index'])->name('templates.index');
+    Route::post('templates/{template}/select', [TemplateBrowserController::class, 'select'])->name('templates.select');
 });

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Admin;
 use App\Http\Middleware\EnsureTemplateSelected;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
@@ -14,7 +15,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'set.locale'     => SetLocale::class,
+            'admin' => Admin::class,
+            'set.locale' => SetLocale::class,
             'ensure.template' => EnsureTemplateSelected::class,
         ]);
     })

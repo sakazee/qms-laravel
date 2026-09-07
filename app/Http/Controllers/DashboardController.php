@@ -11,11 +11,11 @@ class DashboardController extends Controller
     public function index()
     {
         $templateId = session('selected_template_id');
-        $stats      = [];
+        $stats = [];
 
         if ($templateId) {
             try {
-                $stats = $this->templateService->getDashboardStats($templateId, auth()->id());
+                $stats = $this->templateService->getDashboardStats($templateId, effective_user_id());
             } catch (\Exception $e) {
                 session()->forget('selected_template_id');
             }

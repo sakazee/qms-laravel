@@ -17,48 +17,55 @@ class ExpenseController extends Controller
     private function getTemplateId(): int
     {
         $id = session('selected_template_id');
-        if (!$id) abort(403, __('messages.select_template_first'));
+        if (! $id) {
+            abort(403, __('messages.select_template_first'));
+        }
+
         return $id;
     }
 
     public function index()
     {
         $templateId = $this->getTemplateId();
-        $expenses   = $this->expenseService->getForTemplate($templateId, auth()->id());
+        $expenses = $this->expenseService->getForTemplate($templateId, effective_user_id());
+
         return view('expenses.index', compact('expenses'));
     }
 
     public function create()
     {
         $templateId = $this->getTemplateId();
-        $animals    = Animal::forTemplate($templateId)->forUser(auth()->id())->get();
-        $expenseHeads = ExpenseHead::forUser(auth()->id())->get();
+        $animals = Animal::forTemplate($templateId)->forUser(effective_user_id())->get();
+        $expenseHeads = ExpenseHead::forUser(effective_user_id())->get();
+
         return view('expenses.create', compact('animals', 'expenseHeads'));
     }
 
     public function store(StoreExpenseRequest $request)
     {
         $templateId = $this->getTemplateId();
-        $data       = $request->validated();
+        $data = $request->validated();
 
-        $animals = $this->expenseService->targetAnimals($data, $templateId, auth()->id());
-        if (!$this->expenseService->validateAllocationTotal($data, $animals, (float) $data['amount'])) {
+        $animals = $this->expenseService->targetAnimals($data, $templateId, effective_user_id());
+        if (! $this->expenseService->validateAllocationTotal($data, $animals, (float) $data['amount'])) {
             return redirect()->back()->withInput()
-                             ->with('error', __('expenses.allocation_mismatch'));
+                ->with('error', __('expenses.allocation_mismatch'));
         }
 
-        $this->expenseService->create($data, $templateId, auth()->id());
+        $this->expenseService->create($data, $templateId, effective_user_id());
+
         return redirect()->route('expenses.index')
-                         ->with('success', __('messages.created_successfully'));
+            ->with('success', __('messages.created_successfully'));
     }
 
     public function edit(Expense $expense)
     {
         $this->authorize('update', $expense);
         $templateId = $this->getTemplateId();
-        $animals    = Animal::forTemplate($templateId)->forUser(auth()->id())->get();
-        $expenseHeads = ExpenseHead::forUser(auth()->id())->get();
+        $animals = Animal::forTemplate($templateId)->forUser(effective_user_id())->get();
+        $expenseHeads = ExpenseHead::forUser(effective_user_id())->get();
         $expense->load('distributions', 'expenseHead');
+
         return view('expenses.edit', compact('expense', 'animals', 'expenseHeads'));
     }
 
@@ -68,37 +75,39 @@ class ExpenseController extends Controller
         $data = $request->validated();
 
         $templateId = $expense->template_id;
-        $animals    = $this->expenseService->targetAnimals($data, $templateId, $expense->user_id);
-        if (!$this->expenseService->validateAllocationTotal($data, $animals, (float) $data['amount'])) {
+        $animals = $this->expenseService->targetAnimals($data, $templateId, $expense->user_id);
+        if (! $this->expenseService->validateAllocationTotal($data, $animals, (float) $data['amount'])) {
             return redirect()->back()->withInput()
-                             ->with('error', __('expenses.allocation_mismatch'));
+                ->with('error', __('expenses.allocation_mismatch'));
         }
 
         $this->expenseService->update($expense, $data);
+
         return redirect()->route('expenses.index')
-                         ->with('success', __('messages.updated_successfully'));
+            ->with('success', __('messages.updated_successfully'));
     }
 
     public function destroy(Expense $expense)
     {
         $this->authorize('delete', $expense);
         $this->expenseService->delete($expense);
+
         return redirect()->route('expenses.index')
-                         ->with('success', __('messages.deleted_successfully'));
+            ->with('success', __('messages.deleted_successfully'));
     }
 
     public function bulkDestroy(Request $request)
     {
         $ids = $request->validate([
-            'ids'   => ['required', 'array', 'min:1'],
+            'ids' => ['required', 'array', 'min:1'],
             'ids.*' => ['integer'],
         ])['ids'];
 
         $templateId = $this->getTemplateId();
-        $expenses   = Expense::forTemplate($templateId)
-                             ->where('user_id', auth()->id())
-                             ->whereIn('id', $ids)
-                             ->get();
+        $expenses = Expense::forTemplate($templateId)
+            ->where('user_id', effective_user_id())
+            ->whereIn('id', $ids)
+            ->get();
 
         $deleted = 0;
         foreach ($expenses as $expense) {
@@ -107,6 +116,6 @@ class ExpenseController extends Controller
         }
 
         return redirect()->route('expenses.index')
-                         ->with('success', __('messages.bulk_deleted', ['count' => format_amount($deleted, 0)]));
+            ->with('success', __('messages.bulk_deleted', ['count' => format_amount($deleted, 0)]));
     }
 }

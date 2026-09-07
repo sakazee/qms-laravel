@@ -90,6 +90,24 @@
     </div>
 
     @endif {{-- end template selected check --}}
+
+    @if(auth()->user()->isAdmin() && session('mode') === 'admin')
+
+    <div class="sidebar-header">{{ app()->getLocale() === 'bn' ? 'সুপার অ্যাডমিন' : 'SUPER ADMIN' }}</div>
+
+    <a href="{{ route('admin.users.index') }}"
+       class="sidebar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+        <i class="fa-solid fa-users-gear w-5 text-center"></i>
+        <span>{{ __('admin.users') }}</span>
+    </a>
+
+    <a href="{{ route('admin.templates.index') }}"
+       class="sidebar-link {{ request()->routeIs('admin.templates.*') ? 'active' : '' }}">
+        <i class="fa-solid fa-layer-group w-5 text-center"></i>
+        <span>{{ __('admin.all_templates') }}</span>
+    </a>
+
+    @endif
 </nav>
 
 <div class="border-t border-white/10 px-5 py-3 text-[11.5px] text-[#5f7d6b]">

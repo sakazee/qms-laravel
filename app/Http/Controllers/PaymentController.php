@@ -13,26 +13,31 @@ class PaymentController extends Controller
     private function getTemplateId(): int
     {
         $id = session('selected_template_id');
-        if (!$id) abort(403, __('messages.select_template_first'));
+        if (! $id) {
+            abort(403, __('messages.select_template_first'));
+        }
+
         return $id;
     }
 
     public function index()
     {
         $templateId = $this->getTemplateId();
-        $payments   = Payment::with('partner')
-                             ->forTemplate($templateId)
-                             ->where('user_id', auth()->id())
-                             ->latest('payment_date')
-                             ->get();
-        $partners   = Partner::forTemplate($templateId)->forUser(auth()->id())->get();
+        $payments = Payment::with('partner')
+            ->forTemplate($templateId)
+            ->where('user_id', effective_user_id())
+            ->latest('payment_date')
+            ->get();
+        $partners = Partner::forTemplate($templateId)->forUser(effective_user_id())->get();
+
         return view('payments.index', compact('payments', 'partners'));
     }
 
     public function create()
     {
         $templateId = $this->getTemplateId();
-        $partners   = Partner::forTemplate($templateId)->forUser(auth()->id())->get();
+        $partners = Partner::forTemplate($templateId)->forUser(effective_user_id())->get();
+
         return view('payments.create', compact('partners'));
     }
 
@@ -40,18 +45,20 @@ class PaymentController extends Controller
     {
         $templateId = $this->getTemplateId();
         Payment::create(array_merge($request->validated(), [
-            'user_id'     => auth()->id(),
+            'user_id' => effective_user_id(),
             'template_id' => $templateId,
         ]));
+
         return redirect()->route('payments.index')
-                         ->with('success', __('messages.created_successfully'));
+            ->with('success', __('messages.created_successfully'));
     }
 
     public function edit(Payment $payment)
     {
         $this->authorize('update', $payment);
         $templateId = $this->getTemplateId();
-        $partners   = Partner::forTemplate($templateId)->forUser(auth()->id())->get();
+        $partners = Partner::forTemplate($templateId)->forUser(effective_user_id())->get();
+
         return view('payments.edit', compact('payment', 'partners'));
     }
 
@@ -59,32 +66,34 @@ class PaymentController extends Controller
     {
         $this->authorize('update', $payment);
         $payment->update($request->validated());
+
         return redirect()->route('payments.index')
-                         ->with('success', __('messages.updated_successfully'));
+            ->with('success', __('messages.updated_successfully'));
     }
 
     public function destroy(Payment $payment)
     {
         $this->authorize('delete', $payment);
         $payment->delete();
+
         return redirect()->route('payments.index')
-                         ->with('success', __('messages.deleted_successfully'));
+            ->with('success', __('messages.deleted_successfully'));
     }
 
     public function bulkDestroy(Request $request)
     {
         $ids = $request->validate([
-            'ids'   => ['required', 'array', 'min:1'],
+            'ids' => ['required', 'array', 'min:1'],
             'ids.*' => ['integer'],
         ])['ids'];
 
         $templateId = $this->getTemplateId();
-        $deleted    = Payment::forTemplate($templateId)
-                             ->where('user_id', auth()->id())
-                             ->whereIn('id', $ids)
-                             ->delete();
+        $deleted = Payment::forTemplate($templateId)
+            ->where('user_id', effective_user_id())
+            ->whereIn('id', $ids)
+            ->delete();
 
         return redirect()->route('payments.index')
-                         ->with('success', __('messages.bulk_deleted', ['count' => format_amount($deleted, 0)]));
+            ->with('success', __('messages.bulk_deleted', ['count' => format_amount($deleted, 0)]));
     }
 }

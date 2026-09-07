@@ -19,50 +19,50 @@ class DatabaseSeeder extends Seeder
     {
         // Create demo user
         $user = User::create([
-            'name'     => 'আহমেদ রাহিম',
-            'email'    => 'demo@qurbani.app',
+            'name' => 'আহমেদ রাহিম',
+            'email' => 'demo@qurbani.app',
             'password' => Hash::make('password'),
-            'locale'   => 'bn',
+            'locale' => 'bn',
         ]);
 
         // Create template
         $template = Template::create([
-            'user_id'     => $user->id,
-            'name'        => 'কোরবানি ২০২৫',
-            'year'        => '২০২৫',
+            'user_id' => $user->id,
+            'name' => 'কোরবানি ২০২৫',
+            'year' => '২০২৫',
             'description' => 'ঢাকা মোহাম্মদপুর এলাকার কোরবানির আয়োজন',
-            'status'      => 'active',
+            'status' => 'active',
         ]);
 
         // Create animals
         $cow1 = Animal::create([
-            'user_id'        => $user->id,
-            'template_id'    => $template->id,
-            'type'           => 'cow',
-            'name'           => 'কালো বলদ',
-            'total_shares'   => 7,
+            'user_id' => $user->id,
+            'template_id' => $template->id,
+            'type' => 'cow',
+            'name' => 'কালো বলদ',
+            'total_shares' => 7,
             'purchase_price' => 105000.00,
-            'status'         => 'purchased',
+            'status' => 'purchased',
         ]);
 
         $cow2 = Animal::create([
-            'user_id'        => $user->id,
-            'template_id'    => $template->id,
-            'type'           => 'cow',
-            'name'           => 'লাল গরু',
-            'total_shares'   => 7,
+            'user_id' => $user->id,
+            'template_id' => $template->id,
+            'type' => 'cow',
+            'name' => 'লাল গরু',
+            'total_shares' => 7,
             'purchase_price' => 98000.00,
-            'status'         => 'purchased',
+            'status' => 'purchased',
         ]);
 
         $goat = Animal::create([
-            'user_id'        => $user->id,
-            'template_id'    => $template->id,
-            'type'           => 'goat',
-            'name'           => 'সাদা ছাগল',
-            'total_shares'   => 1,
+            'user_id' => $user->id,
+            'template_id' => $template->id,
+            'type' => 'goat',
+            'name' => 'সাদা ছাগল',
+            'total_shares' => 1,
             'purchase_price' => 18000.00,
-            'status'         => 'pending',
+            'status' => 'pending',
         ]);
 
         // Create partners
@@ -80,11 +80,11 @@ class DatabaseSeeder extends Seeder
         $partners = collect();
         foreach ($partnerNames as $pd) {
             $partners->push(Partner::create([
-                'user_id'     => $user->id,
+                'user_id' => $user->id,
                 'template_id' => $template->id,
-                'name'        => $pd['name'],
-                'phone'       => $pd['phone'],
-                'address'     => $pd['address'],
+                'name' => $pd['name'],
+                'phone' => $pd['phone'],
+                'address' => $pd['address'],
             ]));
         }
 
@@ -92,11 +92,11 @@ class DatabaseSeeder extends Seeder
         $sharePrice1 = $cow1->purchase_price / $cow1->total_shares; // 15000 each
         foreach ($partners->take(7) as $i => $partner) {
             AnimalShare::create([
-                'user_id'      => $user->id,
-                'template_id'  => $template->id,
-                'animal_id'    => $cow1->id,
-                'partner_id'   => $partner->id,
-                'shares'       => 1,
+                'user_id' => $user->id,
+                'template_id' => $template->id,
+                'animal_id' => $cow1->id,
+                'partner_id' => $partner->id,
+                'shares' => 1,
                 'share_amount' => round($sharePrice1, 2),
             ]);
         }
@@ -105,31 +105,31 @@ class DatabaseSeeder extends Seeder
         $sharePrice2 = $cow2->purchase_price / $cow2->total_shares; // 14000 each
         foreach ($partners as $i => $partner) {
             AnimalShare::create([
-                'user_id'      => $user->id,
-                'template_id'  => $template->id,
-                'animal_id'    => $cow2->id,
-                'partner_id'   => $partner->id,
-                'shares'       => 1,
+                'user_id' => $user->id,
+                'template_id' => $template->id,
+                'animal_id' => $cow2->id,
+                'partner_id' => $partner->id,
+                'shares' => 1,
                 'share_amount' => round($sharePrice2, 2),
             ]);
         }
 
         // Goat for first partner (single share)
         AnimalShare::create([
-            'user_id'      => $user->id,
-            'template_id'  => $template->id,
-            'animal_id'    => $goat->id,
-            'partner_id'   => $partners->first()->id,
-            'shares'       => 1,
+            'user_id' => $user->id,
+            'template_id' => $template->id,
+            'animal_id' => $goat->id,
+            'partner_id' => $partners->first()->id,
+            'shares' => 1,
             'share_amount' => 18000.00,
         ]);
 
         // Create expenses
         $expense1 = Expense::create([
-            'user_id'      => $user->id,
-            'template_id'  => $template->id,
-            'title'        => 'পরিবহন খরচ',
-            'amount'       => 7000.00,
+            'user_id' => $user->id,
+            'template_id' => $template->id,
+            'title' => 'পরিবহন খরচ',
+            'amount' => 7000.00,
             'expense_date' => now()->subDays(3),
         ]);
         // Flat (equal) distribution
@@ -138,15 +138,15 @@ class DatabaseSeeder extends Seeder
         foreach ($animals as $a) {
             ExpenseDistribution::create([
                 'expense_id' => $expense1->id, 'animal_id' => $a->id, 'method' => 'percent',
-                'percentage' => round(100/3, 2), 'amount' => $flatAmt,
+                'percentage' => round(100 / 3, 2), 'amount' => $flatAmt,
             ]);
         }
 
         $expense2 = Expense::create([
-            'user_id'      => $user->id,
-            'template_id'  => $template->id,
-            'title'        => 'কসাই মজুরি',
-            'amount'       => 5000.00,
+            'user_id' => $user->id,
+            'template_id' => $template->id,
+            'title' => 'কসাই মজুরি',
+            'amount' => 5000.00,
             'expense_date' => now()->subDays(1),
         ]);
         $totalPurchase = $cow1->purchase_price + $cow2->purchase_price + $goat->purchase_price;
@@ -173,11 +173,11 @@ class DatabaseSeeder extends Seeder
         foreach ($payments as [$partnerId, $amount]) {
             if ($amount > 0) {
                 Payment::create([
-                    'user_id'        => $user->id,
-                    'template_id'    => $template->id,
-                    'partner_id'     => $partnerId,
-                    'amount'         => $amount,
-                    'payment_date'   => now()->subDays(rand(1, 10)),
+                    'user_id' => $user->id,
+                    'template_id' => $template->id,
+                    'partner_id' => $partnerId,
+                    'amount' => $amount,
+                    'payment_date' => now()->subDays(rand(1, 10)),
                     'payment_method' => ['cash', 'bank', 'mobile_banking'][rand(0, 2)],
                 ]);
             }
@@ -185,6 +185,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             DefaultExpenseHeadsSeeder::class,
+            AdminUserSeeder::class,
         ]);
 
         $this->command->info('✅ Demo data seeded successfully!');
