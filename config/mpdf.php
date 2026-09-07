@@ -21,7 +21,7 @@ return [
     'mode'           => 'utf-8',
     'format'         => 'A4',
     'orientation'    => 'P',
-    'default_font'   => 'solaimanlipi',
+    'default_font'   => 'shonar-bangla',
 
     'margin_left'   => 15,
     'margin_right'  => 15,
@@ -32,6 +32,12 @@ return [
         'solaimanlipi' => [
             'R'  => 'SolaimanLipi.ttf',
             'B'  => 'SolaimanLipi_Bold.ttf',
+            'useOTL'    => 0xFF,
+            'useKashida' => 75,
+        ],
+        'shonar-bangla' => [
+            'R'  => 'ShonarBangla-N.ttf',
+            'B'  => 'ShonarBangla-B.ttf',
             'useOTL'    => 0xFF,
             'useKashida' => 75,
         ],
