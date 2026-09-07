@@ -31,7 +31,7 @@
                         <div class="font-semibold text-gray-900">{{ $template->name }}</div>
                         @if(session('selected_template_id') == $template->id)
                             <span class="badge mt-1 bg-emerald-100 text-emerald-800">
-                                <i class="fa-solid fa-check text-[10px]"></i>{{ app()->getLocale() === 'bn' ? 'নির্বাচিত' : 'Selected' }}
+                                <i class="fa-solid fa-check text-[11px]"></i>{{ app()->getLocale() === 'bn' ? 'নির্বাচিত' : 'Selected' }}
                             </span>
                         @endif
                     </td>
@@ -60,8 +60,8 @@
                             </button>
                         </form>
                         @else
-                        <span class="text-[12px] text-emerald-700 font-semibold">
-                            <i class="fa-solid fa-check-circle"></i> {{ __('templates.selected') }}
+                        <span class="text-[14.5px] text-emerald-600">
+                            <i class="fa-solid fa-check-circle"></i>
                         </span>
                         @endif
                     </td>
@@ -71,7 +71,7 @@
                     <td colspan="7">
                         <div class="empty-state">
                             <i class="fa-solid fa-folder-open text-3xl text-gray-300"></i>
-                            <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>
+                            <span class="text-[14.5px]">{{ __('messages.no_data_found') }}</span>
                         </div>
                     </td>
                 </tr>
