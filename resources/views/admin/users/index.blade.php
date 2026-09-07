@@ -58,6 +58,8 @@
                     <td>
                         @if($user->trashed())
                         <span class="badge bg-rose-100 text-rose-800">{{ __('admin.user_deleted_badge') }}</span>
+                        @elseif($user->isInactive())
+                        <span class="badge bg-amber-100 text-amber-800">{{ __('admin.user_inactive') }}</span>
                         @else
                         <span class="badge bg-emerald-100 text-emerald-800">{{ __('admin.user_active') }}</span>
                         @endif
@@ -82,6 +84,21 @@
                             <a href="{{ route('admin.users.edit', $user) }}" class="action-btn action-edit" title="{{ __('messages.edit') }}">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
+                            @if($user->isInactive())
+                            <form action="{{ route('admin.users.activate', $user) }}" method="POST" class="m-0">
+                                @csrf
+                                <button type="submit" class="action-btn bg-emerald-100 text-emerald-800 hover:bg-emerald-200" title="{{ __('admin.activate') }}">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </button>
+                            </form>
+                            @else
+                            <form action="{{ route('admin.users.deactivate', $user) }}" method="POST" class="m-0">
+                                @csrf
+                                <button type="submit" class="action-btn bg-amber-100 text-amber-800 hover:bg-amber-200" title="{{ __('admin.deactivate') }}">
+                                    <i class="fa-solid fa-circle-pause"></i>
+                                </button>
+                            </form>
+                            @endif
                             <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="form-delete m-0">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="action-btn action-delete" title="{{ __('messages.delete') }}">

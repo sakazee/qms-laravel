@@ -37,6 +37,7 @@ class UserController extends Controller
             'phone' => $request->phone,
             'locale' => $request->locale ?? 'bn',
             'role' => $request->role ?? User::ROLE_USER,
+            'status' => $request->status ?? User::STATUS_ACTIVE,
             'password' => $password,
         ]);
 
@@ -65,6 +66,7 @@ class UserController extends Controller
             'phone' => $request->phone,
             'locale' => $request->locale ?? $user->locale,
             'role' => $request->role ?? $user->role,
+            'status' => $request->status ?? $user->status,
         ]);
 
         return redirect()->route('admin.users.index')
@@ -82,6 +84,27 @@ class UserController extends Controller
 
         return redirect()->route('admin.users.index')
             ->with('success', __('admin.user_deleted'));
+    }
+
+    public function deactivate(User $user)
+    {
+        if ($user->id === auth()->id()) {
+            return redirect()->route('admin.users.index')
+                ->with('error', __('admin.cannot_deactivate_self'));
+        }
+
+        $user->update(['status' => User::STATUS_INACTIVE]);
+
+        return redirect()->route('admin.users.index')
+            ->with('success', __('admin.user_deactivated', ['name' => $user->name]));
+    }
+
+    public function activate(User $user)
+    {
+        $user->update(['status' => User::STATUS_ACTIVE]);
+
+        return redirect()->route('admin.users.index')
+            ->with('success', __('admin.user_activated', ['name' => $user->name]));
     }
 
     public function manage(User $user)

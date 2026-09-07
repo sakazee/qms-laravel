@@ -37,4 +37,13 @@
         </select>
         @error('locale')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
+
+    <div>
+        <label class="label">{{ __('admin.user_status') }}</label>
+        <select name="status" class="input">
+            <option value="active"   {{ old('status', $user->status ?? App\Models\User::STATUS_ACTIVE) === App\Models\User::STATUS_ACTIVE ? 'selected' : '' }}>{{ __('admin.user_active') }}</option>
+            <option value="inactive" {{ old('status', $user->status ?? App\Models\User::STATUS_ACTIVE) === App\Models\User::STATUS_INACTIVE ? 'selected' : '' }}>{{ __('admin.user_inactive') }}</option>
+        </select>
+        @error('status')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
+    </div>
 </div>

@@ -5,10 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -24,5 +21,14 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('auth.login');
+    }
+
+    protected function credentials(Request $request)
+    {
+        return [
+            'email' => $request->get('email'),
+            'password' => $request->get('password'),
+            'status' => User::STATUS_ACTIVE,
+        ];
     }
 }
