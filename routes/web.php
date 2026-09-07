@@ -86,6 +86,7 @@ Route::middleware(['auth', 'set.locale', 'admin'])->prefix('admin')->name('admin
     Route::put('users/{user}', [AdminUserController::class, 'update'])->name('users.update');
     Route::delete('users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
     Route::post('users/{user}/restore', [AdminUserController::class, 'restore'])->name('users.restore')->withTrashed();
+    Route::post('users/{user}/manage', [AdminUserController::class, 'manage'])->name('users.manage');
 
     // Impersonation
     Route::post('impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop');

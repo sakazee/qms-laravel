@@ -64,6 +64,8 @@
 
                 @include('layouts.partials.alerts')
 
+                @include('layouts.partials.managing-banner')
+
                 @yield('content')
             </div>
         </main>

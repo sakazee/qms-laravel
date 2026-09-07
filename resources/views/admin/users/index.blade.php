@@ -23,6 +23,10 @@
                     <th>{{ __('admin.user_phone') }}</th>
                     <th>{{ __('admin.user_role') }}</th>
                     <th>{{ __('admin.user_templates') }}</th>
+                    <th>{{ __('admin.user_animals') }}</th>
+                    <th>{{ __('admin.user_partners') }}</th>
+                    <th>{{ __('admin.user_expenses') }}</th>
+                    <th>{{ __('admin.user_payments') }}</th>
                     <th>{{ __('admin.user_status') }}</th>
                     <th>{{ __('messages.action') }}</th>
                 </tr>
@@ -47,6 +51,10 @@
                         </span>
                     </td>
                     <td class="text-center font-semibold">{{ format_amount($user->templates_count, 0) }}</td>
+                    <td class="text-center">{{ format_amount($user->animals_count, 0) }}</td>
+                    <td class="text-center">{{ format_amount($user->partners_count, 0) }}</td>
+                    <td class="text-center">{{ format_amount($user->expenses_count, 0) }}</td>
+                    <td class="text-center">{{ format_amount($user->payments_count, 0) }}</td>
                     <td>
                         @if($user->trashed())
                         <span class="badge bg-rose-100 text-rose-800">{{ __('admin.user_deleted_badge') }}</span>
@@ -57,6 +65,12 @@
                     <td>
                         <div class="flex items-center gap-1.5">
                             @unless($user->trashed())
+                            <form action="{{ route('admin.users.manage', $user) }}" method="POST" class="m-0" title="{{ __('admin.manage_data') }}">
+                                @csrf
+                                <button type="submit" class="action-btn bg-pine-100 text-pine-800 hover:bg-pine-200">
+                                    <i class="fa-solid fa-database"></i>
+                                </button>
+                            </form>
                             <form action="{{ route('admin.impersonate', $user) }}" method="POST" class="m-0">
                                 @csrf
                                 <button type="submit" class="action-btn bg-sky-100 text-sky-800 hover:bg-sky-200"
@@ -88,7 +102,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8">
+                    <td colspan="12">
                         <div class="empty-state">
                             <i class="fa-solid fa-user-slash text-3xl text-gray-300"></i>
                             <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>

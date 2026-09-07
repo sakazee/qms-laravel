@@ -14,7 +14,10 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::withTrashed()->withCount(['templates', 'partners'])->latest()->get();
+        $users = User::withTrashed()
+            ->withCount(['templates', 'animals', 'partners', 'expenses', 'payments'])
+            ->latest()
+            ->get();
 
         return view('admin.users.index', compact('users'));
     }
@@ -79,6 +82,23 @@ class UserController extends Controller
 
         return redirect()->route('admin.users.index')
             ->with('success', __('admin.user_deleted'));
+    }
+
+    public function manage(User $user)
+    {
+        if ($user->trashed()) {
+            abort(404);
+        }
+
+        session()->forget('selected_template_id');
+        session([
+            'mode' => 'admin',
+            'user_id' => $user->id,
+            'impersonating' => true,
+        ]);
+
+        return redirect()->route('templates.index')
+            ->with('success', __('admin.managing_user', ['name' => $user->name]));
     }
 
     public function restore(User $user)
