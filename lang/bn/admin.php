@@ -42,4 +42,5 @@ return [
     'managing_user_data' => ':name এর ডেটা পরিচালিত হচ্ছে',
     'admin_mode' => 'অ্যাডমিন মোড',
     'template_selected' => '":name" টেমপ্লেট নির্বাচিত হয়েছে।',
+    'template_restored' => '":name" টেমপ্লেট সফলভাবে পুনরুদ্ধার হয়েছে।',
 ];

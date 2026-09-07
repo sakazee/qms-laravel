@@ -42,4 +42,5 @@ return [
     'managing_user_data' => 'Managing :name\'s data',
     'admin_mode' => 'Admin mode',
     'template_selected' => 'Template ":name" selected.',
+    'template_restored' => 'Template ":name" restored successfully.',
 ];

@@ -29,4 +29,12 @@ class TemplateBrowserController extends Controller
         return redirect()->route('dashboard')
             ->with('success', __('admin.template_selected', ['name' => $template->name]));
     }
+
+    public function restore(Template $template)
+    {
+        $template->restore();
+
+        return redirect()->route('admin.templates.index')
+            ->with('success', __('admin.template_restored', ['name' => $template->name]));
+    }
 }

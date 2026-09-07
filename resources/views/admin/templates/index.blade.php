@@ -43,16 +43,29 @@
                     </td>
                     <td class="font-medium">{{ $template->year }}</td>
                     <td>
+                        @if($template->trashed())
+                        <span class="badge bg-rose-100 text-rose-800">
+                            <i class="fa-solid fa-trash-can"></i> {{ __('admin.user_deleted_badge') }}
+                        </span>
+                        @else
                         <span class="badge {{ $template->status === 'active'
                             ? 'bg-emerald-100 text-emerald-800'
                             : 'bg-gray-100 text-gray-600' }}">
                             <i class="fa-solid fa-circle text-[6px]"></i>
                             {{ $template->status === 'active' ? __('templates.active') : __('templates.inactive') }}
                         </span>
+                        @endif
                     </td>
                     <td class="text-center font-semibold">{{ format_amount($template->animals->count(), 0) }}</td>
                     <td>
-                        @if(session('selected_template_id') !== $template->id)
+                        @if($template->trashed())
+                        <form action="{{ route('admin.templates.restore', $template) }}" method="POST" class="m-0">
+                            @csrf
+                            <button type="submit" class="action-btn bg-amber-100 text-amber-800 hover:bg-amber-200" title="{{ __('admin.restore') }}">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </button>
+                        </form>
+                        @elseif(session('selected_template_id') !== $template->id)
                         <form action="{{ route('admin.templates.select', $template) }}" method="POST" class="m-0">
                             @csrf
                             <button type="submit" class="action-btn bg-emerald-100 text-emerald-800 hover:bg-emerald-200" title="{{ __('templates.select') }}">

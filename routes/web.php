@@ -95,4 +95,5 @@ Route::middleware(['auth', 'set.locale', 'admin'])->prefix('admin')->name('admin
     // Template browser
     Route::get('templates', [TemplateBrowserController::class, 'index'])->name('templates.index');
     Route::post('templates/{template}/select', [TemplateBrowserController::class, 'select'])->name('templates.select');
+    Route::post('templates/{template}/restore', [TemplateBrowserController::class, 'restore'])->name('templates.restore')->withTrashed();
 });
