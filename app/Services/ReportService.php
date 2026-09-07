@@ -99,7 +99,7 @@ class ReportService
         return ['partners' => $partners];
     }
 
-    public function generatePdf(string $view, array $data, string $filename, string $defaultFont = 'solaimanlipi'): Response
+    public function generatePdf(string $view, array $data, string $filename, string $defaultFont = 'shonar-bangla'): Response
     {
         $defaultConfig = (new ConfigVariables)->getDefaults();
         $fontDirs = $defaultConfig['fontDir'];
@@ -122,12 +122,18 @@ class ReportService
                 'solaimanlipi' => [
                     'R' => 'SolaimanLipi.ttf',
                     'B' => 'SolaimanLipi_Bold.ttf',
+                    'useOTL'    => 0xFF,
+                    'useKashida' => 75,
                 ],
                 'kalpurush' => [
                     'R' => 'Kalpurush.ttf',
+                    'useOTL'    => 0xFF,
                 ],
-                'shonarbangla' => [
+                'shonar-bangla' => [
                     'R' => 'ShonarBangla-N.ttf',
+                    'B' => 'ShonarBangla-B.ttf',
+                    'useOTL'    => 0xFF,
+                    'useKashida' => 75,
                 ],
             ],
             'default_font' => $defaultFont,
