@@ -34,11 +34,11 @@
                         <div class="font-semibold text-gray-900">{{ $template->name }}</div>
                         @if(session('selected_template_id') == $template->id)
                             <span class="badge mt-1 bg-emerald-100 text-emerald-800">
-                                <i class="fa-solid fa-check text-[10px]"></i>{{ app()->getLocale() === 'bn' ? 'নির্বাচিত' : 'Selected' }}
+                                <i class="fa-solid fa-check text-[11px]"></i>{{ app()->getLocale() === 'bn' ? 'নির্বাচিত' : 'Selected' }}
                             </span>
                         @endif
                         @if($template->description)
-                            <div class="mt-0.5 max-w-[220px] truncate text-[12px] text-gray-400">{{ Str::limit($template->description, 40) }}</div>
+                            <div class="mt-0.5 max-w-[220px] truncate text-[13px] text-gray-400">{{ Str::limit($template->description, 40) }}</div>
                         @endif
                     </td>
                     <td class="font-medium">{{ $template->year }}</td>

@@ -105,7 +105,7 @@
                     <td colspan="12">
                         <div class="empty-state">
                             <i class="fa-solid fa-user-slash text-3xl text-gray-300"></i>
-                            <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>
+                            <span class="text-[14.5px]">{{ __('messages.no_data_found') }}</span>
                         </div>
                     </td>
                 </tr>

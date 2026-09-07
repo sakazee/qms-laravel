@@ -3,7 +3,7 @@
 @section('page-title', __('expenses.edit'))
 @section('breadcrumb')
     <span><a href="{{ route('expenses.index') }}" class="hover:text-emerald-700">{{ __('expenses.expenses') }}</a></span>
-    <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+    <i class="fa-solid fa-chevron-right text-[11px] text-gray-400"></i>
     <span class="text-gray-600">{{ __('expenses.edit') }}: {{ $expense->title }}</span>
 @endsection
 

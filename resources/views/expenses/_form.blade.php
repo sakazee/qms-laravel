@@ -19,32 +19,32 @@ $checkedAnimals = array_map('intval', (array) $checkedAnimals);
             <option value="{{ $head->id }}" {{ old('expense_head_id', $expense?->expense_head_id) == $head->id ? 'selected' : '' }}>{{ $head->name }}</option>
             @endforeach
         </select>
-        @error('expense_head_id')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+        @error('expense_head_id')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 
     <div class="sm:col-span-2">
         <label class="label">{{ __('expenses.title') }} <span class="text-rose-600">*</span></label>
         <input type="text" name="title" value="{{ old('title', $expense?->title) }}"
                class="input @error('title') border-rose-400 @enderror" required>
-        @error('title')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+        @error('title')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 
     <div class="lg:col-span-1">
         <label class="label">{{ __('expenses.amount') }} <span class="text-rose-600">*</span></label>
         <div class="relative">
-            <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[13.5px] font-medium text-gray-500">৳</span>
+            <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[14.5px] font-medium text-gray-500">৳</span>
             <input type="number" name="amount" id="total_amount" value="{{ old('amount', $expense?->amount) }}"
                    class="input pl-8 @error('amount') border-rose-400 @enderror"
                    min="0.01" step="0.01" required>
         </div>
-        @error('amount')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+        @error('amount')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 
     <div class="lg:col-span-1">
         <label class="label">{{ __('expenses.expense_date') }} <span class="text-rose-600">*</span></label>
         <input type="date" name="expense_date" value="{{ old('expense_date', $expense?->expense_date?->format('Y-m-d') ?? date('Y-m-d')) }}"
                class="input @error('expense_date') border-rose-400 @enderror" required>
-        @error('expense_date')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+        @error('expense_date')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 </div>
 
@@ -57,7 +57,7 @@ $checkedAnimals = array_map('intval', (array) $checkedAnimals);
 <input type="hidden" name="split_type" id="split_type" value="{{ old('split_type', $expense?->split_type ?? 'manual') }}">
 <div id="distribution_section" class="d-none mt-6 rounded-xl border border-gray-200">
     <div class="flex items-center justify-between rounded-t-xl border-b border-gray-100 px-5 py-4">
-        <h5 class="flex items-center gap-2 font-serif text-[15px] font-semibold text-amber-700">
+        <h5 class="flex items-center gap-2 font-serif text-[16px] font-semibold text-amber-700">
             <i class="fa-solid fa-table"></i>{{ __('expenses.distributions') }}
         </h5>
         <span id="allocation_status" class="badge bg-gray-100 text-gray-600" role="status">
@@ -71,20 +71,20 @@ $checkedAnimals = array_map('intval', (array) $checkedAnimals);
         <div id="animal_picker" class="rounded-xl border border-gray-200 bg-white">
             <label class="flex cursor-pointer items-center gap-2.5 border-b border-gray-100 px-4 py-2.5 select-none hover:bg-emerald-50/60">
                 <input type="checkbox" id="animal_select_all" class="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500">
-                <span class="text-[13px] font-semibold text-gray-800 ml-2">{{ __('expenses.select_all_animals') }}</span>
-                <span id="animal_picker_count" class="ml-auto text-[12px] font-semibold text-emerald-700"></span>
+                <span class="text-[14px] font-semibold text-gray-800 ml-2">{{ __('expenses.select_all_animals') }}</span>
+                <span id="animal_picker_count" class="ml-auto text-[13px] font-semibold text-emerald-700"></span>
             </label>
             <div class="max-h-48 overflow-y-auto py-1">
                 @foreach($animals as $animal)
                 <label class="flex cursor-pointer items-center gap-2.5 px-4 py-1.5 select-none hover:bg-emerald-50/60">
                     <input type="checkbox" name="animal_ids[]" value="{{ $animal->id }}" class="animal-check h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
                            {{ in_array($animal->id, $checkedAnimals, true) ? 'checked' : '' }}>
-                    <span class="text-[13px] text-gray-700 ml-2">{{ $animal->type_name }}{{ $animal->name ? ' — '.$animal->name : '' }} (৳{{ format_amount($animal->purchase_price, 0) }})</span>
+                    <span class="text-[14px] text-gray-700 ml-2">{{ $animal->type_name }}{{ $animal->name ? ' — '.$animal->name : '' }} (৳{{ format_amount($animal->purchase_price, 0) }})</span>
                 </label>
                 @endforeach
             </div>
         </div>
-        <p class="mt-1.5 text-[12px] text-gray-500"><i class="fa-solid fa-circle-info mr-1"></i>{{ __('expenses.all_animals_hint') }}</p>
+        <p class="mt-1.5 text-[13px] text-gray-500"><i class="fa-solid fa-circle-info mr-1"></i>{{ __('expenses.all_animals_hint') }}</p>
 
         <div class="mt-3 flex flex-wrap items-center gap-2">
             <button type="button" id="btn_equal" class="btn btn-sm btn-split" aria-pressed="false">
@@ -100,9 +100,9 @@ $checkedAnimals = array_map('intval', (array) $checkedAnimals);
     </div>
 
     <div class="table-wrap">
-        <table class="w-full text-[13px]" id="dist_table">
+        <table class="w-full text-[14px]" id="dist_table">
             <thead>
-                <tr class="border-b border-gray-200 bg-paper-100 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">
+                <tr class="border-b border-gray-200 bg-paper-100 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">
                     <th class="px-4 py-3">#</th>
                     <th class="px-4 py-3">{{ __('expenses.animal') }}</th>
                     <th class="px-4 py-3">{{ __('animals.purchase_price') }}</th>
@@ -119,7 +119,7 @@ $checkedAnimals = array_map('intval', (array) $checkedAnimals);
                     <td class="px-4 py-3">৳{{ format_amount($animal->purchase_price, 0) }}</td>
                     <td class="px-4 py-3">
                         <div class="relative">
-                            <span class="pointer-events-none absolute inset-y-0 left-0 flex w-9 items-center justify-end pr-1.5 text-[12.5px] font-medium text-gray-500">%</span>
+                            <span class="pointer-events-none absolute inset-y-0 left-0 flex w-9 items-center justify-end pr-1.5 text-[13.5px] font-medium text-gray-500">%</span>
                             <input type="number" name="distributions[{{ $animal->id }}][percent]"
                                    class="input !py-1.5 pl-9 dist-percent" placeholder="—"
                                    min="0" step="0.01"
@@ -128,7 +128,7 @@ $checkedAnimals = array_map('intval', (array) $checkedAnimals);
                     </td>
                     <td class="px-4 py-3">
                         <div class="relative">
-                            <span class="pointer-events-none absolute inset-y-0 left-0 flex w-9 items-center justify-end pr-1.5 text-[12.5px] font-medium text-gray-500">৳</span>
+                            <span class="pointer-events-none absolute inset-y-0 left-0 flex w-9 items-center justify-end pr-1.5 text-[13.5px] font-medium text-gray-500">৳</span>
                             <input type="number" name="distributions[{{ $animal->id }}][amount]"
                                    class="input !py-1.5 pl-9 dist-amount" placeholder="—"
                                    min="0" step="0.01"
@@ -139,7 +139,7 @@ $checkedAnimals = array_map('intval', (array) $checkedAnimals);
                 @endforeach
                 @if($animals->isEmpty())
                 <tr>
-                    <td colspan="5" class="px-4 py-6 text-center text-[13px] text-gray-500">{{ __('messages.no_data_found') }}</td>
+                    <td colspan="5" class="px-4 py-6 text-center text-[14px] text-gray-500">{{ __('messages.no_data_found') }}</td>
                 </tr>
                 @endif
             </tbody>

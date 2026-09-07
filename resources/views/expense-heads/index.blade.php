@@ -32,12 +32,12 @@
                         <div class="font-semibold text-gray-900">{{ $expenseHead->name }}</div>
                     </td>
                     <td>
-                        <div class="max-w-[260px] truncate text-[13px] text-gray-500">{{ $expenseHead->description ?: '—' }}</div>
+                        <div class="max-w-[260px] truncate text-[14px] text-gray-500">{{ $expenseHead->description ?: '—' }}</div>
                     </td>
                     <td>
                         <span class="inline-flex items-center gap-2">
                             <span class="inline-block h-3.5 w-3.5 rounded-full" style="background-color: {{ $expenseHead->color }};"></span>
-                            <span class="font-mono text-[12px] uppercase text-gray-500">{{ $expenseHead->color }}</span>
+                            <span class="font-mono text-[13px] uppercase text-gray-500">{{ $expenseHead->color }}</span>
                         </span>
                     </td>
                     <td>

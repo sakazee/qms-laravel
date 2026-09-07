@@ -13,7 +13,7 @@
         <h2 class="font-serif text-lg font-semibold text-pine-900">
             {{ app()->getLocale() === 'bn' ? 'নতুন পাসওয়ার্ড সেট করুন' : 'Set a new password' }}
         </h2>
-        <p class="mt-1 text-[13px] text-gray-500">
+        <p class="mt-1 text-[14px] text-gray-500">
             {{ app()->getLocale() === 'bn' ? 'নিচে আপনার নতুন পাসওয়ার্ড দিন।' : 'Choose a new password for your account.' }}
         </p>
 
@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary w-full py-2.5 text-[14px]">
+            <button type="submit" class="btn btn-primary w-full py-2.5 text-[15px]">
                 {{ app()->getLocale() === 'bn' ? 'পাসওয়ার্ড রিসেট করুন' : 'Reset password' }}
             </button>
         </form>

@@ -13,7 +13,7 @@
         <h2 class="font-serif text-lg font-semibold text-pine-900">
             {{ app()->getLocale() === 'bn' ? 'নতুন অ্যাকাউন্ট তৈরি করুন' : 'Create a new account' }}
         </h2>
-        <p class="mt-1 text-[13px] text-gray-500">
+        <p class="mt-1 text-[14px] text-gray-500">
             {{ app()->getLocale() === 'bn' ? 'একটি অ্যাকাউন্ট তৈরি করে কোরবানি ব্যবস্থাপনা শুরু করুন।' : 'Set up an account and start managing your Qurbani.' }}
         </p>
 
@@ -63,13 +63,13 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary w-full py-2.5 text-[14px]">
+            <button type="submit" class="btn btn-primary w-full py-2.5 text-[15px]">
                 {{ app()->getLocale() === 'bn' ? 'নিবন্ধন করুন' : 'Register' }}
             </button>
         </form>
     </div>
 
-    <p class="mt-5 text-center text-[13px] text-white/70">
+    <p class="mt-5 text-center text-[14px] text-white/70">
         {!! app()->getLocale() === 'bn'
             ? 'ইতিমধ্যে অ্যাকাউন্ট আছে? <a href="'.route('login').'" class="font-semibold text-gold hover:text-gold-300">লগইন করুন</a>'
             : 'Already have an account? <a href="'.route('login').'" class="font-semibold text-gold hover:text-gold-300">Login</a>' !!}

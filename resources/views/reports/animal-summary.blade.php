@@ -18,18 +18,18 @@
 <div class="card">
     <div class="card-header"><h3 class="card-title"><i class="fa-solid fa-horse text-emerald-700"></i>{{ __('reports.animal_summary') }}</h3></div>
     <div class="table-wrap">
-        <table class="w-full text-[13px]">
+        <table class="w-full text-[14px]">
             <thead class="border-b border-gray-200 bg-paper-100">
                 <tr>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">#</th>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.type.label') }}</th>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.name') }}</th>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.purchase_price') }}</th>
-                    <th class="px-4 py-3 text-center text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.total_shares') }}</th>
-                    <th class="px-4 py-3 text-center text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.assigned_shares') }}</th>
-                    <th class="px-4 py-3 text-center text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.available_shares') }}</th>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ app()->getLocale() === 'bn' ? 'অংশীদারগণ' : 'Partners' }}</th>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.status.label') }}</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">#</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.type.label') }}</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.name') }}</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.purchase_price') }}</th>
+                    <th class="px-4 py-3 text-center text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.total_shares') }}</th>
+                    <th class="px-4 py-3 text-center text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.assigned_shares') }}</th>
+                    <th class="px-4 py-3 text-center text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.available_shares') }}</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ app()->getLocale() === 'bn' ? 'অংশীদারগণ' : 'Partners' }}</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.status.label') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,7 +42,7 @@
                     <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700">{{ $animal->total_shares }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700"><span class="badge bg-sky-100 text-sky-700">{{ $animal->assigned_shares }}</span></td>
                     <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700"><span class="badge {{ $animal->available_shares > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-600' }}">{{ $animal->available_shares }}</span></td>
-                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">@foreach($animal->animalShares as $share)<span class="mr-1 inline-flex items-center rounded-md bg-paper-100 px-2 py-0.5 text-[12px] font-medium text-gray-700 ring-1 ring-gray-200">{{ $share->partner->name }}</span>@endforeach</td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">@foreach($animal->animalShares as $share)<span class="mr-1 inline-flex items-center rounded-md bg-paper-100 px-2 py-0.5 text-[13px] font-medium text-gray-700 ring-1 ring-gray-200">{{ $share->partner->name }}</span>@endforeach</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700"><span class="badge bg-gray-100 text-gray-600">{{ __('animals.status.'.$animal->status) }}</span></td>
                 </tr>
                 @empty
@@ -50,7 +50,7 @@
                     <td colspan="9">
                         <div class="empty-state">
                             <i class="fa-solid fa-horse text-3xl text-gray-300"></i>
-                            <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>
+                            <span class="text-[14.5px]">{{ __('messages.no_data_found') }}</span>
                         </div>
                     </td>
                 </tr>

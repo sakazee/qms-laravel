@@ -8,8 +8,8 @@
             <option value="{{ $val }}" {{ old('type', $animal->type ?? '') === $val ? 'selected' : '' }}>{{ $label }}</option>
             @endforeach
         </select>
-        @error('type')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
-        <p id="share_hint" class="mt-1 text-[12px] text-gray-500"></p>
+        @error('type')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
+        <p id="share_hint" class="mt-1 text-[13px] text-gray-500"></p>
     </div>
 
     <div>
@@ -25,7 +25,7 @@
                value="{{ old('total_shares', $animal->total_shares ?? 1) }}"
                class="input @error('total_shares') border-rose-400 @enderror"
                min="1" max="7" required>
-        @error('total_shares')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+        @error('total_shares')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 
     <div>
@@ -35,7 +35,7 @@
                class="input @error('purchase_price') border-rose-400 @enderror"
                placeholder="৳"
                min="0" step="0.01" required>
-        @error('purchase_price')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+        @error('purchase_price')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 
     <div>
@@ -46,7 +46,7 @@
             <option value="{{ $val }}" {{ old('status', $animal->status ?? 'pending') === $val ? 'selected' : '' }}>{{ $label }}</option>
             @endforeach
         </select>
-        @error('status')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+        @error('status')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 
     <div>

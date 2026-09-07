@@ -33,8 +33,8 @@
         @foreach($cards as $card)
             <div class="rounded-xl border {{ $card['color'] }} p-4">
                 <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-{{ $card['icon'] }} text-[15px]"></i>
-                    <span class="text-[12.5px] font-medium text-gray-500">{{ $card['label'] }}</span>
+                    <i class="fa-solid fa-{{ $card['icon'] }} text-[16px]"></i>
+                    <span class="text-[13.5px] font-medium text-gray-500">{{ $card['label'] }}</span>
                 </div>
                 <div class="mt-0.5 font-serif text-[22px] font-bold text-gray-900">{{ $card['value'] }}</div>
             </div>
@@ -46,16 +46,16 @@
         <div class="card-header"><h3 class="card-title"><i
                         class="fa-solid fa-horse text-emerald-700"></i>{{ __('animals.animals') }}</h3></div>
         <div class="table-wrap">
-            <table class="w-full text-[13px]">
+            <table class="w-full text-[14px]">
                 <thead class="border-b border-gray-200 bg-paper-100">
                 <tr>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">#</th>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.type.label') }}</th>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.name') }}</th>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.purchase_price') }}</th>
-                    <th class="px-4 py-3 text-center text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.total_shares') }}</th>
-                    <th class="px-4 py-3 text-center text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.assigned_shares') }}</th>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.status.label') }}</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">#</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.type.label') }}</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.name') }}</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.purchase_price') }}</th>
+                    <th class="px-4 py-3 text-center text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.total_shares') }}</th>
+                    <th class="px-4 py-3 text-center text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.assigned_shares') }}</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.status.label') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -92,15 +92,15 @@
                             class="fa-solid fa-file-invoice-dollar text-amber-700"></i>{{ __('expenses.expenses') }}
                 </h3></div>
             <div class="table-wrap">
-                <table class="w-full text-[13px]">
+                <table class="w-full text-[14px]">
                     <thead class="border-b border-gray-200 bg-paper-100">
                     <tr>
-                        <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">#
+                        <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">#
                         </th>
-                        <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.title') }}</th>
-                        <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.animals_covered') }}</th>
-                        <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.expense_date') }}</th>
-                        <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.amount') }}</th>
+                        <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.title') }}</th>
+                        <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.animals_covered') }}</th>
+                        <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.expense_date') }}</th>
+                        <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.amount') }}</th>
                     </tr>
                     </thead>
                     <tbody>

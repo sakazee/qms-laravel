@@ -13,7 +13,7 @@
         <h2 class="font-serif text-lg font-semibold text-pine-900">
             {{ app()->getLocale() === 'bn' ? 'আপনার অ্যাকাউন্টে লগইন করুন' : 'Sign in to your account' }}
         </h2>
-        <p class="mt-1 text-[13px] text-gray-500">
+        <p class="mt-1 text-[14px] text-gray-500">
             {{ app()->getLocale() === 'bn' ? 'ধন্যবাদ, আবার ফিরে আসার জন্য!' : 'Welcome back to the Qurbani season.' }}
         </p>
 
@@ -46,22 +46,22 @@
             </div>
 
             <div class="flex items-center justify-between">
-                <label class="flex cursor-pointer items-center gap-2 text-[13px] text-gray-600">
+                <label class="flex cursor-pointer items-center gap-2 text-[14px] text-gray-600">
                     <input type="checkbox" name="remember" value="1" class="h-4 w-4 rounded border-gray-300 text-emerald-800 focus:ring-emerald-600">
                     {{ app()->getLocale() === 'bn' ? 'মনে রাখুন' : 'Remember me' }}
                 </label>
-                <a href="{{ route('password.request') }}" class="text-[12.5px] font-medium text-emerald-800 hover:text-emerald-900">
+                <a href="{{ route('password.request') }}" class="text-[13.5px] font-medium text-emerald-800 hover:text-emerald-900">
                     {{ app()->getLocale() === 'bn' ? 'পাসওয়ার্ড ভুলে গেছেন?' : 'Forgot password?' }}
                 </a>
             </div>
 
-            <button type="submit" class="btn btn-primary w-full py-2.5 text-[14px]">
+            <button type="submit" class="btn btn-primary w-full py-2.5 text-[15px]">
                 {{ app()->getLocale() === 'bn' ? 'লগইন করুন' : 'Login' }}
             </button>
         </form>
     </div>
 
-    <p class="mt-5 text-center text-[13px] text-white/70">
+    <p class="mt-5 text-center text-[14px] text-white/70">
         {!! app()->getLocale() === 'bn'
             ? 'নতুন ব্যবহারকারী? <a href="'.route('register').'" class="font-semibold text-gold hover:text-gold-300">অ্যাকাউন্ট তৈরি করুন</a>'
             : 'New here? <a href="'.route('register').'" class="font-semibold text-gold hover:text-gold-300">Create an account</a>' !!}

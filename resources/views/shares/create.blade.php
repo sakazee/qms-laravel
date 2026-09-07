@@ -3,7 +3,7 @@
 @section('page-title', __('shares.create'))
 @section('breadcrumb')
     <span><a href="{{ route('shares.index') }}" class="hover:text-emerald-700">{{ __('shares.shares') }}</a></span>
-    <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+    <i class="fa-solid fa-chevron-right text-[11px] text-gray-400"></i>
     <span class="text-gray-600">{{ __('shares.create') }}</span>
 @endsection
 
@@ -28,7 +28,7 @@
                             </option>
                             @endforeach
                         </select>
-                        @error('animal_id')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+                        @error('animal_id')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
                     </div>
 
                     <div>
@@ -39,7 +39,7 @@
                             <option value="{{ $partner->id }}" {{ old('partner_id', request('partner_id')) == $partner->id ? 'selected' : '' }}>{{ $partner->name }}</option>
                             @endforeach
                         </select>
-                        @error('partner_id')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+                        @error('partner_id')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
                     </div>
                 </div>
 
@@ -47,20 +47,20 @@
                 <div id="animal_info" class="alert alert-info d-none mt-5">
                     <div class="grid grid-cols-2 gap-4 text-center sm:grid-cols-4">
                         <div>
-                            <div class="font-serif text-[17px] font-bold text-gray-900" id="info_total"></div>
-                            <div class="text-[11.5px] font-semibold text-gray-500">{{ __('animals.total_shares') }}</div>
+                            <div class="font-serif text-[18px] font-bold text-gray-900" id="info_total"></div>
+                            <div class="text-[12.5px] font-semibold text-gray-500">{{ __('animals.total_shares') }}</div>
                         </div>
                         <div>
-                            <div class="font-serif text-[17px] font-bold text-gray-900" id="info_assigned"></div>
-                            <div class="text-[11.5px] font-semibold text-gray-500">{{ __('animals.assigned_shares') }}</div>
+                            <div class="font-serif text-[18px] font-bold text-gray-900" id="info_assigned"></div>
+                            <div class="text-[12.5px] font-semibold text-gray-500">{{ __('animals.assigned_shares') }}</div>
                         </div>
                         <div>
-                            <div class="font-serif text-[17px] font-bold text-gray-900" id="info_available"></div>
-                            <div class="text-[11.5px] font-semibold text-gray-500">{{ __('animals.available_shares') }}</div>
+                            <div class="font-serif text-[18px] font-bold text-gray-900" id="info_available"></div>
+                            <div class="text-[12.5px] font-semibold text-gray-500">{{ __('animals.available_shares') }}</div>
                         </div>
                         <div>
-                            <div class="font-serif text-[17px] font-bold text-gray-900" id="info_price"></div>
-                            <div class="text-[11.5px] font-semibold text-gray-500">{{ __('animals.share_price') }}</div>
+                            <div class="font-serif text-[18px] font-bold text-gray-900" id="info_price"></div>
+                            <div class="text-[12.5px] font-semibold text-gray-500">{{ __('animals.share_price') }}</div>
                         </div>
                     </div>
                 </div>
@@ -72,13 +72,13 @@
                                value="{{ old('shares', 1) }}"
                                class="input @error('shares') border-rose-400 @enderror"
                                min="1" max="7" required>
-                        @error('shares')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+                        @error('shares')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
                     </div>
 
                     <div>
                         <label class="label">{{ __('shares.share_amount') }}</label>
                         <div class="relative">
-                            <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[13.5px] font-medium text-gray-500">৳</span>
+                            <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[14.5px] font-medium text-gray-500">৳</span>
                             <input type="text" id="calc_amount" class="input pl-8" readonly
                                    placeholder="{{ app()->getLocale() === 'bn' ? 'স্বয়ংক্রিয়' : 'Auto' }}">
                         </div>

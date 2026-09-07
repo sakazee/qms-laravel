@@ -24,7 +24,7 @@
     }
 
     body {
-        @apply bg-paper font-sans text-[14px] text-gray-800;
+        @apply bg-paper font-sans text-[15px] text-gray-800;
     }
 
     ::selection {
@@ -34,7 +34,7 @@
 
 @layer components {
     .sidebar-link {
-        @apply mx-2 my-0.5 flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13.5px] font-medium text-[#b9cdbf] transition-colors duration-150 hover:bg-pine-800 hover:text-white;
+        @apply mx-2 my-px flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-[14.5px] font-medium text-[#b9cdbf] transition-colors duration-150 hover:bg-pine-800 hover:text-white;
     }
 
     .sidebar-link.active {
@@ -42,11 +42,11 @@
     }
 
     .sidebar-header {
-        @apply px-5 pb-1.5 pt-5 text-[10px] font-bold uppercase tracking-[1.5px] text-[#5f7d6b];
+        @apply px-4 pb-0.5 pt-3 text-[11px] font-bold uppercase tracking-[1.2px] text-[#5f7d6b];
     }
 
     .btn {
-        @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 text-[13px] font-medium transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60;
+        @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 text-[14px] font-medium transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60;
     }
 
     .btn-primary {
@@ -66,11 +66,11 @@
     }
 
     .btn-sm {
-        @apply px-2.5 py-1.5 text-[12px];
+        @apply px-2.5 py-1.5 text-[13px];
     }
 
     .btn-xs {
-        @apply px-2 py-1 text-[11.5px];
+        @apply px-2 py-1 text-[12.5px];
     }
 
     .btn-split {
@@ -90,7 +90,7 @@
     }
 
     .card-title {
-        @apply flex items-center gap-2 font-serif text-[15.5px] font-semibold text-gray-900;
+        @apply flex items-center gap-2 font-serif text-[16.5px] font-semibold text-gray-900;
     }
 
     .card-body {
@@ -98,19 +98,19 @@
     }
 
     .input {
-        @apply block w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-[13.5px] text-gray-800 shadow-sm placeholder:text-gray-400 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/25;
+        @apply block w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-[14.5px] text-gray-800 shadow-sm placeholder:text-gray-400 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/25;
     }
 
     .label {
-        @apply mb-1.5 block text-[12.5px] font-semibold text-gray-700;
+        @apply mb-1.5 block text-[13.5px] font-semibold text-gray-700;
     }
 
     .badge {
-        @apply inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11.5px] font-semibold;
+        @apply inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[12.5px] font-semibold;
     }
 
     .alert {
-        @apply mb-4 rounded-xl border px-4 py-3 text-[13.5px] font-medium;
+        @apply mb-4 rounded-xl border px-4 py-3 text-[14.5px] font-medium;
     }
 
     .alert-success {
@@ -134,11 +134,11 @@
     }
 
     .datatable {
-        @apply text-[13px];
+        @apply text-[14px];
     }
 
     .datatable thead th {
-        @apply border-b border-gray-200 bg-paper-100 px-4 py-3 text-left align-middle text-[12px] font-bold uppercase tracking-wide text-gray-600;
+        @apply border-b border-gray-200 bg-paper-100 px-4 py-3 text-left align-middle text-[13px] font-bold uppercase tracking-wide text-gray-600;
     }
 
     .datatable tbody td {
@@ -150,7 +150,7 @@
     }
 
     .action-btn {
-        @apply inline-flex h-8 w-8 items-center justify-center rounded-lg text-[13px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600;
+        @apply inline-flex h-8 w-8 items-center justify-center rounded-lg text-[14px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600;
     }
 
     .action-view {
@@ -166,7 +166,7 @@
     }
 
     .dropdown-item {
-        @apply flex w-full items-center gap-2 px-4 py-2 text-left text-[13px] text-gray-700 hover:bg-paper-100;
+        @apply flex w-full items-center gap-2 px-4 py-2 text-left text-[14px] text-gray-700 hover:bg-paper-100;
     }
 
     .empty-state {
@@ -180,15 +180,15 @@
 }
 
 .badge-success {
-    @apply inline-flex items-center gap-1 rounded-md bg-emerald-100 px-2 py-0.5 text-[11.5px] font-semibold text-emerald-800;
+    @apply inline-flex items-center gap-1 rounded-md bg-emerald-100 px-2 py-0.5 text-[12.5px] font-semibold text-emerald-800;
 }
 
 .badge-danger {
-    @apply inline-flex items-center gap-1 rounded-md bg-rose-100 px-2 py-0.5 text-[11.5px] font-semibold text-rose-800;
+    @apply inline-flex items-center gap-1 rounded-md bg-rose-100 px-2 py-0.5 text-[12.5px] font-semibold text-rose-800;
 }
 
 .badge-secondary {
-    @apply inline-flex items-center gap-1 rounded-md bg-gray-100 px-2 py-0.5 text-[11.5px] font-semibold text-gray-600;
+    @apply inline-flex items-center gap-1 rounded-md bg-gray-100 px-2 py-0.5 text-[12.5px] font-semibold text-gray-600;
 }
 
 .text-success {
@@ -217,7 +217,7 @@
 
 .dataTables_wrapper .dataTables_filter input,
 .dataTables_wrapper .dataTables_length select {
-    @apply rounded-lg border border-gray-300 bg-white px-2.5 py-1.5 text-[13px] text-gray-700 focus:border-emerald-600 focus:outline-none;
+    @apply rounded-lg border border-gray-300 bg-white px-2.5 py-1.5 text-[14px] text-gray-700 focus:border-emerald-600 focus:outline-none;
 }
 
 .dataTables_wrapper .dataTables_length,
@@ -226,11 +226,11 @@
 }
 
 .dataTables_wrapper .dataTables_info {
-    @apply py-3 text-[12.5px] text-gray-500;
+    @apply py-3 text-[13.5px] text-gray-500;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
-    @apply mx-0.5 cursor-pointer rounded-md border border-gray-200 bg-white px-2.5 py-1 text-[12.5px] text-gray-600 hover:bg-paper-100 hover:!text-gray-800;
+    @apply mx-0.5 cursor-pointer rounded-md border border-gray-200 bg-white px-2.5 py-1 text-[13.5px] text-gray-600 hover:bg-paper-100 hover:!text-gray-800;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current {
@@ -251,7 +251,7 @@
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-    @apply flex items-center px-3 text-[13.5px] text-gray-800;
+    @apply flex items-center px-3 text-[14.5px] text-gray-800;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__placeholder {
@@ -276,7 +276,7 @@
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    @apply flex items-center gap-1 rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[12px] font-medium text-emerald-900;
+    @apply flex items-center gap-1 rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[13px] font-medium text-emerald-900;
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
@@ -297,7 +297,7 @@
 
 .select2-container--default .select2-search--inline .select2-search__field,
 .select2-container--default .select2-search--dropdown .select2-search__field {
-    @apply m-0 text-[13.5px] text-gray-800;
+    @apply m-0 text-[14.5px] text-gray-800;
 }
 
 .select2-container--default .select2-search--inline .select2-search__field::placeholder {
@@ -323,7 +323,7 @@
 }
 
 .select2-container--default .select2-results__option {
-    @apply px-3 py-1.5 text-[13.5px] text-gray-900;
+    @apply px-3 py-1.5 text-[14.5px] text-gray-900;
 }
 
 .select2-container--default .select2-results__option[aria-selected="true"] {

@@ -3,7 +3,7 @@
 @section('page-title', $partner->name)
 @section('breadcrumb')
     <span><a href="{{ route('partners.index') }}" class="hover:text-emerald-700">{{ __('partners.partners') }}</a></span>
-    <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+    <i class="fa-solid fa-chevron-right text-[11px] text-gray-400"></i>
     <span class="text-gray-600">{{ __('messages.view') }}</span>
 @endsection
 
@@ -23,27 +23,27 @@
                     {{ strtoupper(mb_substr($partner->name, 0, 1)) }}
                 </div>
                 <div class="text-center">
-                    <h4 class="font-serif text-[16px] font-bold text-gray-900">{{ $partner->name }}</h4>
+                    <h4 class="font-serif text-[17px] font-bold text-gray-900">{{ $partner->name }}</h4>
                     @if($partner->phone)
-                        <p class="mt-1 inline-flex items-center gap-1.5 text-[13px] text-gray-500"><i class="fa-solid fa-phone"></i>{{ $partner->phone }}</p>
+                        <p class="mt-1 inline-flex items-center gap-1.5 text-[14px] text-gray-500"><i class="fa-solid fa-phone"></i>{{ $partner->phone }}</p>
                     @endif
                     @if($partner->address)
-                        <p class="mt-0.5 inline-flex items-center gap-1.5 text-[13px] text-gray-500"><i class="fa-solid fa-location-dot"></i>{{ $partner->address }}</p>
+                        <p class="mt-0.5 inline-flex items-center gap-1.5 text-[14px] text-gray-500"><i class="fa-solid fa-location-dot"></i>{{ $partner->address }}</p>
                     @endif
                 </div>
             </div>
             <div class="grid grid-cols-3 divide-x divide-gray-100 border-b border-gray-100">
                 <div class="px-3 py-4 text-center">
-                    <div class="text-[14px] font-bold text-sky-700">৳{{ format_amount($totalShare, 0) }}</div>
-                    <div class="mt-0.5 text-[11.5px] text-gray-500">{{ __('partners.total_share') }}</div>
+                    <div class="text-[15px] font-bold text-sky-700">৳{{ format_amount($totalShare, 0) }}</div>
+                    <div class="mt-0.5 text-[12.5px] text-gray-500">{{ __('partners.total_share') }}</div>
                 </div>
                 <div class="px-3 py-4 text-center">
-                    <div class="text-[14px] font-bold text-emerald-700">৳{{ format_amount($totalPaid, 0) }}</div>
-                    <div class="mt-0.5 text-[11.5px] text-gray-500">{{ __('partners.total_paid') }}</div>
+                    <div class="text-[15px] font-bold text-emerald-700">৳{{ format_amount($totalPaid, 0) }}</div>
+                    <div class="mt-0.5 text-[12.5px] text-gray-500">{{ __('partners.total_paid') }}</div>
                 </div>
                 <div class="px-3 py-4 text-center">
-                    <div class="text-[14px] font-bold {{ $due > 0 ? 'text-rose-700' : 'text-emerald-700' }}">৳{{ format_amount($due, 0) }}</div>
-                    <div class="mt-0.5 text-[11.5px] text-gray-500">{{ __('partners.due') }}</div>
+                    <div class="text-[15px] font-bold {{ $due > 0 ? 'text-rose-700' : 'text-emerald-700' }}">৳{{ format_amount($due, 0) }}</div>
+                    <div class="mt-0.5 text-[12.5px] text-gray-500">{{ __('partners.due') }}</div>
                 </div>
             </div>
             <div class="flex flex-col gap-2 px-5 py-4">

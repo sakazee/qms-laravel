@@ -10,7 +10,7 @@
     <div class="card-header">
         <h3 class="card-title"><i class="fa-solid fa-file-invoice-dollar text-emerald-700"></i>{{ __('expenses.expenses') }}</h3>
         <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-amber-50 px-3 py-1.5 font-serif text-[14px] font-bold text-amber-800 ring-1 ring-amber-200">
+            <span class="rounded-lg bg-amber-50 px-3 py-1.5 font-serif text-[15px] font-bold text-amber-800 ring-1 ring-amber-200">
                 {{ app()->getLocale() === 'bn' ? 'মোট: ৳' : 'Total: ৳' }}{{ format_amount($expenses->sum('amount'), 0) }}
             </span>
             <button type="submit" form="bulk-form" class="btn btn-danger btn-sm bulk-delete-btn" disabled
@@ -48,16 +48,16 @@
                         @if($expense->expenseHead)
                         <span class="inline-flex items-center gap-1.5">
                             <span class="inline-block h-2.5 w-2.5 rounded-full" style="background-color: {{ $expense->expenseHead->color }};"></span>
-                            <span class="text-[12.5px] font-medium text-gray-700">{{ $expense->expenseHead->name }}</span>
+                            <span class="text-[13.5px] font-medium text-gray-700">{{ $expense->expenseHead->name }}</span>
                         </span>
                         @else
-                            <span class="text-[12.5px] text-gray-400">—</span>
+                            <span class="text-[13.5px] text-gray-400">—</span>
                         @endif
                     </td>
                     <td>
                         <div class="font-semibold text-gray-900">{{ $expense->title }}</div>
                         @if($expense->description)
-                        <div class="max-w-[220px] truncate text-[12px] text-gray-400">{{ Str::limit($expense->description, 50) }}</div>
+                        <div class="max-w-[220px] truncate text-[13px] text-gray-400">{{ Str::limit($expense->description, 50) }}</div>
                         @endif
                     </td>
                     <td class="font-semibold">৳{{ format_amount($expense->amount, 0) }}</td>
@@ -78,12 +78,12 @@
                                 default => 'bg-gray-100 text-gray-500',
                             } }}">{{ $expense->split_type_label }}</span>
                             <span class="badge {{ $distBadge[0] }}">{{ $distBadge[1] }}</span>
-                            <span class="text-[12px] text-gray-400">{{ format_amount($expense->distributions->count(), 0) }} {{ app()->getLocale() === 'bn' ? 'টি পশু' : 'animals' }}</span>
+                            <span class="text-[13px] text-gray-400">{{ format_amount($expense->distributions->count(), 0) }} {{ app()->getLocale() === 'bn' ? 'টি পশু' : 'animals' }}</span>
                         </div>
                     </td>
                     <td>{{ $expense->expense_date->format('d M Y') }}</td>
                     <td>
-                        <div class="text-[12.5px] text-gray-600">
+                        <div class="text-[13.5px] text-gray-600">
                             @foreach($expense->distributions->take(3) as $d)
                                 {{ $d->animal->type_name }}: ৳{{ format_amount($d->amount, 0) }} ({{ format_amount($d->percentage, 0) }}%)<br>
                             @endforeach

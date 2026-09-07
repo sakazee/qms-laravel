@@ -3,7 +3,7 @@
         <label class="label">{{ __('partners.name') }} <span class="text-rose-600">*</span></label>
         <input type="text" name="name" value="{{ old('name', $partner->name ?? '') }}"
                class="input @error('name') border-rose-400 @enderror" required>
-        @error('name')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+        @error('name')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 
     <div>

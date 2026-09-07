@@ -18,15 +18,15 @@
 <div class="card">
     <div class="card-header"><h3 class="card-title"><i class="fa-solid fa-scale-balanced text-sky-700"></i>{{ __('reports.partner_due_summary') }}</h3></div>
     <div class="table-wrap">
-        <table class="w-full text-[13px]">
+        <table class="w-full text-[14px]">
             <thead class="border-b border-gray-200 bg-paper-100">
                 <tr>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">#</th>
-                    <th class="px-4 py-3 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('partners.name') }}</th>
-                    <th class="px-4 py-3 text-right text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('reports.total_shares') }}</th>
-                    <th class="px-4 py-3 text-right text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('reports.total_due') }}</th>
-                    <th class="px-4 py-3 text-right text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('reports.total_paid') }}</th>
-                    <th class="px-4 py-3 text-right text-[12px] font-bold uppercase tracking-wide text-gray-600">{{ __('reports.balance') }}</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">#</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('partners.name') }}</th>
+                    <th class="px-4 py-3 text-right text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('reports.total_shares') }}</th>
+                    <th class="px-4 py-3 text-right text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('reports.total_due') }}</th>
+                    <th class="px-4 py-3 text-right text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('reports.total_paid') }}</th>
+                    <th class="px-4 py-3 text-right text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('reports.balance') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,7 +49,7 @@
                     <td colspan="6">
                         <div class="empty-state">
                             <i class="fa-solid fa-scale-balanced text-3xl text-gray-300"></i>
-                            <span class="text-[13.5px]">{{ __('messages.no_data_found') }}</span>
+                            <span class="text-[14.5px]">{{ __('messages.no_data_found') }}</span>
                         </div>
                     </td>
                 </tr>

@@ -3,7 +3,7 @@
 @section('page-title', $animal->type_name . ' — ' . ($animal->name ?: ''))
 @section('breadcrumb')
     <span><a href="{{ route('animals.index') }}" class="hover:text-emerald-700">{{ __('animals.animals') }}</a></span>
-    <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+    <i class="fa-solid fa-chevron-right text-[11px] text-gray-400"></i>
     <span class="text-gray-600">{{ __('messages.view') }}</span>
 @endsection
 
@@ -25,42 +25,42 @@
             <div class="card-body">
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-1">
                     <div>
-                        <p class="text-[12px] font-semibold text-gray-500">{{ __('animals.type.label') }}</p>
-                        <p class="text-[14px] font-medium text-gray-900">
+                        <p class="text-[13px] font-semibold text-gray-500">{{ __('animals.type.label') }}</p>
+                        <p class="text-[15px] font-medium text-gray-900">
                             <span class="badge bg-sky-100 text-sky-700">{{ $animal->type_name }}</span>
                         </p>
                     </div>
                     <div>
-                        <p class="text-[12px] font-semibold text-gray-500">{{ __('animals.name') }}</p>
-                        <p class="text-[14px] font-medium text-gray-900">{{ $animal->name ?: '—' }}</p>
+                        <p class="text-[13px] font-semibold text-gray-500">{{ __('animals.name') }}</p>
+                        <p class="text-[15px] font-medium text-gray-900">{{ $animal->name ?: '—' }}</p>
                     </div>
                     <div>
-                        <p class="text-[12px] font-semibold text-gray-500">{{ __('animals.purchase_price') }}</p>
-                        <p class="text-[14px] font-medium text-gray-900">৳{{ format_amount($animal->purchase_price, 2) }}</p>
+                        <p class="text-[13px] font-semibold text-gray-500">{{ __('animals.purchase_price') }}</p>
+                        <p class="text-[15px] font-medium text-gray-900">৳{{ format_amount($animal->purchase_price, 2) }}</p>
                     </div>
                     <div>
-                        <p class="text-[12px] font-semibold text-gray-500">{{ __('animals.total_shares') }}</p>
-                        <p class="text-[14px] font-medium text-gray-900">{{ $animal->total_shares }}</p>
+                        <p class="text-[13px] font-semibold text-gray-500">{{ __('animals.total_shares') }}</p>
+                        <p class="text-[15px] font-medium text-gray-900">{{ $animal->total_shares }}</p>
                     </div>
                     <div>
-                        <p class="text-[12px] font-semibold text-gray-500">{{ __('animals.assigned_shares') }}</p>
-                        <p class="text-[14px] font-medium text-gray-900">
+                        <p class="text-[13px] font-semibold text-gray-500">{{ __('animals.assigned_shares') }}</p>
+                        <p class="text-[15px] font-medium text-gray-900">
                             <span class="badge bg-sky-100 text-sky-700">{{ $animal->assigned_shares }}</span>
                         </p>
                     </div>
                     <div>
-                        <p class="text-[12px] font-semibold text-gray-500">{{ __('animals.available_shares') }}</p>
-                        <p class="text-[14px] font-medium text-gray-900">
+                        <p class="text-[13px] font-semibold text-gray-500">{{ __('animals.available_shares') }}</p>
+                        <p class="text-[15px] font-medium text-gray-900">
                             <span class="badge {{ $animal->available_shares > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-700' }}">{{ $animal->available_shares }}</span>
                         </p>
                     </div>
                     <div>
-                        <p class="text-[12px] font-semibold text-gray-500">{{ __('animals.share_price') }}</p>
-                        <p class="text-[14px] font-medium text-gray-900">৳{{ format_amount($animal->share_price, 2) }}</p>
+                        <p class="text-[13px] font-semibold text-gray-500">{{ __('animals.share_price') }}</p>
+                        <p class="text-[15px] font-medium text-gray-900">৳{{ format_amount($animal->share_price, 2) }}</p>
                     </div>
                     <div>
-                        <p class="text-[12px] font-semibold text-gray-500">{{ __('animals.status.label') }}</p>
-                        <p class="text-[14px] font-medium text-gray-900">
+                        <p class="text-[13px] font-semibold text-gray-500">{{ __('animals.status.label') }}</p>
+                        <p class="text-[15px] font-medium text-gray-900">
                             <span class="badge {{ $statusBadgeClass }}">{{ __('animals.status.' . $animal->status) }}</span>
                         </p>
                     </div>

@@ -36,7 +36,7 @@
 
     {{-- Sidebar --}}
     <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
-           class="fixed inset-y-0 left-0 z-40 flex w-64 flex-col overflow-y-auto bg-pine-900 shadow-lift transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0">
+           class="fixed inset-y-0 left-0 z-40 flex w-56 flex-col overflow-y-auto bg-pine-900 shadow-lift transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0">
         @include('layouts.partials.sidebar')
     </aside>
 
@@ -54,9 +54,9 @@
                 <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
                     <h1 class="font-serif text-[22px] font-bold text-pine-900">@yield('page-title')</h1>
                     @hasSection('breadcrumb')
-                    <nav class="flex items-center gap-1.5 text-[12.5px] text-gray-500">
+                    <nav class="flex items-center gap-1.5 text-[13.5px] text-gray-500">
                         <a href="{{ route('dashboard') }}" class="hover:text-emerald-700">{{ __('messages.app_name') }}</a>
-                        <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+                        <i class="fa-solid fa-chevron-right text-[11px] text-gray-400"></i>
                         @yield('breadcrumb')
                     </nav>
                     @endif
@@ -72,7 +72,7 @@
 
         {{-- Footer --}}
         <footer class="border-t border-gray-200 bg-white px-6 py-4">
-            <div class="mx-auto flex flex-wrap items-center justify-between gap-2 text-[12.5px] text-gray-500">
+            <div class="mx-auto flex flex-wrap items-center justify-between gap-2 text-[13.5px] text-gray-500">
                 <span><strong class="text-emerald-800">{{ __('messages.app_name') }}</strong> &copy; {{ date('Y') }}</span>
                 <span class="hidden sm:inline"><b>{{ config('app.name') }}</b></span>
 </div>

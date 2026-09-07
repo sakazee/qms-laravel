@@ -3,7 +3,7 @@
 @section('page-title', __('admin.edit_user'))
 @section('breadcrumb')
     <span><a href="{{ route('admin.users.index') }}" class="hover:text-emerald-700">{{ __('admin.users') }}</a></span>
-    <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+    <i class="fa-solid fa-chevron-right text-[11px] text-gray-400"></i>
     <span class="text-gray-600">{{ __('admin.edit_user') }}</span>
 @endsection
 

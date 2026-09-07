@@ -61,9 +61,9 @@
         <h3 class="card-title"><i class="fa-solid fa-chart-pie text-emerald-700"></i>{{ app()->getLocale() === 'bn' ? 'পশু ভাগের সারসংক্ষেপ' : 'Animal Share Summary' }}</h3>
     </div>
     <div class="table-wrap">
-        <table class="w-full text-[13px]">
+        <table class="w-full text-[14px]">
             <thead>
-                <tr class="border-b border-gray-200 bg-paper-100 text-left text-[12px] font-bold uppercase tracking-wide text-gray-600">
+                <tr class="border-b border-gray-200 bg-paper-100 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">
                     <th class="px-4 py-3">{{ __('animals.animal') }}</th>
                     <th class="px-4 py-3 text-center">{{ __('animals.total_shares') }}</th>
                     <th class="px-4 py-3 text-center">{{ __('animals.assigned_shares') }}</th>
@@ -87,7 +87,7 @@
                         <div class="h-2 w-[160px] overflow-hidden rounded-full bg-gray-200">
                             <div class="h-full rounded-full {{ $pct == 100 ? 'bg-emerald-600' : 'bg-sky-500' }}" style="width:{{ $pct }}%"></div>
                         </div>
-                        <span class="mt-0.5 block text-[11.5px] text-gray-500">{{ format_amount($pct, 0) }}%</span>
+                        <span class="mt-0.5 block text-[12.5px] text-gray-500">{{ format_amount($pct, 0) }}%</span>
                     </td>
                 </tr>
                 @endforeach

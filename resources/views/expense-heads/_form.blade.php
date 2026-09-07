@@ -4,7 +4,7 @@
         <input type="text" name="name" value="{{ old('name', $expenseHead->name ?? '') }}"
                class="input @error('name') border-rose-400 @enderror"
                placeholder="{{ app()->getLocale() === 'bn' ? 'যেমন: পশুখাদ্য' : 'e.g. Animal Feed' }}" required>
-        @error('name')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+        @error('name')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 
     <div>
@@ -12,7 +12,7 @@
         <textarea name="description" rows="3"
                   class="input @error('description') border-rose-400 @enderror resize-none"
                   placeholder="{{ app()->getLocale() === 'bn' ? 'ঐচ্ছিক বিবরণ...' : 'Optional description...' }}">{{ old('description', $expenseHead->description ?? '') }}</textarea>
-        @error('description')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+        @error('description')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 
     <div>
@@ -27,6 +27,6 @@
             </label>
             @endforeach
         </div>
-        @error('color')<p class="mt-1 text-[12px] font-medium text-rose-600">{{ $message }}</p>@enderror
+        @error('color')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 </div>

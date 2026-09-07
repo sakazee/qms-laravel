@@ -9,13 +9,13 @@
             <i class="fa-solid fa-database"></i>
         </span>
         <div>
-            <p class="text-[13px] font-bold uppercase tracking-wide text-amber-700">{{ __('admin.admin_mode') }}</p>
-            <p class="text-[15px] font-bold text-amber-900">{{ __('admin.managing_user_data', ['name' => $impersonatedUser->name]) }}</p>
+            <p class="text-[14px] font-bold uppercase tracking-wide text-amber-700">{{ __('admin.admin_mode') }}</p>
+            <p class="text-[16px] font-bold text-amber-900">{{ __('admin.managing_user_data', ['name' => $impersonatedUser->name]) }}</p>
         </div>
     </div>
     <form action="{{ route('admin.impersonate.stop') }}" method="POST" class="m-0">
         @csrf
-        <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-[13px] font-bold text-white shadow-sm transition-colors hover:bg-amber-600">
+        <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-[14px] font-bold text-white shadow-sm transition-colors hover:bg-amber-600">
             <i class="fa-solid fa-arrow-left"></i> {{ __('admin.switch_back') }}
         </button>
     </form>

@@ -3,7 +3,7 @@
 @section('page-title', __('templates.create'))
 @section('breadcrumb')
     <span><a href="{{ route('templates.index') }}" class="hover:text-emerald-700">{{ __('templates.templates') }}</a></span>
-    <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+    <i class="fa-solid fa-chevron-right text-[11px] text-gray-400"></i>
     <span class="text-gray-600">{{ __('templates.create') }}</span>
 @endsection
 
