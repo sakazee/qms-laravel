@@ -91,7 +91,7 @@
 
     @endif {{-- end template selected check --}}
 
-    @if(auth()->user()->isAdmin() && session('mode') === 'admin')
+    @if(auth()->user()->isAdmin())
 
     <div class="sidebar-header">{{ app()->getLocale() === 'bn' ? 'সুপার অ্যাডমিন' : 'SUPER ADMIN' }}</div>
 
