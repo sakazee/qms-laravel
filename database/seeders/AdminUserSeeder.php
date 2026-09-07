@@ -9,10 +9,10 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        $emails = array_filter([
+        $emails = array_values(array_unique(array_filter([
             config('superadmin.email'),
             'demo@qurbani.app',
-        ]);
+        ])));
 
         foreach ($emails as $email) {
             User::withTrashed()->where('email', $email)->update(['role' => User::ROLE_ADMIN]);
