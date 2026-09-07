@@ -10,7 +10,11 @@ class Template extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['user_id', 'name', 'year', 'description', 'status'];
+    protected $fillable = ['user_id', 'name', 'year', 'description', 'status', 'is_default'];
+
+    protected $casts = [
+        'is_default' => 'boolean',
+    ];
 
     public function user()
     {
@@ -51,6 +55,11 @@ class Template extends Model
     public function scopeActive($query)
     {
         return $query->where('status', 'active');
+    }
+
+    public function scopeDefault($query)
+    {
+        return $query->where('is_default', true);
     }
 
     // Computed attributes

@@ -71,4 +71,23 @@ class TemplateController extends Controller
 
         return redirect()->route('dashboard')->with('success', __('templates.deselected'));
     }
+
+    public function makeDefault(Request $request, Template $template)
+    {
+        $this->authorize('update', $template);
+
+        if ($template->is_default) {
+            $template->update(['is_default' => false]);
+
+            return redirect()->route('templates.index')
+                ->with('success', __('templates.default_removed'));
+        }
+
+        Template::forUser($template->user_id)->update(['is_default' => false]);
+        $template->update(['is_default' => true]);
+        session(['selected_template_id' => $template->id]);
+
+        return redirect()->route('dashboard')
+            ->with('success', __('templates.default_set', ['name' => $template->name]));
+    }
 }

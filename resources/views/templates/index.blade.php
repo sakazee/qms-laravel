@@ -32,6 +32,11 @@
                     <td>{{ format_amount($i + 1, 0) }}</td>
                     <td>
                         <div class="font-semibold text-gray-900">{{ $template->name }}</div>
+                        @if($template->is_default)
+                            <span class="badge mt-1 bg-amber-100 text-amber-800">
+                                <i class="fa-solid fa-star text-[11px]"></i>{{ __('templates.default') }}
+                            </span>
+                        @endif
                         @if(session('selected_template_id') == $template->id)
                             <span class="badge mt-1 bg-emerald-100 text-emerald-800">
                                 <i class="fa-solid fa-check text-[11px]"></i>{{ app()->getLocale() === 'bn' ? 'নির্বাচিত' : 'Selected' }}
@@ -54,6 +59,14 @@
                     <td class="text-center font-semibold">{{ format_amount($template->partners_count ?? $template->partners()->count(), 0) }}</td>
                     <td>
                         <div class="flex items-center gap-1.5">
+                            <form action="{{ route('templates.make-default', $template) }}" method="POST" class="m-0">
+                                @csrf
+                                <button type="submit" class="action-btn {{ $template->is_default
+                                    ? 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+                                    : 'bg-gray-100 text-gray-400 hover:bg-amber-200' }}" title="{{ $template->is_default ? __('templates.remove_default') : __('templates.make_default') }}">
+                                    <i class="{{ $template->is_default ? 'fa-solid' : 'fa-regular' }} fa-star"></i>
+                                </button>
+                            </form>
                             @if(session('selected_template_id') == $template->id)
                             <a href="{{ route('templates.deselect') }}"
                                class="action-btn bg-gray-100 text-gray-600 hover:bg-gray-200" title="{{ __('templates.deselect') }}">

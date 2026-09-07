@@ -33,6 +33,7 @@ Route::middleware(['auth', 'set.locale', 'ensure.template'])->group(function () 
     Route::get('templates/deselect', [TemplateController::class, 'deselect'])->name('templates.deselect');
     Route::resource('templates', TemplateController::class)->except(['show']);
     Route::get('templates/{template}/select', [TemplateController::class, 'select'])->name('templates.select');
+    Route::post('templates/{template}/make-default', [TemplateController::class, 'makeDefault'])->name('templates.make-default');
 
     // Expense Heads
     Route::resource('expense-heads', ExpenseHeadController::class)->except(['show']);

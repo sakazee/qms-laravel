@@ -31,4 +31,13 @@ class LoginController extends Controller
             'status' => User::STATUS_ACTIVE,
         ];
     }
+
+    protected function authenticated(Request $request, $user)
+    {
+        $default = $user->templates()->default()->first();
+
+        if ($default) {
+            session(['selected_template_id' => $default->id]);
+        }
+    }
 }
