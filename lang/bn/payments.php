@@ -9,6 +9,7 @@
     'payment_method' => 'পেমেন্ট পদ্ধতি',
     'reference'      => 'রেফারেন্স নম্বর',
     'take_payment'   => 'পেমেন্ট নিন',
+    'total_due'      => 'মোট বকেয়া',
     'method' => [
         'cash'           => 'নগদ টাকা',
         'bank'           => 'ব্যাংক',

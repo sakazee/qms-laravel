@@ -6,10 +6,13 @@ use App\Http\Requests\Payment\StorePaymentRequest;
 use App\Http\Requests\Payment\UpdatePaymentRequest;
 use App\Models\Partner;
 use App\Models\Payment;
+use App\Services\ReportService;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+    public function __construct(private readonly ReportService $reportService) {}
+
     private function getTemplateId(): int
     {
         $id = session('selected_template_id');
@@ -18,6 +21,18 @@ class PaymentController extends Controller
         }
 
         return $id;
+    }
+
+    private function partnerDueMap(int $templateId): array
+    {
+        $summary = $this->reportService->getPartnerDueSummary($templateId, effective_user_id());
+
+        $map = [];
+        foreach ($summary['partners'] as $row) {
+            $map[$row['partner']->id] = max(0, round($row['balance'], 2));
+        }
+
+        return $map;
     }
 
     public function index()
@@ -37,8 +52,9 @@ class PaymentController extends Controller
     {
         $templateId = $this->getTemplateId();
         $partners = Partner::forTemplate($templateId)->forUser(effective_user_id())->get();
+        $partnerDueMap = $this->partnerDueMap($templateId);
 
-        return view('payments.create', compact('partners'));
+        return view('payments.create', compact('partners', 'partnerDueMap'));
     }
 
     public function store(StorePaymentRequest $request)
@@ -58,8 +74,9 @@ class PaymentController extends Controller
         $this->authorize('update', $payment);
         $templateId = $this->getTemplateId();
         $partners = Partner::forTemplate($templateId)->forUser(effective_user_id())->get();
+        $partnerDueMap = $this->partnerDueMap($templateId);
 
-        return view('payments.edit', compact('payment', 'partners'));
+        return view('payments.edit', compact('payment', 'partners', 'partnerDueMap'));
     }
 
     public function update(UpdatePaymentRequest $request, Payment $payment)
