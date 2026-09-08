@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\TemplateBrowserController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AnimalShareController;
+use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ExpenseHeadController;
@@ -29,6 +30,10 @@ Route::middleware(['auth', 'set.locale', 'ensure.template'])->group(function () 
 
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Change Password
+    Route::get('password/change', [ChangePasswordController::class, 'showForm'])->name('password.change');
+    Route::post('password/change', [ChangePasswordController::class, 'update'])->name('password.change.update');
 
     // Templates
     Route::get('templates/deselect', [TemplateController::class, 'deselect'])->name('templates.deselect');

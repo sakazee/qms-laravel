@@ -110,6 +110,9 @@
                         <div class="text-[14px] font-semibold text-gray-800">{{ auth()->user()->name }}</div>
                         <div class="text-[13px] text-gray-400">{{ auth()->user()->email }}</div>
                     </div>
+                    <a href="{{ route('password.change') }}" class="dropdown-item">
+                        <i class="fa-solid fa-key"></i> {{ __('profile.change_password') }}
+                    </a>
                     <a href="{{ route('logout') }}" class="dropdown-item text-rose-700"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout

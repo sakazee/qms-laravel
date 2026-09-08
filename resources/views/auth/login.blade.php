@@ -38,10 +38,14 @@
 
             <div>
                 <label for="password" class="label">{{ app()->getLocale() === 'bn' ? 'পাসওয়ার্ড' : 'Password' }}</label>
-                <div class="relative">
+                <div class="relative" x-data="{ show: false }">
                     <i class="fa-solid fa-lock pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-gray-400"></i>
-                    <input type="password" id="password" name="password"
-                           class="input pl-10" placeholder="••••••••" required>
+                    <input :type="show ? 'text' : 'password'" id="password" name="password"
+                           class="input pl-10 pr-11" placeholder="••••••••" required>
+                    <button type="button" @click="show = !show" :aria-label="show ? '{{ app()->getLocale() === 'bn' ? 'পাসওয়ার্ড লুকান' : 'Hide password' }}' : '{{ app()->getLocale() === 'bn' ? 'পাসওয়ার্ড দেখান' : 'Show password' }}'"
+                            class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-emerald-700 focus:outline-none">
+                        <i :class="show ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+                    </button>
                 </div>
             </div>
 

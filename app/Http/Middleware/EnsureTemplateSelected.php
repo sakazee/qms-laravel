@@ -14,6 +14,8 @@ class EnsureTemplateSelected
         'templates.*',
         'expense-heads.*',
         'language.*',
+        'password.change',
+        'password.change.update',
         'logout',
     ];
 
