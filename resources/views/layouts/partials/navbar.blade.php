@@ -2,8 +2,8 @@
     <div class="mx-auto flex h-16 max-w-screen-2xl items-center gap-3 px-4 sm:px-6 lg:px-8">
 
         {{-- Left: sidebar toggle + template badge --}}
-        <button type="button" @click="sidebarOpen = true" class="-ml-1 rounded-lg p-2 text-gray-600 hover:bg-paper-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 lg:hidden" aria-label="Open menu">
-            <i class="fa-solid fa-bars text-lg"></i>
+        <button type="button" @click="sidebarToggle()" :title="sidebarToggleIcon()" aria-label="{{ __('messages.toggle_sidebar') }}" class="-ml-1 rounded-lg bg-emerald-50 p-2 text-emerald-800 ring-1 ring-inset ring-emerald-200 hover:bg-emerald-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600">
+            <i class="fa-solid text-lg" :class="sidebarToggleIcon()"></i>
         </button>
 
         @if(session('selected_template_id'))

@@ -1,4 +1,4 @@
-<a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 border-b border-white/10 px-4 py-3">
+<a href="{{ route('dashboard') }}" class="sidebar-brand flex items-center gap-2.5 border-b border-white/10 px-4 py-3">
     <i class="fa-solid fa-moon text-[17px] text-gold"></i>
     <span class="font-serif text-[14.5px] font-bold leading-tight text-white">
         {{ app()->getLocale() === 'bn' ? 'কোরবানি সিস্টেম' : 'Qurbani System' }}
@@ -110,6 +110,6 @@
     @endif
 </nav>
 
-<div class="border-t border-white/10 px-4 py-2 text-[12.5px] text-[#5f7d6b]">
+<div class="sidebar-footer border-t border-white/10 px-4 py-2 text-[12.5px] text-[#5f7d6b]">
     {{ config('app.name') }}
 </div>

@@ -14,6 +14,7 @@ use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TemplateController;
+use App\Http\Controllers\UserPreferenceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +59,9 @@ Route::middleware(['auth', 'set.locale', 'ensure.template'])->group(function () 
     // Payments
     Route::post('payments/bulk-destroy', [PaymentController::class, 'bulkDestroy'])->name('payments.bulk-destroy');
     Route::resource('payments', PaymentController::class);
+
+    // Sidebar preference
+    Route::post('sidebar-mode', [UserPreferenceController::class, 'updateSidebarMode'])->name('sidebar-mode.update');
 
     // Reports
     Route::prefix('reports')->name('reports.')->group(function () {

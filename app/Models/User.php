@@ -11,7 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
 
-    protected $fillable = ['name', 'email', 'password', 'phone', 'locale', 'role', 'status'];
+    protected $fillable = ['name', 'email', 'password', 'phone', 'locale', 'role', 'status', 'sidebar_mode'];
 
     protected $hidden = ['password', 'remember_token'];
 
@@ -22,6 +22,12 @@ class User extends Authenticatable
     public const STATUS_ACTIVE = 'active';
 
     public const STATUS_INACTIVE = 'inactive';
+
+    public const SIDEBAR_EXPANDED = 'expanded';
+
+    public const SIDEBAR_MINI = 'mini';
+
+    public const SIDEBAR_HIDDEN = 'hidden';
 
     protected function casts(): array
     {

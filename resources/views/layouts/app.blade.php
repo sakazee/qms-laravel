@@ -29,19 +29,51 @@
 <body class="bg-paper" data-flash-success="{{ session('success') }}"
                        data-flash-error="{{ session('error') }}"
                        data-flash-warning="{{ session('warning') }}">
-<div x-data="{ sidebarOpen: false }" @keydown.escape.window="sidebarOpen = false" class="flex min-h-screen">
+<div x-data="{
+            sidebarOpen: false,
+            sidebarMode: {{ \Illuminate\Support\Js::from(auth()->user()?->sidebar_mode ?? 'expanded') }},
+            cycleSidebar() {
+                const order = ['expanded', 'mini', 'hidden'];
+                this.sidebarMode = order[(order.indexOf(this.sidebarMode) + 1) % order.length];
+                if (this.$refs.sidebar) this.$refs.sidebar.dataset.sidebarMode = this.sidebarMode;
+                this.persistSidebarMode(this.sidebarMode);
+            },
+            persistSidebarMode(mode) {
+                fetch('{{ route('sidebar-mode.update') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+                    },
+                    body: JSON.stringify({ mode }),
+                });
+            },
+            sidebarToggle() {
+                if (window.matchMedia('(min-width: 1024px)').matches) {
+                    this.cycleSidebar();
+                } else {
+                    this.sidebarOpen = true;
+                }
+            },
+            sidebarToggleIcon() {
+                if (!window.matchMedia('(min-width: 1024px)').matches) return 'fa-bars';
+                return { expanded: 'fa-angles-left', mini: 'fa-compress', hidden: 'fa-angles-right' }[this.sidebarMode];
+            },
+        }" @keydown.escape.window="sidebarOpen = false" class="flex min-h-screen">
 
     {{-- Mobile overlay --}}
     <div x-show="sidebarOpen" x-cloak class="fixed inset-0 z-30 bg-pine-950/60 backdrop-blur-sm lg:hidden" @click="sidebarOpen = false"></div>
 
     {{-- Sidebar --}}
-    <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
-           class="fixed inset-y-0 left-0 z-40 flex w-56 flex-col overflow-y-auto bg-pine-900 shadow-lift transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0">
+    <aside x-ref="sidebar" data-sidebar-mode="{{ auth()->user()?->sidebar_mode ?? 'expanded' }}"
+           :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
+           class="app-aside fixed inset-y-0 left-0 z-40 flex w-56 flex-col overflow-y-auto bg-pine-900 shadow-lift lg:sticky lg:top-0 lg:h-screen lg:translate-x-0">
         @include('layouts.partials.sidebar')
     </aside>
 
     {{-- Main column --}}
-    <div class="flex min-h-screen w-full flex-col">
+    <div class="app-main flex min-h-screen flex-col">
         {{-- Navbar --}}
         @include('layouts.partials.navbar')
 
