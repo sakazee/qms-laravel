@@ -293,7 +293,8 @@
 
 /* Select2 theme */
 .select2-container {
-    width: 100% !important;
+    width: auto !important;
+    max-width: 100%;
 }
 
 .select2-container .select2-selection--single {

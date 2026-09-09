@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
-    <div>
+    <div class="min-w-0">
         <label class="label">{{ __('payments.partner') }} <span class="text-rose-600">*</span></label>
         <select name="partner_id" class="input select2 js-partner-due-select @error('partner_id') border-rose-400 @enderror"
                 data-due-map='{{ json_encode($partnerDueMap ?? []) }}' required>
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div>
+    <div class="min-w-0">
         <label class="label">{{ __('payments.amount') }} <span class="text-rose-600">*</span></label>
         <div class="relative">
             <span class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[14.5px] text-gray-400">৳</span>
@@ -25,13 +25,13 @@
         @error('amount')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 
-    <div>
+    <div class="min-w-0">
         <label class="label">{{ __('payments.payment_date') }} <span class="text-rose-600">*</span></label>
         <input type="date" name="payment_date" value="{{ old('payment_date', isset($payment) ? $payment->payment_date->format('Y-m-d') : date('Y-m-d')) }}" class="input @error('payment_date') border-rose-400 @enderror" required>
         @error('payment_date')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 
-    <div>
+    <div class="min-w-0">
         <label class="label">{{ __('payments.payment_method') }} <span class="text-rose-600">*</span></label>
         <select name="payment_method" class="input @error('payment_method') border-rose-400 @enderror" required>
             @foreach(['cash' => __('payments.method.cash'), 'bank' => __('payments.method.bank'), 'mobile_banking' => __('payments.method.mobile_banking'), 'other' => __('payments.method.other')] as $val => $label)
@@ -41,12 +41,12 @@
         @error('payment_method')<p class="mt-1 text-[13px] font-medium text-rose-600">{{ $message }}</p>@enderror
     </div>
 
-    <div>
+    <div class="min-w-0">
         <label class="label">{{ __('payments.reference') }}</label>
         <input type="text" name="reference" value="{{ old('reference', $payment->reference ?? '') }}" class="input">
     </div>
 
-    <div class="sm:col-span-2">
+    <div class="min-w-0 sm:col-span-2">
         <label class="label">{{ __('messages.notes') }}</label>
         <textarea name="notes" rows="2" class="input resize-none">{{ old('notes', $payment->notes ?? '') }}</textarea>
     </div>
