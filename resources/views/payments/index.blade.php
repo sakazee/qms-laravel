@@ -24,6 +24,7 @@
     </div>
     <form id="bulk-form" action="{{ route('payments.bulk-destroy') }}" method="POST" class="bulk-form">
         @csrf
+    </form>
     <div class="table-wrap">
         <table class="datatable">
             <thead>
@@ -70,6 +71,5 @@
             </tbody>
         </table>
     </div>
-    </form>
 </div>
 @endsection
