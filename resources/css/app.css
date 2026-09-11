@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: 'SolaimanLipi';
-    src: url('/fonts/bengali/SolaimanLipi.ttf') format('truetype');
+    src: url('../fonts/bengali/SolaimanLipi.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -12,7 +12,7 @@
 
 @font-face {
     font-family: 'SolaimanLipi';
-    src: url('/fonts/bengali/SolaimanLipi_Bold.ttf') format('truetype');
+    src: url('../fonts/bengali/SolaimanLipi_Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -293,7 +293,6 @@
 
 /* Select2 theme */
 .select2-container {
-    width: auto !important;
     max-width: 100%;
 }
 
