@@ -23,6 +23,11 @@ class ReportService
 
         return [
             'template' => $template,
+            'animal_expenses' => $template->expenses
+                ->flatMap(fn ($e) => $e->distributions)
+                ->filter(fn ($d) => $d->animal_id !== null)
+                ->groupBy('animal_id')
+                ->map(fn ($ds) => $ds->sum('amount')),
             'stats' => [
                 'total_animals' => $template->animals->count(),
                 'total_partners' => $template->partners->count(),

@@ -44,14 +44,14 @@
 <h3 style="color:#1a6b3a">{{ __('animals.animals') }}</h3>
 <table>
     <thead>
-        <tr><th>#</th><th>{{ __('animals.type.label') }}</th><th>{{ __('animals.name') }}</th><th>{{ __('animals.purchase_price') }}</th><th>{{ __('animals.total_shares') }}</th><th>{{ __('animals.status.label') }}</th></tr>
+        <tr><th>#</th><th>{{ __('animals.type.label') }}</th><th>{{ __('animals.name') }}</th><th>{{ __('animals.purchase_price') }}</th><th>{{ __('expenses.expenses') }}</th><th>{{ __('animals.total_shares') }}</th><th>{{ __('animals.status.label') }}</th></tr>
     </thead>
     <tbody>
         @foreach($template->animals as $i => $a)
-        <tr><td>{{ format_amount($i+1, 0) }}</td><td>{{ $a->type_name }}</td><td>{{ $a->name ?: '—' }}</td><td>৳{{ format_amount($a->purchase_price,0) }}</td><td>{{ format_amount($a->total_shares,0) }}</td><td>{{ __('animals.status.'.$a->status) }}</td></tr>
+        <tr><td>{{ format_amount($i+1, 0) }}</td><td>{{ $a->type_name }}</td><td>{{ $a->name ?: '—' }}</td><td>৳{{ format_amount($a->purchase_price,0) }}</td><td>৳{{ format_amount($animal_expenses[$a->id] ?? 0,0) }}</td><td>{{ format_amount($a->total_shares,0) }}</td><td>{{ __('animals.status.'.$a->status) }}</td></tr>
         @endforeach
     </tbody>
-    <tfoot><tr class="tfoot"><td colspan="3">{{ __('messages.total') }}</td><td>৳{{ format_amount($template->animals->sum('purchase_price'),0) }}</td><td>{{ format_amount($template->animals->sum('total_shares'),0) }}</td><td></td></tr></tfoot>
+    <tfoot><tr class="tfoot"><td colspan="3">{{ __('messages.total') }}</td><td>৳{{ format_amount($template->animals->sum('purchase_price'),0) }}</td><td>৳{{ format_amount($animal_expenses->sum(),0) }}</td><td>{{ format_amount($template->animals->sum('total_shares'),0) }}</td><td></td></tr></tfoot>
 </table>
 </body>
 </html>

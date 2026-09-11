@@ -53,6 +53,7 @@
                     <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.type.label') }}</th>
                     <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.name') }}</th>
                     <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.purchase_price') }}</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('expenses.expenses') }}</th>
                     <th class="px-4 py-3 text-center text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.total_shares') }}</th>
                     <th class="px-4 py-3 text-center text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.assigned_shares') }}</th>
                     <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.status.label') }}</th>
@@ -66,6 +67,8 @@
                         <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $animal->name ?: '—' }}</td>
                         <td class="border-b border-gray-100 px-4 py-3 text-gray-700">
                             ৳{{ format_amount($animal->purchase_price,0) }}</td>
+                        <td class="border-b border-gray-100 px-4 py-3 text-gray-700">
+                            ৳{{ format_amount($animal_expenses[$animal->id] ?? 0, 0) }}</td>
                         <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700">{{ $animal->total_shares }}</td>
                         <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700">{{ $animal->assigned_shares }}</td>
                         <td class="border-b border-gray-100 px-4 py-3 text-gray-700"><span
@@ -77,6 +80,8 @@
                     <td colspan="3" class="border-b border-gray-100 px-4 py-3">{{ __('messages.total') }}</td>
                     <td class="border-b border-gray-100 px-4 py-3">
                         ৳{{ format_amount($template->animals->sum('purchase_price'),0) }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3">
+                        ৳{{ format_amount($animal_expenses->sum(), 0) }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-center">{{ format_amount($template->animals->sum('total_shares'), 0) }}</td>
                     <td colspan="2" class="border-b border-gray-100 px-4 py-3"></td>
                 </tr>
