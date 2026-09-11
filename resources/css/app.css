@@ -270,6 +270,15 @@
     @apply rounded-lg border border-gray-300 bg-white px-2.5 py-1.5 text-[14px] text-gray-700 focus:border-emerald-600 focus:outline-none;
 }
 
+.dataTables_wrapper .dataTables_length select {
+    text-align: center;
+    text-align-last: center;
+    height: 35px;
+    line-height: 33px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 .dataTables_wrapper .dataTables_length,
 .dataTables_wrapper .dataTables_filter {
     @apply text-gray-600;

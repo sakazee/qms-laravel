@@ -36,7 +36,7 @@ $(document).ready(function () {
     // DataTables
     $('.datatable').each(function () {
         const table = $(this).DataTable({
-            pageLength: 15,
+            pageLength: 10,
             responsive: true,
             order: [],
             language: {
