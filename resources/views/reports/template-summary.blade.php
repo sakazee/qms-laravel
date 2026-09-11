@@ -69,8 +69,8 @@
                             ৳{{ format_amount($animal->purchase_price,0) }}</td>
                         <td class="border-b border-gray-100 px-4 py-3 text-gray-700">
                             ৳{{ format_amount($animal_expenses[$animal->id] ?? 0, 0) }}</td>
-                        <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700">{{ $animal->total_shares }}</td>
-                        <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700">{{ $animal->assigned_shares }}</td>
+                        <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700">{{ format_amount($animal->total_shares) }}</td>
+                        <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700">{{ format_amount($animal->assigned_shares) }}</td>
                         <td class="border-b border-gray-100 px-4 py-3 text-gray-700"><span
                                     class="badge bg-gray-100 text-gray-600">{{ __('animals.status.'.$animal->status) }}</span>
                         </td>
@@ -115,7 +115,7 @@
                             <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $expense->title }}</td>
                             <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ format_amount($expense->distributions->count(), 0) }}
                                 / {{ format_amount($template->animals->count(), 0) }}</td>
-                            <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $expense->expense_date->format('d M Y') }}</td>
+                            <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ bd_date($expense->expense_date->format('d M Y')) }}</td>
                             <td class="border-b border-gray-100 px-4 py-3 text-gray-700">
                                 ৳{{ format_amount($expense->amount,0) }}</td>
                         </tr>

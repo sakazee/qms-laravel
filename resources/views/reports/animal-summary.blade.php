@@ -29,7 +29,7 @@
                     <th class="px-4 py-3 text-center text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.total_shares') }}</th>
                     <th class="px-4 py-3 text-center text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.assigned_shares') }}</th>
                     <th class="px-4 py-3 text-center text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.available_shares') }}</th>
-                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ app()->getLocale() === 'bn' ? 'অংশীদারগণ' : 'Partners' }}</th>
+                    <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600" width="25%">{{ app()->getLocale() === 'bn' ? 'অংশীদারগণ' : 'Partners' }}</th>
                     <th class="px-4 py-3 text-left text-[13px] font-bold uppercase tracking-wide text-gray-600">{{ __('animals.status.label') }}</th>
                 </tr>
             </thead>
@@ -41,10 +41,10 @@
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">{{ $animal->name ?: '—' }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">৳{{ format_amount($animal->purchase_price,0) }}</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700">৳{{ format_amount($animal_expenses[$animal->id] ?? 0, 0) }}</td>
-                    <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700">{{ $animal->total_shares }}</td>
-                    <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700"><span class="badge bg-sky-100 text-sky-700">{{ $animal->assigned_shares }}</span></td>
-                    <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700"><span class="badge {{ $animal->available_shares > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-600' }}">{{ $animal->available_shares }}</span></td>
-                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">@foreach($animal->animalShares as $share)<span class="mr-1 inline-flex items-center gap-1 rounded-md bg-paper-100 px-2 py-0.5 text-[13px] font-medium text-gray-700 ring-1 ring-gray-200">{{ $share->partner->name }}<span class="font-bold text-gray-900">({{ format_amount($share->shares, 0) }})</span></span>@endforeach</td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700">{{ format_amount($animal->total_shares) }}</td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700"><span class="badge bg-sky-100 text-sky-700">{{ format_amount($animal->assigned_shares) }}</span></td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-center text-gray-700"><span class="badge {{ $animal->available_shares > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-600' }}">{{ format_amount($animal->available_shares) }}</span></td>
+                    <td class="border-b border-gray-100 px-4 py-3 text-gray-700">@foreach($animal->animalShares as $share)<span class="mr-1 mb-1 inline-flex items-center gap-1 rounded-md bg-emerald-100 text-emerald-800 px-2 py-0.5 text-[13px] font-medium ring-1 ring-gray-200">{{ $share->partner->name }}<span class="font-bold text-gray-900">({{ format_amount($share->shares, 0) }})</span></span>@endforeach</td>
                     <td class="border-b border-gray-100 px-4 py-3 text-gray-700"><span class="badge bg-gray-100 text-gray-600">{{ __('animals.status.'.$animal->status) }}</span></td>
                 </tr>
                 @empty
